@@ -1,0 +1,387 @@
+app:
+  description: 删除对应容器
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 删除对应容器02
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: 9d2430f1-64cc-489a-8805-260612964652
+    name: API_KEY
+    selector:
+    - env
+    - API_KEY
+    value: e62a9b0d239d3f6fe2f203c5bede453c
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1751957550572-source-1751957557917-target
+      source: '1751957550572'
+      sourceHandle: source
+      target: '1751957557917'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1751957557917-source-1751957592742-target
+      source: '1751957557917'
+      sourceHandle: source
+      target: '1751957592742'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1751957592742-source-1751957617667-target
+      source: '1751957592742'
+      sourceHandle: source
+      target: '1751957617667'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1751957617667-source-1751957641530-target
+      source: '1751957617667'
+      sourceHandle: source
+      target: '1751957641530'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: input
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: input
+      height: 90
+      id: '1751957550572'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\nimport requests\n\
+          import json\n\ndef main(input:str, API_KEY:str) -> dict:\n    \"\"\"\n \
+          \   获取所有Docker容器信息（包括未运行的）并返回，让后端大模型进行比对\n    \n    参数:\n        input:\
+          \ 用户输入的查询文本，包含对靶场环境的需求描述\n        \n    返回:\n        dict: 包含所有容器信息和用户输入的格式化文本\n\
+          \    \"\"\"\n    # API服务的URL\n    API_BASE_URL = \"http://172.17.0.1:8005\"\
+          \n    \n    # 添加API密钥到请求头\n    headers = {\n        \"X-API-Key\": API_KEY\n\
+          \    }\n    \n    try:\n        # 获取所有Docker容器（包括未运行的）\n        try:\n \
+          \           # 使用 docker ps -a 对应的API\n            containers_response =\
+          \ requests.get(f\"{API_BASE_URL}/docker/ps?all=true\", headers=headers,\
+          \ timeout=10)\n            containers_response.raise_for_status()\n    \
+          \        containers_data = containers_response.json()\n        except Exception\
+          \ as e:\n            return {\n                \"result\": f\"### ⚠️ 获取Docker容器列表失败\\\
+          n\\n无法获取当前的Docker容器列表。\\n错误信息: {str(e)}\\n\\n请确认Docker服务正常运行。\\n\\n**用户查询**:\
+          \ {input}\"\n            }\n        \n        if containers_data.get(\"\
+          status\") != \"success\":\n            return {\n                \"result\"\
+          : f\"### ⚠️ 获取Docker容器列表失败\\n\\n无法获取当前的Docker容器列表。\\n错误信息: {containers_data.get('message',\
+          \ '未知错误')}\\n\\n请确认Docker服务正常运行。\\n\\n**用户查询**: {input}\"\n            }\n\
+          \        \n        # 获取所有容器\n        containers = containers_data.get(\"\
+          containers\", [])\n        \n        # 如果没有容器\n        if not containers:\n\
+          \            return {\n                \"result\": f\"### ℹ️ 当前环境中没有Docker容器\\\
+          n\\n未检测到任何Docker容器（包括停止状态）。\\n\\n**用户查询**: {input}\"\n            }\n  \
+          \      \n        # 返回所有容器信息\n        result = f\"### \U0001F4CB 当前所有Docker容器\\\
+          n\\n\"\n        \n        # 表格标题\n        result += \"| 容器ID | 容器名称 | 镜像\
+          \ | 状态 | 端口 | 创建时间 |\\n\"\n        result += \"|--------|---------|------|------|------|--------|\\\
+          n\"\n        \n        # 表格内容\n        for container in containers:\n  \
+          \          container_id = container.get(\"ID\", \"\")[:12]  # 截取ID前12位以便显示\n\
+          \            names = container.get(\"Names\", \"\")\n            image =\
+          \ container.get(\"Image\", \"\")\n            status = container.get(\"\
+          Status\", \"\")\n            ports = container.get(\"Ports\", \"\")\n  \
+          \          created = container.get(\"CreatedAt\", \"\")\n            \n\
+          \            # 根据状态添加状态图标\n            if \"Up\" in status:\n          \
+          \      status = \"\U0001F7E2 \" + status  # 运行中\n            elif \"Exited\"\
+          \ in status:\n                status = \"\U0001F534 \" + status  # 已停止\n\
+          \            else:\n                status = \"⚪ \" + status  # 其他状态\n \
+          \               \n            result += f\"| {container_id} | {names} |\
+          \ {image} | {status} | {ports} | {created} |\\n\"\n        \n        # 添加简单的状态统计\n\
+          \        running = sum(1 for c in containers if \"Up\" in c.get(\"Status\"\
+          , \"\"))\n        stopped = sum(1 for c in containers if \"Exited\" in c.get(\"\
+          Status\", \"\"))\n        result += f\"\\n**统计信息**: 共{len(containers)}个容器，{running}个运行中，{stopped}个已停止\\\
+          n\\n\"\n        \n        result += f\"**用户查询**: {input}\"\n        \n \
+          \       return {\"result\": result}\n        \n    except requests.exceptions.ConnectionError:\n\
+          \        return {\n            \"result\": f\"### ❌ 连接错误\\n\\n无法连接到Docker\
+          \ API服务。请确保服务正在运行。\\n\\n**用户查询**: {input}\"\n        }\n    except requests.exceptions.Timeout:\n\
+          \        return {\n            \"result\": f\"### ⏱️ 请求超时\\n\\n连接Docker\
+          \ API服务超时。请检查服务状态后重试。\\n\\n**用户查询**: {input}\"\n        }\n    except Exception\
+          \ as e:\n        return {\n            \"result\": f\"### \U0001F525 未知错误\\\
+          n\\n处理Docker容器查询时发生错误: {str(e)}\\n\\n**用户查询**: {input}\"\n        }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 查看容器状态
+        type: code
+        variables:
+        - value_selector:
+          - '1751957550572'
+          - input
+          variable: input
+        - value_selector:
+          - env
+          - API_KEY
+          variable: API_KEY
+      height: 54
+      id: '1751957557917'
+      position:
+        x: 383.7183520758398
+        y: 282
+      positionAbsolute:
+        x: 383.7183520758398
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1751957557917'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: a1a75638-b266-464d-8e23-1c9e983c63d9
+          role: system
+          text: "您是一个Docker容器删除接口。您将接收到一个JSON格式的输入{{#context#}}，包含以下结构：\n{\n  \"#context#\"\
+            : \"包含容器列表和用户查询的文本\"\n}\n\n您需要：\n\n1. 解析输入中的\"#context#\"字段，该字段包含容器列表表格和最后一行的\"\
+            **用户查询**\"部分\n2. 从\"**用户查询**\"后面提取用户的具体请求内容\n3. 在容器列表中寻找未运行(状态包含\"\U0001F534\
+            \ Exited\")的容器，并匹配用户查询中提到的容器(通过名称、ID或描述)\n4. 如果找到匹配的未运行容器，输出一条删除该容器的curl命令\n\
+            5. 如果没有找到匹配的未运行容器，仅输出\"null\"\n\n输出格式必须严格遵循以下规则：\n- 成功匹配未运行容器时：输出完整的curl命令，格式为\
+            \ curl -X POST \"http://localhost:8005/docker/rm\" -H \"Content-Type:\
+            \ application/json\" -d '{\"container_id\":\"容器ID\",\"force\":true}'\n\
+            - 未找到匹配的未运行容器时：仅输出 null\n\n不要输出任何解释、分析或其他文本，只输出curl命令或null。\n正在运行的容器(状态为\"\
+            \U0001F7E2 Up\")不应被考虑匹配，即使名称或ID符合查询条件。\n\n例如，如果用户查询是\"删除dvwa容器\"，您应该查找名称包含\"\
+            dvwa\"且状态为\"\U0001F534 Exited\"的容器，如有匹配则生成相应的curl命令。"
+        selected: false
+        title: RM命令深化
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1751957592742'
+      position:
+        x: 689
+        y: 282
+      positionAbsolute:
+        x: 689
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\nimport requests\n\
+          import json\nimport re\nimport sys\nimport argparse\n\ndef main(input: str,\
+          \ API_KEY: str) -> dict:\n    \"\"\"\n    根据用户输入删除指定的Docker容器\n    \n  \
+          \  参数:\n        input: 用户输入的curl命令或容器ID/名称\n        \n    返回:\n        dict:\
+          \ 包含操作结果的格式化文本\n    \"\"\"\n    # API服务的URL\n    API_BASE_URL = \"http://172.17.0.1:8005\"\
+          \n    \n    # 添加API密钥到请求头\n    headers = {\n        \"X-API-Key\": API_KEY\n\
+          \    }\n    \n    try:\n        container_id = None\n        force = True\n\
+          \        \n        # 尝试解析为curl命令\n        if input.strip().startswith(\"\
+          curl\"):\n            # 提取JSON数据部分 - 支持单引号或双引号\n            data_match =\
+          \ re.search(r'-d\\s+([\\'\"])(.*?)(\\1)', input)\n            if not data_match:\n\
+          \                return {\"result\": f\"### ❌ 无效的命令格式\\n\\n无法从输入中提取JSON数据。请确保提供了正确的curl命令格式。\"\
+          }\n                \n            data_str = data_match.group(2)\n      \
+          \      \n            # 解析JSON数据\n            try:\n                data_str\
+          \ = data_str.replace('\\\\\\\"', '\"').replace('\\\\\"', '\"')\n       \
+          \         data_json = json.loads(data_str)\n                container_id\
+          \ = data_json.get(\"container_id\")\n                force = data_json.get(\"\
+          force\", True)\n            except json.JSONDecodeError:\n             \
+          \   return {\"result\": f\"### ❌ 无效的JSON数据\\n\\n无法解析请求数据: {data_str}\\n\\\
+          n请确保JSON格式正确。\"}\n        else:\n            # 直接将输入作为容器ID处理\n         \
+          \   container_id = input.strip()\n        \n        # 验证必要的参数\n        if\
+          \ not container_id:\n            return {\"result\": \"### ❌ 缺少容器ID\\n\\\
+          n请提供要删除的容器ID或名称。\"}\n            \n        # 构建API请求\n        url = f\"\
+          {API_BASE_URL}/docker/rm\"\n        headers = {\"Content-Type\": \"application/json\"\
+          , \"X-API-Key\": API_KEY}\n        data = {\"container_id\": container_id,\
+          \ \"force\": force}\n        \n        # 发送请求\n        response = requests.post(url,\
+          \ headers=headers, json=data, timeout=10)\n        \n        # 处理响应\n  \
+          \      if response.status_code == 200:\n            response_data = response.json()\n\
+          \            if response_data.get(\"status\") == \"success\":\n        \
+          \        message = response_data.get('message', '')\n                \n\
+          \                # 检查是否是容器不存在的情况\n                if \"No such container\"\
+          \ in message:\n                    return {\"result\": f\"### ⚠️ 容器不存在\\\
+          n\\n容器 '{container_id}' 已不存在或已被删除。\\n\\n请检查容器ID是否正确，或使用 `docker ps -a` 查看所有容器。\"\
+          }\n                \n                return {\"result\": f\"### ✅ 容器删除成功\\\
+          n\\n成功删除容器 **{container_id}**\\n\\n响应信息: {message}\"}\n            else:\n\
+          \                error_msg = response_data.get(\"message\", \"未知错误\")\n\
+          \                if \"No such container\" in error_msg:\n              \
+          \      return {\"result\": f\"### ⚠️ 容器不存在\\n\\n容器 '{container_id}' 已不存在或已被删除。\\\
+          n\\n请检查容器ID是否正确，或使用 `docker ps -a` 查看所有容器。\"}\n                return {\"\
+          result\": f\"### ❌ 容器删除失败\\n\\n服务器返回错误: {error_msg}\\n\\n请确认容器ID正确并且容器可以被删除。\"\
+          }\n        else:\n            return {\"result\": f\"### ❌ 请求失败\\n\\nHTTP状态码:\
+          \ {response.status_code}\\n响应内容: {response.text}\\n\\n请检查API服务状态。\"}\n \
+          \   \n    except requests.exceptions.ConnectionError:\n        return {\"\
+          result\": \"### ❌ 连接错误\\n\\n无法连接到Docker API服务。请确保服务正在运行。\"}\n    except\
+          \ requests.exceptions.Timeout:\n        return {\"result\": \"### ⏱️ 请求超时\\\
+          n\\n连接Docker API服务超时。请检查服务状态后重试。\"}\n    except Exception as e:\n      \
+          \  return {\"result\": f\"### \U0001F525 执行错误\\n\\n删除容器时发生错误: {str(e)}\\\
+          n\\n请检查输入格式和API服务状态。\"}\n\ndef cli_main():\n    # 创建命令行参数解析器\n    parser\
+          \ = argparse.ArgumentParser(description='删除Docker容器')\n    parser.add_argument('container',\
+          \ help='要删除的容器ID或名称，或包含删除容器信息的curl命令')\n    parser.add_argument('--force',\
+          \ action='store_true', help='强制删除容器')\n    parser.add_argument('--debug',\
+          \ action='store_true', help='显示调试信息')\n    parser.add_argument('--api_key',\
+          \ help='API密钥')\n    # 解析命令行参数\n    args = parser.parse_args()\n    \n \
+          \   if args.debug:\n        print(f\"准备删除Docker容器: {args.container}\")\n\
+          \        print(f\"强制删除: {'是' if args.force else '否'}\")\n    \n    # 如果是直接提供容器ID/名称，且指定了force参数\n\
+          \    if not args.container.startswith('curl') and args.force:\n        container_id\
+          \ = args.container\n        curl_cmd = f'''curl -X POST \"http://localhost:8000/docker/rm\"\
+          \ -H \"Content-Type: application/json\" -d '{{\"container_id\":\"{container_id}\"\
+          ,\"force\":true}}' '''\n        if args.debug:\n            print(f\"生成的CURL命令:\
+          \ {curl_cmd}\")\n        result = main(curl_cmd, args.api_key)\n    else:\n\
+          \        result = main(args.container, args.api_key)\n    \n    print(result[\"\
+          result\"])\n    return result"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: true
+        title: 删除容器
+        type: code
+        variables:
+        - value_selector:
+          - '1751957592742'
+          - text
+          variable: input
+        - value_selector:
+          - env
+          - API_KEY
+          variable: API_KEY
+      height: 54
+      id: '1751957617667'
+      position:
+        x: 993
+        y: 282
+      positionAbsolute:
+        x: 993
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1751957617667'
+          - result
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1751957641530'
+      position:
+        x: 1297
+        y: 282
+      positionAbsolute:
+        x: 1297
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -137.0748216886169
+      y: 207.80069663558055
+      zoom: 0.7802454801737027

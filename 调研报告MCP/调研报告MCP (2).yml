@@ -1,0 +1,3095 @@
+app:
+  description: 调研报告MCP
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 调研报告MCP
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tavily:0.1.2@aa7a8744b2ccf3a7aec818da6c504997a6319b29040e541bfc73b4fbaa9e98d9
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/google:0.0.9@d360bbc433f39be1b11909cb9c32e6be4a17ea06af083f9e1c7613bb802bf517
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1757408899533-source-1757409080658-target
+      source: '1757408899533'
+      sourceHandle: source
+      target: '1757409080658'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1757412434634-source-1757412562672-target
+      source: '1757412434634'
+      sourceHandle: source
+      target: '1757412562672'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: iteration
+      id: 1757412562672-source-1757412608508-target
+      source: '1757412562672'
+      sourceHandle: source
+      target: '1757412608508'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1757412608508'
+        sourceType: iteration-start
+        targetType: code
+      id: 1757412608508start-source-1757412622217-target
+      source: 1757412608508start
+      sourceHandle: source
+      target: '1757412622217'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1757412608508'
+        sourceType: code
+        targetType: http-request
+      id: 1757412622217-source-1757412677444-target
+      source: '1757412622217'
+      sourceHandle: source
+      target: '1757412677444'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1757412608508'
+        sourceType: http-request
+        targetType: tool
+      id: 1757412677444-source-1757412846858-target
+      source: '1757412677444'
+      sourceHandle: source
+      target: '1757412846858'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: llm
+      id: 1757412608508-source-1757412955421-target
+      source: '1757412608508'
+      sourceHandle: source
+      target: '1757412955421'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1757412955421-source-1757412965263-target
+      source: '1757412955421'
+      sourceHandle: source
+      target: '1757412965263'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1757409080658-source-1757483681140-target
+      source: '1757409080658'
+      sourceHandle: source
+      target: '1757483681140'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: llm
+      id: 1757483681140-source-1757484202816-target
+      source: '1757483681140'
+      sourceHandle: source
+      target: '1757484202816'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1757484202816-source-1757412434634-target
+      source: '1757484202816'
+      sourceHandle: source
+      target: '1757412434634'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1757412608508'
+        sourceType: tool
+        targetType: llm
+      id: 1757412846858-source-1757412882592-target
+      source: '1757412846858'
+      sourceHandle: source
+      target: '1757412882592'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: input
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: input
+      height: 90
+      id: '1757408899533'
+      position:
+        x: -263.4720214528461
+        y: 282
+      positionAbsolute:
+        x: -263.4720214528461
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1757408899533'
+          - input
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: eba51eea-f79b-474e-be41-9d7441dbd30e
+          role: system
+          text: '你是网络安全产品专家，任务是基于用户输入 {{#1757408899533.input#}}，生成一个丰富且清晰的“完善后提问”句子，适用于
+            Google 搜索以调研网络安全相关内容（如产品、企业或事件）。根据用户需求，优先聚焦官方文档，其次官方产品信息、官方博客和知识博客，强调包含丰富媒介（如图片、视频）。时间范围限定为
+            2025年9月上下1年。提问应反映用户意图（若询问产品则聚焦产品信息，若询问企业则聚焦企业背景），其余搜索细节交由 Google 处理。
+
+            处理步骤（内部思考，不输出）：
+
+            1. 提取用户输入的核心主题和意图（产品名、企业名或事件）。
+
+            2. 构建包含优先级（官方文档 > 产品信息 > 博客）和媒介需求的句子。
+
+            3. 融入时间范围，适配 Google 自然语言搜索。
+
+            输出格式：
+
+            ```markdown
+
+            # 完善后提问
+
+            ## 提问内容
+
+            请提供多个关于 [用户输入主题] 的官方文档、产品信息、官方博客和知识博客，包含图片和视频，时间范围为 2024年9月至2025年9月。
+
+            ```'
+        - id: df1cc286-0b7b-4bdf-b3ee-d4157661e04a
+          role: user
+          text: '{{#1757408899533.input#}}'
+        - id: f19b62df-49f2-47f8-89d1-6b1a9ed793c5
+          role: assistant
+          text: '输出格式：
+
+            、、、
+
+            请提供关于 [用户输入主题] 的官方文档、产品信息、官方博客和知识博客，包含图片和视频，时间范围为 2024年9月至2025年9月。
+
+            ```'
+        selected: true
+        title: 完善提问
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1757409080658'
+      position:
+        x: 46.983715926189916
+        y: 282
+      positionAbsolute:
+        x: 46.983715926189916
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: false
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The search query you want to execute with Tavily.
+            ja_JP: The search query you want to execute with Tavily.
+            pt_BR: The search query you want to execute with Tavily.
+            zh_Hans: 您想用 Tavily 执行的搜索查询。
+          label:
+            en_US: Query
+            ja_JP: Query
+            pt_BR: Query
+            zh_Hans: 查询
+          llm_description: The search query.
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: basic
+          form: llm
+          human_description:
+            en_US: The depth of the search.
+            ja_JP: The depth of the search.
+            pt_BR: The depth of the search.
+            zh_Hans: 搜索的深度。
+          label:
+            en_US: Search Depth
+            ja_JP: Search Depth
+            pt_BR: Search Depth
+            zh_Hans: 搜索深度
+          llm_description: The depth of the search. 'basic' for standard search, 'advanced'
+            for more comprehensive results.
+          max: null
+          min: null
+          name: search_depth
+          options:
+          - icon: ''
+            label:
+              en_US: Basic
+              ja_JP: Basic
+              pt_BR: Basic
+              zh_Hans: 基本
+            value: basic
+          - icon: ''
+            label:
+              en_US: Advanced
+              ja_JP: Advanced
+              pt_BR: Advanced
+              zh_Hans: 高级
+            value: advanced
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: general
+          form: llm
+          human_description:
+            en_US: The category of the search.
+            ja_JP: The category of the search.
+            pt_BR: The category of the search.
+            zh_Hans: 搜索的类别。
+          label:
+            en_US: Topic
+            ja_JP: Topic
+            pt_BR: Topic
+            zh_Hans: 主题
+          llm_description: The category of the search. Options include 'general',
+            'news', or 'finance'.
+          max: null
+          min: null
+          name: topic
+          options:
+          - icon: ''
+            label:
+              en_US: General
+              ja_JP: General
+              pt_BR: General
+              zh_Hans: 一般
+            value: general
+          - icon: ''
+            label:
+              en_US: News
+              ja_JP: News
+              pt_BR: News
+              zh_Hans: 新闻
+            value: news
+          - icon: ''
+            label:
+              en_US: Finance
+              ja_JP: Finance
+              pt_BR: Finance
+              zh_Hans: 金融
+            value: finance
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 7
+          form: llm
+          human_description:
+            en_US: The number of days back from the current date to include in the
+              search results (only applicable when "topic" is "news").
+            ja_JP: The number of days back from the current date to include in the
+              search results (only applicable when "topic" is "news").
+            pt_BR: The number of days back from the current date to include in the
+              search results (only applicable when "topic" is "news").
+            zh_Hans: 从当前日期起向前追溯的天数，以包含在搜索结果中（仅当"topic"为"news"时适用）。
+          label:
+            en_US: Days
+            ja_JP: Days
+            pt_BR: Days
+            zh_Hans: 天数
+          llm_description: The number of days back from the current date to include
+            in the search results. Only applicable when "topic" is "news".
+          max: null
+          min: 1
+          name: days
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: not_specified
+          form: llm
+          human_description:
+            en_US: The time range back from the current date to filter results.
+            ja_JP: The time range back from the current date to filter results.
+            pt_BR: The time range back from the current date to filter results.
+            zh_Hans: 从当前日期起向后筛选结果的时间范围。
+          label:
+            en_US: Time Range
+            ja_JP: Time Range
+            pt_BR: Time Range
+            zh_Hans: 时间范围
+          llm_description: The time range back from the current date to filter results.
+            Options include 'not_specified', 'day', 'week', 'month', or 'year'.
+          max: null
+          min: null
+          name: time_range
+          options:
+          - icon: ''
+            label:
+              en_US: Not Specified
+              ja_JP: Not Specified
+              pt_BR: Not Specified
+              zh_Hans: 不指定
+            value: not_specified
+          - icon: ''
+            label:
+              en_US: Day
+              ja_JP: Day
+              pt_BR: Day
+              zh_Hans: 天
+            value: day
+          - icon: ''
+            label:
+              en_US: Week
+              ja_JP: Week
+              pt_BR: Week
+              zh_Hans: 周
+            value: week
+          - icon: ''
+            label:
+              en_US: Month
+              ja_JP: Month
+              pt_BR: Month
+              zh_Hans: 月
+            value: month
+          - icon: ''
+            label:
+              en_US: Year
+              ja_JP: Year
+              pt_BR: Year
+              zh_Hans: 年
+            value: year
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: Automatically configure search parameters based on query content
+              and intent.
+            ja_JP: Automatically configure search parameters based on query content
+              and intent.
+            pt_BR: Automatically configure search parameters based on query content
+              and intent.
+            zh_Hans: 根据查询内容和意图自动配置搜索参数。
+          label:
+            en_US: Auto Parameters
+            ja_JP: Auto Parameters
+            pt_BR: Auto Parameters
+            zh_Hans: 自动参数
+          llm_description: When set to true, Tavily automatically configures search
+            parameters based on your query.
+          max: null
+          min: null
+          name: auto_parameters
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: Include a list of query-related images in the response.
+            ja_JP: Include a list of query-related images in the response.
+            pt_BR: Include a list of query-related images in the response.
+            zh_Hans: 在响应中包含与查询相关的图片列表。
+          label:
+            en_US: Include Images
+            ja_JP: Include Images
+            pt_BR: Include Images
+            zh_Hans: 包含图片
+          llm_description: When set to true, includes a list of query-related images
+            in the response.
+          max: null
+          min: null
+          name: include_images
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: When include_images is True, adds descriptive text for each image.
+            ja_JP: When include_images is True, adds descriptive text for each image.
+            pt_BR: When include_images is True, adds descriptive text for each image.
+            zh_Hans: 当 include_images 为 True 时，为每个图像添加描述文本。
+          label:
+            en_US: Include Image Descriptions
+            ja_JP: Include Image Descriptions
+            pt_BR: Include Image Descriptions
+            zh_Hans: 包含图片描述
+          llm_description: When include_images is True and this is set to true, adds
+            descriptive text for each image.
+          max: null
+          min: null
+          name: include_image_descriptions
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: Include favicon URL for each result.
+            ja_JP: Include favicon URL for each result.
+            pt_BR: Include favicon URL for each result.
+            zh_Hans: 包含每个结果的favicon URL。
+          label:
+            en_US: Include Favicon
+            ja_JP: Include Favicon
+            pt_BR: Include Favicon
+            zh_Hans: 包含Favicon
+          llm_description: When set to true, includes the favicon URL for each result.
+          max: null
+          min: null
+          name: include_favicon
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: Include a short answer to the original query in the response.
+            ja_JP: Include a short answer to the original query in the response.
+            pt_BR: Include a short answer to the original query in the response.
+            zh_Hans: 在响应中包含对原始查询的简短回答。
+          label:
+            en_US: Include Answer
+            ja_JP: Include Answer
+            pt_BR: Include Answer
+            zh_Hans: 包含答案
+          llm_description: When set to true, includes a short answer to the original
+            query in the response.
+          max: null
+          min: null
+          name: include_answer
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: Include the cleaned and parsed HTML content of each search result.
+            ja_JP: Include the cleaned and parsed HTML content of each search result.
+            pt_BR: Include the cleaned and parsed HTML content of each search result.
+            zh_Hans: 包含每个搜索结果的已清理和解析的HTML内容。
+          label:
+            en_US: Include Raw Content
+            ja_JP: Include Raw Content
+            pt_BR: Include Raw Content
+            zh_Hans: 包含原始内容
+          llm_description: When set to true, includes the cleaned and parsed HTML
+            content of each search result.
+          max: null
+          min: null
+          name: include_raw_content
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 5
+          form: form
+          human_description:
+            en_US: The maximum number of search results to return.
+            ja_JP: The maximum number of search results to return.
+            pt_BR: The maximum number of search results to return.
+            zh_Hans: 要返回的最大搜索结果数。
+          label:
+            en_US: Max Results
+            ja_JP: Max Results
+            pt_BR: Max Results
+            zh_Hans: 最大结果数
+          llm_description: The maximum number of search results to return. Range is
+            1-20.
+          max: 20
+          min: 1
+          name: max_results
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: 3
+          form: form
+          human_description:
+            en_US: Maximum number of content chunks returned per source (advanced
+              search only).
+            ja_JP: Maximum number of content chunks returned per source (advanced
+              search only).
+            pt_BR: Maximum number of content chunks returned per source (advanced
+              search only).
+            zh_Hans: 每个来源返回的内容片段的最大数量（仅限高级搜索）。
+          label:
+            en_US: Chunks Per Source
+            ja_JP: Chunks Per Source
+            pt_BR: Chunks Per Source
+            zh_Hans: 每来源片段数
+          llm_description: Maximum number of relevant content chunks (1-3) returned
+            per source. Valid only when search_depth is advanced.
+          max: 3
+          min: 1
+          name: chunks_per_source
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: united states
+          form: llm
+          human_description:
+            en_US: Boost search results from a specific country (topic must be general).
+            ja_JP: Boost search results from a specific country (topic must be general).
+            pt_BR: Boost search results from a specific country (topic must be general).
+            zh_Hans: 从特定国家/地区提升搜索结果（主题必须是general）。
+          label:
+            en_US: Country
+            ja_JP: Country
+            pt_BR: Country
+            zh_Hans: 国家
+          llm_description: Select a country to boost its content in results (only
+            when topic is general).
+          max: null
+          min: null
+          name: country
+          options:
+          - icon: ''
+            label:
+              en_US: Afghanistan
+              ja_JP: Afghanistan
+              pt_BR: Afghanistan
+              zh_Hans: 阿富汗
+            value: afghanistan
+          - icon: ''
+            label:
+              en_US: Albania
+              ja_JP: Albania
+              pt_BR: Albania
+              zh_Hans: 阿尔巴尼亚
+            value: albania
+          - icon: ''
+            label:
+              en_US: Algeria
+              ja_JP: Algeria
+              pt_BR: Algeria
+              zh_Hans: 阿尔及利亚
+            value: algeria
+          - icon: ''
+            label:
+              en_US: Andorra
+              ja_JP: Andorra
+              pt_BR: Andorra
+              zh_Hans: 安道尔
+            value: andorra
+          - icon: ''
+            label:
+              en_US: Angola
+              ja_JP: Angola
+              pt_BR: Angola
+              zh_Hans: 安哥拉
+            value: angola
+          - icon: ''
+            label:
+              en_US: Argentina
+              ja_JP: Argentina
+              pt_BR: Argentina
+              zh_Hans: 阿根廷
+            value: argentina
+          - icon: ''
+            label:
+              en_US: Armenia
+              ja_JP: Armenia
+              pt_BR: Armenia
+              zh_Hans: 亚美尼亚
+            value: armenia
+          - icon: ''
+            label:
+              en_US: Australia
+              ja_JP: Australia
+              pt_BR: Australia
+              zh_Hans: 澳大利亚
+            value: australia
+          - icon: ''
+            label:
+              en_US: Austria
+              ja_JP: Austria
+              pt_BR: Austria
+              zh_Hans: 奥地利
+            value: austria
+          - icon: ''
+            label:
+              en_US: Azerbaijan
+              ja_JP: Azerbaijan
+              pt_BR: Azerbaijan
+              zh_Hans: 阿塞拜疆
+            value: azerbaijan
+          - icon: ''
+            label:
+              en_US: Bahamas
+              ja_JP: Bahamas
+              pt_BR: Bahamas
+              zh_Hans: 巴哈马
+            value: bahamas
+          - icon: ''
+            label:
+              en_US: Bahrain
+              ja_JP: Bahrain
+              pt_BR: Bahrain
+              zh_Hans: 巴林
+            value: bahrain
+          - icon: ''
+            label:
+              en_US: Bangladesh
+              ja_JP: Bangladesh
+              pt_BR: Bangladesh
+              zh_Hans: 孟加拉国
+            value: bangladesh
+          - icon: ''
+            label:
+              en_US: Barbados
+              ja_JP: Barbados
+              pt_BR: Barbados
+              zh_Hans: 巴巴多斯
+            value: barbados
+          - icon: ''
+            label:
+              en_US: Belarus
+              ja_JP: Belarus
+              pt_BR: Belarus
+              zh_Hans: 白俄罗斯
+            value: belarus
+          - icon: ''
+            label:
+              en_US: Belgium
+              ja_JP: Belgium
+              pt_BR: Belgium
+              zh_Hans: 比利时
+            value: belgium
+          - icon: ''
+            label:
+              en_US: Belize
+              ja_JP: Belize
+              pt_BR: Belize
+              zh_Hans: 伯利兹
+            value: belize
+          - icon: ''
+            label:
+              en_US: Benin
+              ja_JP: Benin
+              pt_BR: Benin
+              zh_Hans: 贝宁
+            value: benin
+          - icon: ''
+            label:
+              en_US: Bhutan
+              ja_JP: Bhutan
+              pt_BR: Bhutan
+              zh_Hans: 不丹
+            value: bhutan
+          - icon: ''
+            label:
+              en_US: Bolivia
+              ja_JP: Bolivia
+              pt_BR: Bolivia
+              zh_Hans: 玻利维亚
+            value: bolivia
+          - icon: ''
+            label:
+              en_US: Bosnia and Herzegovina
+              ja_JP: Bosnia and Herzegovina
+              pt_BR: Bosnia and Herzegovina
+              zh_Hans: 波斯尼亚和黑塞哥维那
+            value: bosnia and herzegovina
+          - icon: ''
+            label:
+              en_US: Botswana
+              ja_JP: Botswana
+              pt_BR: Botswana
+              zh_Hans: 博茨瓦纳
+            value: botswana
+          - icon: ''
+            label:
+              en_US: Brazil
+              ja_JP: Brazil
+              pt_BR: Brazil
+              zh_Hans: 巴西
+            value: brazil
+          - icon: ''
+            label:
+              en_US: Brunei
+              ja_JP: Brunei
+              pt_BR: Brunei
+              zh_Hans: 文莱
+            value: brunei
+          - icon: ''
+            label:
+              en_US: Bulgaria
+              ja_JP: Bulgaria
+              pt_BR: Bulgaria
+              zh_Hans: 保加利亚
+            value: bulgaria
+          - icon: ''
+            label:
+              en_US: Burkina Faso
+              ja_JP: Burkina Faso
+              pt_BR: Burkina Faso
+              zh_Hans: 布基纳法索
+            value: burkina faso
+          - icon: ''
+            label:
+              en_US: Burundi
+              ja_JP: Burundi
+              pt_BR: Burundi
+              zh_Hans: 布隆迪
+            value: burundi
+          - icon: ''
+            label:
+              en_US: Cambodia
+              ja_JP: Cambodia
+              pt_BR: Cambodia
+              zh_Hans: 柬埔寨
+            value: cambodia
+          - icon: ''
+            label:
+              en_US: Cameroon
+              ja_JP: Cameroon
+              pt_BR: Cameroon
+              zh_Hans: 喀麦隆
+            value: cameroon
+          - icon: ''
+            label:
+              en_US: Canada
+              ja_JP: Canada
+              pt_BR: Canada
+              zh_Hans: 加拿大
+            value: canada
+          - icon: ''
+            label:
+              en_US: Cape Verde
+              ja_JP: Cape Verde
+              pt_BR: Cape Verde
+              zh_Hans: 佛得角
+            value: cape verde
+          - icon: ''
+            label:
+              en_US: Central African Republic
+              ja_JP: Central African Republic
+              pt_BR: Central African Republic
+              zh_Hans: 中非共和国
+            value: central african republic
+          - icon: ''
+            label:
+              en_US: Chad
+              ja_JP: Chad
+              pt_BR: Chad
+              zh_Hans: 乍得
+            value: chad
+          - icon: ''
+            label:
+              en_US: Chile
+              ja_JP: Chile
+              pt_BR: Chile
+              zh_Hans: 智利
+            value: chile
+          - icon: ''
+            label:
+              en_US: China
+              ja_JP: China
+              pt_BR: China
+              zh_Hans: 中国
+            value: china
+          - icon: ''
+            label:
+              en_US: Colombia
+              ja_JP: Colombia
+              pt_BR: Colombia
+              zh_Hans: 哥伦比亚
+            value: colombia
+          - icon: ''
+            label:
+              en_US: Comoros
+              ja_JP: Comoros
+              pt_BR: Comoros
+              zh_Hans: 科摩罗
+            value: comoros
+          - icon: ''
+            label:
+              en_US: Congo
+              ja_JP: Congo
+              pt_BR: Congo
+              zh_Hans: 刚果
+            value: congo
+          - icon: ''
+            label:
+              en_US: Costa Rica
+              ja_JP: Costa Rica
+              pt_BR: Costa Rica
+              zh_Hans: 哥斯达黎加
+            value: costa rica
+          - icon: ''
+            label:
+              en_US: Croatia
+              ja_JP: Croatia
+              pt_BR: Croatia
+              zh_Hans: 克罗地亚
+            value: croatia
+          - icon: ''
+            label:
+              en_US: Cuba
+              ja_JP: Cuba
+              pt_BR: Cuba
+              zh_Hans: 古巴
+            value: cuba
+          - icon: ''
+            label:
+              en_US: Cyprus
+              ja_JP: Cyprus
+              pt_BR: Cyprus
+              zh_Hans: 塞浦路斯
+            value: cyprus
+          - icon: ''
+            label:
+              en_US: Czech Republic
+              ja_JP: Czech Republic
+              pt_BR: Czech Republic
+              zh_Hans: 捷克共和国
+            value: czech republic
+          - icon: ''
+            label:
+              en_US: Denmark
+              ja_JP: Denmark
+              pt_BR: Denmark
+              zh_Hans: 丹麦
+            value: denmark
+          - icon: ''
+            label:
+              en_US: Djibouti
+              ja_JP: Djibouti
+              pt_BR: Djibouti
+              zh_Hans: 吉布提
+            value: djibouti
+          - icon: ''
+            label:
+              en_US: Dominican Republic
+              ja_JP: Dominican Republic
+              pt_BR: Dominican Republic
+              zh_Hans: 多米尼加共和国
+            value: dominican republic
+          - icon: ''
+            label:
+              en_US: Ecuador
+              ja_JP: Ecuador
+              pt_BR: Ecuador
+              zh_Hans: 厄瓜多尔
+            value: ecuador
+          - icon: ''
+            label:
+              en_US: Egypt
+              ja_JP: Egypt
+              pt_BR: Egypt
+              zh_Hans: 埃及
+            value: egypt
+          - icon: ''
+            label:
+              en_US: El Salvador
+              ja_JP: El Salvador
+              pt_BR: El Salvador
+              zh_Hans: 萨尔瓦多
+            value: el salvador
+          - icon: ''
+            label:
+              en_US: Equatorial Guinea
+              ja_JP: Equatorial Guinea
+              pt_BR: Equatorial Guinea
+              zh_Hans: 赤道几内亚
+            value: equatorial guinea
+          - icon: ''
+            label:
+              en_US: Eritrea
+              ja_JP: Eritrea
+              pt_BR: Eritrea
+              zh_Hans: 厄立特里亚
+            value: eritrea
+          - icon: ''
+            label:
+              en_US: Estonia
+              ja_JP: Estonia
+              pt_BR: Estonia
+              zh_Hans: 爱沙尼亚
+            value: estonia
+          - icon: ''
+            label:
+              en_US: Ethiopia
+              ja_JP: Ethiopia
+              pt_BR: Ethiopia
+              zh_Hans: 埃塞俄比亚
+            value: ethiopia
+          - icon: ''
+            label:
+              en_US: Fiji
+              ja_JP: Fiji
+              pt_BR: Fiji
+              zh_Hans: 斐济
+            value: fiji
+          - icon: ''
+            label:
+              en_US: Finland
+              ja_JP: Finland
+              pt_BR: Finland
+              zh_Hans: 芬兰
+            value: finland
+          - icon: ''
+            label:
+              en_US: France
+              ja_JP: France
+              pt_BR: France
+              zh_Hans: 法国
+            value: france
+          - icon: ''
+            label:
+              en_US: Gabon
+              ja_JP: Gabon
+              pt_BR: Gabon
+              zh_Hans: 加蓬
+            value: gabon
+          - icon: ''
+            label:
+              en_US: Gambia
+              ja_JP: Gambia
+              pt_BR: Gambia
+              zh_Hans: 冈比亚
+            value: gambia
+          - icon: ''
+            label:
+              en_US: Georgia
+              ja_JP: Georgia
+              pt_BR: Georgia
+              zh_Hans: 格鲁吉亚
+            value: georgia
+          - icon: ''
+            label:
+              en_US: Germany
+              ja_JP: Germany
+              pt_BR: Germany
+              zh_Hans: 德国
+            value: germany
+          - icon: ''
+            label:
+              en_US: Ghana
+              ja_JP: Ghana
+              pt_BR: Ghana
+              zh_Hans: 加纳
+            value: ghana
+          - icon: ''
+            label:
+              en_US: Greece
+              ja_JP: Greece
+              pt_BR: Greece
+              zh_Hans: 希腊
+            value: greece
+          - icon: ''
+            label:
+              en_US: Guatemala
+              ja_JP: Guatemala
+              pt_BR: Guatemala
+              zh_Hans: 危地马拉
+            value: guatemala
+          - icon: ''
+            label:
+              en_US: Guinea
+              ja_JP: Guinea
+              pt_BR: Guinea
+              zh_Hans: 几内亚
+            value: guinea
+          - icon: ''
+            label:
+              en_US: Haiti
+              ja_JP: Haiti
+              pt_BR: Haiti
+              zh_Hans: 海地
+            value: haiti
+          - icon: ''
+            label:
+              en_US: Honduras
+              ja_JP: Honduras
+              pt_BR: Honduras
+              zh_Hans: 洪都拉斯
+            value: honduras
+          - icon: ''
+            label:
+              en_US: Hungary
+              ja_JP: Hungary
+              pt_BR: Hungary
+              zh_Hans: 匈牙利
+            value: hungary
+          - icon: ''
+            label:
+              en_US: Iceland
+              ja_JP: Iceland
+              pt_BR: Iceland
+              zh_Hans: 冰岛
+            value: iceland
+          - icon: ''
+            label:
+              en_US: India
+              ja_JP: India
+              pt_BR: India
+              zh_Hans: 印度
+            value: india
+          - icon: ''
+            label:
+              en_US: Indonesia
+              ja_JP: Indonesia
+              pt_BR: Indonesia
+              zh_Hans: 印度尼西亚
+            value: indonesia
+          - icon: ''
+            label:
+              en_US: Iran
+              ja_JP: Iran
+              pt_BR: Iran
+              zh_Hans: 伊朗
+            value: iran
+          - icon: ''
+            label:
+              en_US: Iraq
+              ja_JP: Iraq
+              pt_BR: Iraq
+              zh_Hans: 伊拉克
+            value: iraq
+          - icon: ''
+            label:
+              en_US: Ireland
+              ja_JP: Ireland
+              pt_BR: Ireland
+              zh_Hans: 爱尔兰
+            value: ireland
+          - icon: ''
+            label:
+              en_US: Israel
+              ja_JP: Israel
+              pt_BR: Israel
+              zh_Hans: 以色列
+            value: israel
+          - icon: ''
+            label:
+              en_US: Italy
+              ja_JP: Italy
+              pt_BR: Italy
+              zh_Hans: 意大利
+            value: italy
+          - icon: ''
+            label:
+              en_US: Jamaica
+              ja_JP: Jamaica
+              pt_BR: Jamaica
+              zh_Hans: 牙买加
+            value: jamaica
+          - icon: ''
+            label:
+              en_US: Japan
+              ja_JP: Japan
+              pt_BR: Japan
+              zh_Hans: 日本
+            value: japan
+          - icon: ''
+            label:
+              en_US: Jordan
+              ja_JP: Jordan
+              pt_BR: Jordan
+              zh_Hans: 约旦
+            value: jordan
+          - icon: ''
+            label:
+              en_US: Kazakhstan
+              ja_JP: Kazakhstan
+              pt_BR: Kazakhstan
+              zh_Hans: 哈萨克斯坦
+            value: kazakhstan
+          - icon: ''
+            label:
+              en_US: Kenya
+              ja_JP: Kenya
+              pt_BR: Kenya
+              zh_Hans: 肯尼亚
+            value: kenya
+          - icon: ''
+            label:
+              en_US: Kuwait
+              ja_JP: Kuwait
+              pt_BR: Kuwait
+              zh_Hans: 科威特
+            value: kuwait
+          - icon: ''
+            label:
+              en_US: Kyrgyzstan
+              ja_JP: Kyrgyzstan
+              pt_BR: Kyrgyzstan
+              zh_Hans: 吉尔吉斯斯坦
+            value: kyrgyzstan
+          - icon: ''
+            label:
+              en_US: Latvia
+              ja_JP: Latvia
+              pt_BR: Latvia
+              zh_Hans: 拉脱维亚
+            value: latvia
+          - icon: ''
+            label:
+              en_US: Lebanon
+              ja_JP: Lebanon
+              pt_BR: Lebanon
+              zh_Hans: 黎巴嫩
+            value: lebanon
+          - icon: ''
+            label:
+              en_US: Lesotho
+              ja_JP: Lesotho
+              pt_BR: Lesotho
+              zh_Hans: 莱索托
+            value: lesotho
+          - icon: ''
+            label:
+              en_US: Liberia
+              ja_JP: Liberia
+              pt_BR: Liberia
+              zh_Hans: 利比里亚
+            value: liberia
+          - icon: ''
+            label:
+              en_US: Libya
+              ja_JP: Libya
+              pt_BR: Libya
+              zh_Hans: 利比亚
+            value: libya
+          - icon: ''
+            label:
+              en_US: Liechtenstein
+              ja_JP: Liechtenstein
+              pt_BR: Liechtenstein
+              zh_Hans: 列支敦士登
+            value: liechtenstein
+          - icon: ''
+            label:
+              en_US: Lithuania
+              ja_JP: Lithuania
+              pt_BR: Lithuania
+              zh_Hans: 立陶宛
+            value: lithuania
+          - icon: ''
+            label:
+              en_US: Luxembourg
+              ja_JP: Luxembourg
+              pt_BR: Luxembourg
+              zh_Hans: 卢森堡
+            value: luxembourg
+          - icon: ''
+            label:
+              en_US: Madagascar
+              ja_JP: Madagascar
+              pt_BR: Madagascar
+              zh_Hans: 马达加斯加
+            value: madagascar
+          - icon: ''
+            label:
+              en_US: Malawi
+              ja_JP: Malawi
+              pt_BR: Malawi
+              zh_Hans: 马拉维
+            value: malawi
+          - icon: ''
+            label:
+              en_US: Malaysia
+              ja_JP: Malaysia
+              pt_BR: Malaysia
+              zh_Hans: 马来西亚
+            value: malaysia
+          - icon: ''
+            label:
+              en_US: Maldives
+              ja_JP: Maldives
+              pt_BR: Maldives
+              zh_Hans: 马尔代夫
+            value: maldives
+          - icon: ''
+            label:
+              en_US: Mali
+              ja_JP: Mali
+              pt_BR: Mali
+              zh_Hans: 马里
+            value: mali
+          - icon: ''
+            label:
+              en_US: Malta
+              ja_JP: Malta
+              pt_BR: Malta
+              zh_Hans: 马耳他
+            value: malta
+          - icon: ''
+            label:
+              en_US: Mauritania
+              ja_JP: Mauritania
+              pt_BR: Mauritania
+              zh_Hans: 毛里塔尼亚
+            value: mauritania
+          - icon: ''
+            label:
+              en_US: Mauritius
+              ja_JP: Mauritius
+              pt_BR: Mauritius
+              zh_Hans: 毛里求斯
+            value: mauritius
+          - icon: ''
+            label:
+              en_US: Mexico
+              ja_JP: Mexico
+              pt_BR: Mexico
+              zh_Hans: 墨西哥
+            value: mexico
+          - icon: ''
+            label:
+              en_US: Moldova
+              ja_JP: Moldova
+              pt_BR: Moldova
+              zh_Hans: 摩尔多瓦
+            value: moldova
+          - icon: ''
+            label:
+              en_US: Monaco
+              ja_JP: Monaco
+              pt_BR: Monaco
+              zh_Hans: 摩纳哥
+            value: monaco
+          - icon: ''
+            label:
+              en_US: Mongolia
+              ja_JP: Mongolia
+              pt_BR: Mongolia
+              zh_Hans: 蒙古
+            value: mongolia
+          - icon: ''
+            label:
+              en_US: Montenegro
+              ja_JP: Montenegro
+              pt_BR: Montenegro
+              zh_Hans: 黑山
+            value: montenegro
+          - icon: ''
+            label:
+              en_US: Morocco
+              ja_JP: Morocco
+              pt_BR: Morocco
+              zh_Hans: 摩洛哥
+            value: morocco
+          - icon: ''
+            label:
+              en_US: Mozambique
+              ja_JP: Mozambique
+              pt_BR: Mozambique
+              zh_Hans: 莫桑比克
+            value: mozambique
+          - icon: ''
+            label:
+              en_US: Myanmar
+              ja_JP: Myanmar
+              pt_BR: Myanmar
+              zh_Hans: 缅甸
+            value: myanmar
+          - icon: ''
+            label:
+              en_US: Namibia
+              ja_JP: Namibia
+              pt_BR: Namibia
+              zh_Hans: 纳米比亚
+            value: namibia
+          - icon: ''
+            label:
+              en_US: Nepal
+              ja_JP: Nepal
+              pt_BR: Nepal
+              zh_Hans: 尼泊尔
+            value: nepal
+          - icon: ''
+            label:
+              en_US: Netherlands
+              ja_JP: Netherlands
+              pt_BR: Netherlands
+              zh_Hans: 荷兰
+            value: netherlands
+          - icon: ''
+            label:
+              en_US: New Zealand
+              ja_JP: New Zealand
+              pt_BR: New Zealand
+              zh_Hans: 新西兰
+            value: new zealand
+          - icon: ''
+            label:
+              en_US: Nicaragua
+              ja_JP: Nicaragua
+              pt_BR: Nicaragua
+              zh_Hans: 尼加拉瓜
+            value: nicaragua
+          - icon: ''
+            label:
+              en_US: Niger
+              ja_JP: Niger
+              pt_BR: Niger
+              zh_Hans: 尼日尔
+            value: niger
+          - icon: ''
+            label:
+              en_US: Nigeria
+              ja_JP: Nigeria
+              pt_BR: Nigeria
+              zh_Hans: 尼日利亚
+            value: nigeria
+          - icon: ''
+            label:
+              en_US: North Korea
+              ja_JP: North Korea
+              pt_BR: North Korea
+              zh_Hans: 朝鲜
+            value: north korea
+          - icon: ''
+            label:
+              en_US: North Macedonia
+              ja_JP: North Macedonia
+              pt_BR: North Macedonia
+              zh_Hans: 北马其顿
+            value: north macedonia
+          - icon: ''
+            label:
+              en_US: Norway
+              ja_JP: Norway
+              pt_BR: Norway
+              zh_Hans: 挪威
+            value: norway
+          - icon: ''
+            label:
+              en_US: Oman
+              ja_JP: Oman
+              pt_BR: Oman
+              zh_Hans: 阿曼
+            value: oman
+          - icon: ''
+            label:
+              en_US: Pakistan
+              ja_JP: Pakistan
+              pt_BR: Pakistan
+              zh_Hans: 巴基斯坦
+            value: pakistan
+          - icon: ''
+            label:
+              en_US: Panama
+              ja_JP: Panama
+              pt_BR: Panama
+              zh_Hans: 巴拿马
+            value: panama
+          - icon: ''
+            label:
+              en_US: Papua New Guinea
+              ja_JP: Papua New Guinea
+              pt_BR: Papua New Guinea
+              zh_Hans: 巴布亚新几内亚
+            value: papua new guinea
+          - icon: ''
+            label:
+              en_US: Paraguay
+              ja_JP: Paraguay
+              pt_BR: Paraguay
+              zh_Hans: 巴拉圭
+            value: paraguay
+          - icon: ''
+            label:
+              en_US: Peru
+              ja_JP: Peru
+              pt_BR: Peru
+              zh_Hans: 秘鲁
+            value: peru
+          - icon: ''
+            label:
+              en_US: Philippines
+              ja_JP: Philippines
+              pt_BR: Philippines
+              zh_Hans: 菲律宾
+            value: philippines
+          - icon: ''
+            label:
+              en_US: Poland
+              ja_JP: Poland
+              pt_BR: Poland
+              zh_Hans: 波兰
+            value: poland
+          - icon: ''
+            label:
+              en_US: Portugal
+              ja_JP: Portugal
+              pt_BR: Portugal
+              zh_Hans: 葡萄牙
+            value: portugal
+          - icon: ''
+            label:
+              en_US: Qatar
+              ja_JP: Qatar
+              pt_BR: Qatar
+              zh_Hans: 卡塔尔
+            value: qatar
+          - icon: ''
+            label:
+              en_US: Romania
+              ja_JP: Romania
+              pt_BR: Romania
+              zh_Hans: 罗马尼亚
+            value: romania
+          - icon: ''
+            label:
+              en_US: Russia
+              ja_JP: Russia
+              pt_BR: Russia
+              zh_Hans: 俄罗斯
+            value: russia
+          - icon: ''
+            label:
+              en_US: Rwanda
+              ja_JP: Rwanda
+              pt_BR: Rwanda
+              zh_Hans: 卢旺达
+            value: rwanda
+          - icon: ''
+            label:
+              en_US: Saudi Arabia
+              ja_JP: Saudi Arabia
+              pt_BR: Saudi Arabia
+              zh_Hans: 沙特阿拉伯
+            value: saudi arabia
+          - icon: ''
+            label:
+              en_US: Senegal
+              ja_JP: Senegal
+              pt_BR: Senegal
+              zh_Hans: 塞内加尔
+            value: senegal
+          - icon: ''
+            label:
+              en_US: Serbia
+              ja_JP: Serbia
+              pt_BR: Serbia
+              zh_Hans: 塞尔维亚
+            value: serbia
+          - icon: ''
+            label:
+              en_US: Singapore
+              ja_JP: Singapore
+              pt_BR: Singapore
+              zh_Hans: 新加坡
+            value: singapore
+          - icon: ''
+            label:
+              en_US: Slovakia
+              ja_JP: Slovakia
+              pt_BR: Slovakia
+              zh_Hans: 斯洛伐克
+            value: slovakia
+          - icon: ''
+            label:
+              en_US: Slovenia
+              ja_JP: Slovenia
+              pt_BR: Slovenia
+              zh_Hans: 斯洛文尼亚
+            value: slovenia
+          - icon: ''
+            label:
+              en_US: Somalia
+              ja_JP: Somalia
+              pt_BR: Somalia
+              zh_Hans: 索马里
+            value: somalia
+          - icon: ''
+            label:
+              en_US: South Africa
+              ja_JP: South Africa
+              pt_BR: South Africa
+              zh_Hans: 南非
+            value: south africa
+          - icon: ''
+            label:
+              en_US: South Korea
+              ja_JP: South Korea
+              pt_BR: South Korea
+              zh_Hans: 韩国
+            value: south korea
+          - icon: ''
+            label:
+              en_US: South Sudan
+              ja_JP: South Sudan
+              pt_BR: South Sudan
+              zh_Hans: 南苏丹
+            value: south sudan
+          - icon: ''
+            label:
+              en_US: Spain
+              ja_JP: Spain
+              pt_BR: Spain
+              zh_Hans: 西班牙
+            value: spain
+          - icon: ''
+            label:
+              en_US: Sri Lanka
+              ja_JP: Sri Lanka
+              pt_BR: Sri Lanka
+              zh_Hans: 斯里兰卡
+            value: sri lanka
+          - icon: ''
+            label:
+              en_US: Sudan
+              ja_JP: Sudan
+              pt_BR: Sudan
+              zh_Hans: 苏丹
+            value: sudan
+          - icon: ''
+            label:
+              en_US: Sweden
+              ja_JP: Sweden
+              pt_BR: Sweden
+              zh_Hans: 瑞典
+            value: sweden
+          - icon: ''
+            label:
+              en_US: Switzerland
+              ja_JP: Switzerland
+              pt_BR: Switzerland
+              zh_Hans: 瑞士
+            value: switzerland
+          - icon: ''
+            label:
+              en_US: Syria
+              ja_JP: Syria
+              pt_BR: Syria
+              zh_Hans: 叙利亚
+            value: syria
+          - icon: ''
+            label:
+              en_US: Taiwan
+              ja_JP: Taiwan
+              pt_BR: Taiwan
+              zh_Hans: 台湾
+            value: taiwan
+          - icon: ''
+            label:
+              en_US: Tajikistan
+              ja_JP: Tajikistan
+              pt_BR: Tajikistan
+              zh_Hans: 塔吉克斯坦
+            value: tajikistan
+          - icon: ''
+            label:
+              en_US: Tanzania
+              ja_JP: Tanzania
+              pt_BR: Tanzania
+              zh_Hans: 坦桑尼亚
+            value: tanzania
+          - icon: ''
+            label:
+              en_US: Thailand
+              ja_JP: Thailand
+              pt_BR: Thailand
+              zh_Hans: 泰国
+            value: thailand
+          - icon: ''
+            label:
+              en_US: Togo
+              ja_JP: Togo
+              pt_BR: Togo
+              zh_Hans: 多哥
+            value: togo
+          - icon: ''
+            label:
+              en_US: Trinidad and Tobago
+              ja_JP: Trinidad and Tobago
+              pt_BR: Trinidad and Tobago
+              zh_Hans: 特立尼达和多巴哥
+            value: trinidad and tobago
+          - icon: ''
+            label:
+              en_US: Tunisia
+              ja_JP: Tunisia
+              pt_BR: Tunisia
+              zh_Hans: 突尼斯
+            value: tunisia
+          - icon: ''
+            label:
+              en_US: Turkey
+              ja_JP: Turkey
+              pt_BR: Turkey
+              zh_Hans: 土耳其
+            value: turkey
+          - icon: ''
+            label:
+              en_US: Turkmenistan
+              ja_JP: Turkmenistan
+              pt_BR: Turkmenistan
+              zh_Hans: 土库曼斯坦
+            value: turkmenistan
+          - icon: ''
+            label:
+              en_US: Uganda
+              ja_JP: Uganda
+              pt_BR: Uganda
+              zh_Hans: 乌干达
+            value: uganda
+          - icon: ''
+            label:
+              en_US: Ukraine
+              ja_JP: Ukraine
+              pt_BR: Ukraine
+              zh_Hans: 乌克兰
+            value: ukraine
+          - icon: ''
+            label:
+              en_US: United Arab Emirates
+              ja_JP: United Arab Emirates
+              pt_BR: United Arab Emirates
+              zh_Hans: 阿拉伯联合酋长国
+            value: united arab emirates
+          - icon: ''
+            label:
+              en_US: United Kingdom
+              ja_JP: United Kingdom
+              pt_BR: United Kingdom
+              zh_Hans: 英国
+            value: united kingdom
+          - icon: ''
+            label:
+              en_US: United States
+              ja_JP: United States
+              pt_BR: United States
+              zh_Hans: 美国
+            value: united states
+          - icon: ''
+            label:
+              en_US: Uruguay
+              ja_JP: Uruguay
+              pt_BR: Uruguay
+              zh_Hans: 乌拉圭
+            value: uruguay
+          - icon: ''
+            label:
+              en_US: Uzbekistan
+              ja_JP: Uzbekistan
+              pt_BR: Uzbekistan
+              zh_Hans: 乌兹别克斯坦
+            value: uzbekistan
+          - icon: ''
+            label:
+              en_US: Venezuela
+              ja_JP: Venezuela
+              pt_BR: Venezuela
+              zh_Hans: 委内瑞拉
+            value: venezuela
+          - icon: ''
+            label:
+              en_US: Vietnam
+              ja_JP: Vietnam
+              pt_BR: Vietnam
+              zh_Hans: 越南
+            value: vietnam
+          - icon: ''
+            label:
+              en_US: Yemen
+              ja_JP: Yemen
+              pt_BR: Yemen
+              zh_Hans: 也门
+            value: yemen
+          - icon: ''
+            label:
+              en_US: Zambia
+              ja_JP: Zambia
+              pt_BR: Zambia
+              zh_Hans: 赞比亚
+            value: zambia
+          - icon: ''
+            label:
+              en_US: Zimbabwe
+              ja_JP: Zimbabwe
+              pt_BR: Zimbabwe
+              zh_Hans: 津巴布韦
+            value: zimbabwe
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: A comma-separated list of domains to specifically include in the
+              search results.
+            ja_JP: A comma-separated list of domains to specifically include in the
+              search results.
+            pt_BR: A comma-separated list of domains to specifically include in the
+              search results.
+            zh_Hans: 要在搜索结果中特别包含的域的逗号分隔列表。
+          label:
+            en_US: Include Domains
+            ja_JP: Include Domains
+            pt_BR: Include Domains
+            zh_Hans: 包含域
+          llm_description: A comma-separated list of domains to specifically include
+            in the search results.
+          max: null
+          min: null
+          name: include_domains
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: A comma-separated list of domains to specifically exclude from
+              the search results.
+            ja_JP: A comma-separated list of domains to specifically exclude from
+              the search results.
+            pt_BR: A comma-separated list of domains to specifically exclude from
+              the search results.
+            zh_Hans: 要从搜索结果中特别排除的域的逗号分隔列表。
+          label:
+            en_US: Exclude Domains
+            ja_JP: Exclude Domains
+            pt_BR: Exclude Domains
+            zh_Hans: 排除域
+          llm_description: A comma-separated list of domains to specifically exclude
+            from the search results.
+          max: null
+          min: null
+          name: exclude_domains
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          auto_parameters: ''
+          chunks_per_source: ''
+          country: ''
+          days: ''
+          exclude_domains: ''
+          include_answer: ''
+          include_domains: ''
+          include_favicon: ''
+          include_image_descriptions: ''
+          include_images: ''
+          include_raw_content: ''
+          max_results: ''
+          query: ''
+          search_depth: ''
+          time_range: ''
+          topic: ''
+        provider_id: langgenius/tavily/tavily
+        provider_name: langgenius/tavily/tavily
+        provider_type: builtin
+        selected: false
+        title: Tavily Search
+        tool_configurations:
+          auto_parameters:
+            type: constant
+            value: false
+          chunks_per_source:
+            type: constant
+            value: 3
+          include_answer:
+            type: constant
+            value: false
+          include_favicon:
+            type: constant
+            value: false
+          include_image_descriptions:
+            type: constant
+            value: true
+          include_images:
+            type: constant
+            value: true
+          include_raw_content:
+            type: constant
+            value: false
+          max_results:
+            type: constant
+            value: 3
+        tool_description: 专为人工智能代理 (LLM) 构建的搜索引擎工具，可快速提供实时、准确和真实的结果。
+        tool_label: Tavily Search
+        tool_name: tavily_search
+        tool_node_version: '2'
+        tool_parameters:
+          country:
+            type: constant
+            value: china
+          days:
+            type: constant
+            value: 7
+          exclude_domains:
+            type: mixed
+            value: null
+          include_domains:
+            type: mixed
+            value: null
+          query:
+            type: mixed
+            value: '{{#1757409080658.text#}}'
+          search_depth:
+            type: constant
+            value: advanced
+          time_range:
+            type: constant
+            value: year
+          topic:
+            type: constant
+            value: general
+        type: tool
+      height: 272
+      id: '1757412434634'
+      position:
+        x: 1197.4308457768657
+        y: 189.13490728791027
+      positionAbsolute:
+        x: 1197.4308457768657
+        y: 189.13490728791027
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(information: str) -> dict:\n    \"\"\"\n    Parse Tavily\
+          \ Search results (Markdown format) into an array of strings.\n    \n   \
+          \ Args:\n        information (str): String containing Tavily results with\
+          \ format:\n                          '# Result X: [...]\\\\n**URL:** ...\\\
+          \\n**Relevance Score:** ...\\\\n**Content:** ...'\n    \n    Returns:\n\
+          \        dict: Dictionary with 'result' key containing an array of strings,\
+          \ each string\n              formatted as 'Result: ... | URL: ... | Relevance\
+          \ Score: ... | Content: ...'.\n    \"\"\"\n    import re\n    \n    # Initialize\
+          \ output list\n    results = []\n    \n    # Split input by '# Result X:'\
+          \ to separate multiple results\n    result_blocks = re.split(r'# Result\
+          \ \\d+:', information.strip())[1:]  # Skip first empty split\n    if not\
+          \ result_blocks:\n        return {\"result\": []}\n    \n    # Process each\
+          \ result block\n    for block in result_blocks:\n        # Split block by\
+          \ '---' to isolate main content\n        main_content = block.split('---')[0].strip()\n\
+          \        if not main_content:\n            continue\n        \n        #\
+          \ Initialize fields\n        result_entry = {\n            \"result\": \"\
+          \",\n            \"url\": \"\",\n            \"relevance_score\": 0.0,\n\
+          \            \"content\": \"\"\n        }\n        \n        # Extract fields\
+          \ using regex\n        # Extract result (text between [ and ])\n       \
+          \ result_match = re.search(r'\\[(.*?)\\]\\((.*?)\\)', main_content)\n  \
+          \      if result_match:\n            result_entry[\"result\"] = result_match.group(1).strip()\n\
+          \        \n        # Extract URL\n        url_match = re.search(r'\\*\\\
+          *URL:\\*\\*\\s*(https?://[^\\n]+)', main_content)\n        if url_match:\n\
+          \            result_entry[\"url\"] = url_match.group(1).strip()\n      \
+          \  \n        # Extract Relevance Score\n        score_match = re.search(r'\\\
+          *\\*Relevance Score:\\*\\*\\s*([\\d.]+)', main_content)\n        if score_match:\n\
+          \            try:\n                result_entry[\"relevance_score\"] = float(score_match.group(1))\n\
+          \            except ValueError:\n                result_entry[\"relevance_score\"\
+          ] = 0.0\n        \n        # Extract Content (everything after **Content:**\
+          \ until --- or end)\n        content_match = re.search(r'\\*\\*Content:\\\
+          *\\*\\s*(.*?)(?=\\n---|$)', main_content, re.DOTALL)\n        if content_match:\n\
+          \            result_entry[\"content\"] = content_match.group(1).strip()\n\
+          \        \n        # Format as string\n        if result_entry[\"result\"\
+          ] and result_entry[\"url\"]:\n            result_string = (\n          \
+          \      f\"Result: {result_entry['result']} | \"\n                f\"URL:\
+          \ {result_entry['url']} | \"\n                f\"Relevance Score: {result_entry['relevance_score']}\
+          \ | \"\n                f\"Content: {result_entry['content']}\"\n      \
+          \      )\n            results.append(result_string)\n    \n    return {\"\
+          result\": results}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: 信息汇总
+        type: code
+        variables:
+        - value_selector:
+          - '1757412434634'
+          - text
+          value_type: string
+          variable: information
+      height: 54
+      id: '1757412562672'
+      position:
+        x: 1553.6690199077166
+        y: 282
+      positionAbsolute:
+        x: 1553.6690199077166
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 253
+        is_parallel: false
+        iterator_input_type: array[string]
+        iterator_selector:
+        - '1757412562672'
+        - result
+        output_selector:
+        - '1757412882592'
+        - text
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1757412608508start
+        title: 迭代
+        type: iteration
+        width: 1558
+      height: 253
+      id: '1757412608508'
+      position:
+        x: -256.0888998720559
+        y: 497.2192355932907
+      positionAbsolute:
+        x: -256.0888998720559
+        y: 497.2192355932907
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 1558
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1757412608508start
+      parentId: '1757412608508'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: -232.0888998720559
+        y: 565.2192355932907
+      selectable: false
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        code: "\ndef main(item: str) -> dict:\n    \"\"\"\n    解析单个 Tavily 搜索结果字符串为结构化字段。\n\
+          \n    参数:\n        item (str): result 数组中的单个字符串，格式为\n                  \
+          \ 'Result: ... | URL: ... | Relevance Score: ... | Content: ...'\n\n   \
+          \ 返回:\n        dict: 包含 markdown_url、result、url、relevance_score 和 content\
+          \ 的字典。\n    \"\"\"\n    # 初始化字段\n    result = \"\"\n    url = \"\"\n   \
+          \ relevance_score = 0.0\n    content = \"\"\n    \n    # 按 ' | ' 分割字段\n\
+          \    fields = item.split(\" | \")\n    if len(fields) < 4:\n        return\
+          \ {\n            \"markdown_url\": \"\",\n            \"result\": result,\n\
+          \            \"url\": url,\n            \"relevance_score\": relevance_score,\n\
+          \            \"content\": content\n        }\n    \n    # 解析每个字段\n    for\
+          \ field in fields:\n        field = field.strip()\n        if field.startswith(\"\
+          Result:\"):\n            result = field.replace(\"Result:\", \"\").strip()\n\
+          \        elif field.startswith(\"URL:\"):\n            url = field.replace(\"\
+          URL:\", \"\").strip()\n        elif field.startswith(\"Relevance Score:\"\
+          ):\n            try:\n                relevance_score = float(field.replace(\"\
+          Relevance Score:\", \"\").strip())\n            except ValueError:\n   \
+          \             relevance_score = 0.0\n        elif field.startswith(\"Content:\"\
+          ):\n            content = field.replace(\"Content:\", \"\").strip()\n  \
+          \  \n    # 创建 Markdown URL\n    markdown_url = f\"[{result}]({url})\" if\
+          \ result and url else \"\"\n    \n    return {\n        \"markdown_url\"\
+          : markdown_url,\n        \"result\": result,\n        \"url\": url,\n  \
+          \      \"relevance_score\": relevance_score,\n        \"content\": content\n\
+          \    }"
+        code_language: python3
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1757412608508'
+        outputs:
+          content:
+            children: null
+            type: string
+          markdown_url:
+            children: null
+            type: string
+          relevance_score:
+            children: null
+            type: number
+          result:
+            children: null
+            type: string
+          url:
+            children: null
+            type: string
+        selected: false
+        title: 拆分
+        type: code
+        variables:
+        - value_selector:
+          - '1757412608508'
+          - item
+          value_type: string
+          variable: item
+      height: 54
+      id: '1757412622217'
+      parentId: '1757412608508'
+      position:
+        x: 102.0736185251472
+        y: 68
+      positionAbsolute:
+        x: -154.0152813469087
+        y: 565.2192355932907
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        authorization:
+          config:
+            api_key: 2835d883-3516-437d-854b-4994da9f136b
+            header: x-api-key
+            type: custom
+          type: api-key
+        body:
+          data:
+          - id: key-value-196
+            key: ''
+            type: text
+            value: "{\n    \"ids\": [\"{{#1757412622217.url#}}\"],\n    \"highlights\"\
+              : {\n      \"numSentences\": 6,\n      \"highlightsPerUrl\": 3\n   \
+              \ }\n}"
+          type: json
+        desc: ''
+        headers: 'accept:application/json
+
+          Content-Type:application/json'
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1757412608508'
+        method: POST
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: EXA搜索
+        type: http-request
+        url: https://api.exa.ai/contents
+        variables: []
+      height: 123
+      id: '1757412677444'
+      parentId: '1757412608508'
+      position:
+        x: 406.07361852514725
+        y: 65.27090721317336
+      positionAbsolute:
+        x: 149.98471865309136
+        y: 562.4901428064641
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        is_team_authorization: false
+        iteration_id: '1757412608508'
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: used for searching
+            ja_JP: used for searching
+            pt_BR: used for searching
+            zh_Hans: 用于搜索网页内容
+          label:
+            en_US: Query string
+            ja_JP: Query string
+            pt_BR: Query string
+            zh_Hans: 查询语句
+          llm_description: key words for searching
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Parameter defines the language to use for the Google search. It's
+              a two-letter language code. (e.g., en for English, es for Spanish, or
+              fr for French). Head to https://serpapi.com/google-languages for a full
+              list of supported Google languages.
+            ja_JP: Parameter defines the language to use for the Google search. It's
+              a two-letter language code. (e.g., en for English, es for Spanish, or
+              fr for French). Head to https://serpapi.com/google-languages for a full
+              list of supported Google languages.
+            pt_BR: Parameter defines the language to use for the Google search. It's
+              a two-letter language code. (e.g., en for English, es for Spanish, or
+              fr for French). Head to https://serpapi.com/google-languages for a full
+              list of supported Google languages.
+            zh_Hans: 此参数定义用于 Google 搜索的语言。它是一个两字母的语言代码。 (例如，en 代表英语，es 代表西班牙语，fr 代表法语)。请前往
+              https://serpapi.com/google-languages 查看完整的支持 Google 语言列表。
+          label:
+            en_US: Language
+            ja_JP: Language
+            pt_BR: Language
+            zh_Hans: 语言
+          llm_description: Language
+          max: null
+          min: null
+          name: hl
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Parameter defines the country to use for the Google search. It's
+              a two-letter country code. (e.g., us for the United States, uk for United
+              Kingdom, or fr for France). Head to the https://serpapi.com/google-countries
+              for a full list of supported Google countries.
+            ja_JP: Parameter defines the country to use for the Google search. It's
+              a two-letter country code. (e.g., us for the United States, uk for United
+              Kingdom, or fr for France). Head to the https://serpapi.com/google-countries
+              for a full list of supported Google countries.
+            pt_BR: Parameter defines the country to use for the Google search. It's
+              a two-letter country code. (e.g., us for the United States, uk for United
+              Kingdom, or fr for France). Head to the https://serpapi.com/google-countries
+              for a full list of supported Google countries.
+            zh_Hans: 此参数定义用于 Google 搜索的国家。它是一个两字母的国家代码。 (例如，us 代表美国，uk 代表英国，fr 代表法国)。请前往
+              https://serpapi.com/google-countries 查看完整的支持 Google 国家列表。
+          label:
+            en_US: Country
+            ja_JP: Country
+            pt_BR: Country
+            zh_Hans: 国家
+          llm_description: Country
+          max: null
+          min: null
+          name: gl
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Parameter defines from where you want the search to originate.
+              If several locations match the location requested, we'll pick the most
+              popular one. Head to the /locations.json API if you need more precise
+              control. The location and uule parameters can't be used together. It
+              is recommended to specify location at the city level in order to simulate
+              a real user’s search. If location is omitted, the search may take on
+              the location of the proxy.
+            ja_JP: Parameter defines from where you want the search to originate.
+              If several locations match the location requested, we'll pick the most
+              popular one. Head to the /locations.json API if you need more precise
+              control. The location and uule parameters can't be used together. It
+              is recommended to specify location at the city level in order to simulate
+              a real user’s search. If location is omitted, the search may take on
+              the location of the proxy.
+            pt_BR: Parameter defines from where you want the search to originate.
+              If several locations match the location requested, we'll pick the most
+              popular one. Head to the /locations.json API if you need more precise
+              control. The location and uule parameters can't be used together. It
+              is recommended to specify location at the city level in order to simulate
+              a real user’s search. If location is omitted, the search may take on
+              the location of the proxy.
+            zh_Hans: 此参数定义搜索的位置。如果有多个位置与请求的位置匹配，我们将选择最受欢迎的一个。如果需要更精确的控制，请前往 /locations.json
+              API。location 和 uule 参数不能同时使用。建议在城市级别指定位置，以模拟真实用户的搜索。如果省略位置，则搜索可能会采用代理的位置。
+          label:
+            en_US: Location
+            ja_JP: Location
+            pt_BR: Location
+            zh_Hans: 位置
+          llm_description: Location
+          max: null
+          min: null
+          name: location
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 3
+          form: form
+          human_description:
+            en_US: The max results.
+            ja_JP: The max results.
+            pt_BR: The max results.
+            zh_Hans: 最大结果数量
+          label:
+            en_US: Max results
+            ja_JP: Max results
+            pt_BR: Max results
+            zh_Hans: 最大结果数量
+          llm_description: ''
+          max: null
+          min: null
+          name: max_results
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: m
+          form: form
+          human_description:
+            en_US: Parameter defines the size of images.
+            ja_JP: Parameter defines the size of images.
+            pt_BR: Parameter defines the size of images.
+            zh_Hans: 设置图片尺寸
+          label:
+            en_US: Parameter defines the size of images.
+            ja_JP: Parameter defines the size of images.
+            pt_BR: Parameter defines the size of images.
+            zh_Hans: Parameter defines the size of images.
+          llm_description: Parameter defines the size of images.
+          max: null
+          min: null
+          name: imgsz
+          options:
+          - icon: ''
+            label:
+              en_US: Large
+              ja_JP: Large
+              pt_BR: Large
+              zh_Hans: Large
+            value: l
+          - icon: ''
+            label:
+              en_US: Medium
+              ja_JP: Medium
+              pt_BR: Medium
+              zh_Hans: Medium
+            value: m
+          - icon: ''
+            label:
+              en_US: Icon
+              ja_JP: Icon
+              pt_BR: Icon
+              zh_Hans: Icon
+            value: i
+          - icon: ''
+            label:
+              en_US: Larger than 640x480
+              ja_JP: Larger than 640x480
+              pt_BR: Larger than 640x480
+              zh_Hans: Larger than 640x480
+            value: vga
+          - icon: ''
+            label:
+              en_US: Larger than 800x600
+              ja_JP: Larger than 800x600
+              pt_BR: Larger than 800x600
+              zh_Hans: Larger than 800x600
+            value: svga
+          - icon: ''
+            label:
+              en_US: Larger than 1024x768
+              ja_JP: Larger than 1024x768
+              pt_BR: Larger than 1024x768
+              zh_Hans: Larger than 1024x768
+            value: xga
+          - icon: ''
+            label:
+              en_US: Larger than 2 MP
+              ja_JP: Larger than 2 MP
+              pt_BR: Larger than 2 MP
+              zh_Hans: Larger than 2 MP
+            value: 2mp
+          - icon: ''
+            label:
+              en_US: Larger than 4 MP
+              ja_JP: Larger than 4 MP
+              pt_BR: Larger than 4 MP
+              zh_Hans: Larger than 4 MP
+            value: 4mp
+          - icon: ''
+            label:
+              en_US: Larger than 6 MP
+              ja_JP: Larger than 6 MP
+              pt_BR: Larger than 6 MP
+              zh_Hans: Larger than 6 MP
+            value: 6mp
+          - icon: ''
+            label:
+              en_US: Larger than 8 MP
+              ja_JP: Larger than 8 MP
+              pt_BR: Larger than 8 MP
+              zh_Hans: Larger than 8 MP
+            value: 8mp
+          - icon: ''
+            label:
+              en_US: Larger than 10 MP
+              ja_JP: Larger than 10 MP
+              pt_BR: Larger than 10 MP
+              zh_Hans: Larger than 10 MP
+            value: 10mp
+          - icon: ''
+            label:
+              en_US: Larger than 12 MP
+              ja_JP: Larger than 12 MP
+              pt_BR: Larger than 12 MP
+              zh_Hans: Larger than 12 MP
+            value: 12mp
+          - icon: ''
+            label:
+              en_US: Larger than 15 MP
+              ja_JP: Larger than 15 MP
+              pt_BR: Larger than 15 MP
+              zh_Hans: Larger than 15 MP
+            value: 15mp
+          - icon: ''
+            label:
+              en_US: Larger than 20 MP
+              ja_JP: Larger than 20 MP
+              pt_BR: Larger than 20 MP
+              zh_Hans: Larger than 20 MP
+            value: 20mp
+          - icon: ''
+            label:
+              en_US: Larger than 40 MP
+              ja_JP: Larger than 40 MP
+              pt_BR: Larger than 40 MP
+              zh_Hans: Larger than 40 MP
+            value: 40mp
+          - icon: ''
+            label:
+              en_US: Larger than 70 MP
+              ja_JP: Larger than 70 MP
+              pt_BR: Larger than 70 MP
+              zh_Hans: Larger than 70 MP
+            value: 70mp
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        params:
+          gl: ''
+          hl: ''
+          imgsz: ''
+          location: ''
+          max_results: ''
+          query: ''
+        provider_id: langgenius/google/google
+        provider_name: langgenius/google/google
+        provider_type: builtin
+        selected: false
+        title: 谷歌图片搜索
+        tool_configurations:
+          imgsz:
+            type: constant
+            value: m
+          max_results:
+            type: constant
+            value: 3
+        tool_description: 一个用于执行 Google 图片搜索并提取图片的工具。输入应该是一个搜索查询。
+        tool_label: 谷歌图片搜索
+        tool_name: google_image_search
+        tool_node_version: '2'
+        tool_parameters:
+          gl:
+            type: mixed
+            value: ''
+          hl:
+            type: mixed
+            value: zh-cn
+          location:
+            type: mixed
+            value: null
+          query:
+            type: mixed
+            value: '{{#1757412622217.url#}}'
+        type: tool
+      height: 116
+      id: '1757412846858'
+      parentId: '1757412608508'
+      position:
+        x: 737.7706312268743
+        y: 65.27090721317336
+      positionAbsolute:
+        x: 481.68173135481845
+        y: 562.4901428064641
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1757412677444'
+          - body
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1757412608508'
+        model:
+          completion_params:
+            temperature: 0.4
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 4a78e9c6-a5e9-481c-a4b4-172908df9e56
+          role: system
+          text: 根据用户提问{{#1757409080658.text#}}以及谷歌搜索相关网址{{#1757483681140.text#}}以创建摘要，不需要多余的解释，但不能遗漏任何关键点。不要添加任何新内容；严格遵循原文意图。同时放入对应的图片链接在合适的位置
+        selected: false
+        title: 深度总结
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1757412882592'
+      parentId: '1757412608508'
+      position:
+        x: 1088.6600452422383
+        y: 66.57398462223887
+      positionAbsolute:
+        x: 832.5711453701824
+        y: 563.7932202155296
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1757412608508'
+          - output
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+          mode: chat
+          name: deepseek-reasoner
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: a02abbd6-c463-4d45-abbe-4361e09cb0df
+          role: system
+          text: '你是一位资深的网络安全领域产品专家，需为领导提交一份关于单个安全产品的调研报告，目标是评估产品以支持决策。基于以下用户提问{{#1757409080658.text#}}和搜集的信息{{#1757412562672.result#}}，结合分页总结{{#1757412608508.output#}}（里面有图片链接，要求补充图片链接放入合适的位置，尽量放置图片丰富内容，使用标准
+            Markdown 语法 ![描述](图片URL)）。生成一份全页面、数字量化、结构清晰的 Markdown 报告，包含执行摘要、产品基础信息、核心能力、厂商背景、RSAC
+            创新映射、市场表现、重要里程碑、核心技术架构深度解析、深度技术分析、商业模式、竞争对比、未来发展预测、决策建议、附录等内容。严格验证输入信息与需求的匹配度，若不一致，补充必要数据（如
+            RSAC 2025 趋势、行业报告）。报告需专业、数据驱动，适合汇报，长度 7000-8000 字符。
+
+            **要求**：
+
+            1. **产品选择**：基于用户提问指定产品，若未指定，使用默认产品。若输入信息不足，补充 RSAC 2025 趋势（如 SentinelOne
+            Purple AI、Cyera Omni DLP）或行业数据（如 Gartner、Forrester）。
+
+            2. **结构**：严格按照以下模板结构生成，包括所有标题和子标题，使用列表、表格等格式，确保全页面布局清晰。
+
+            3. **量化数据**：引用输入信息（如产品规格、收购金额），补充数据：市场规模（约 45 亿美元，2025 年）、增长率（18.5%）、客户评分（如
+            4.8/5）。
+
+            4. **验证匹配度**：检查输入信息是否与产品相关，若不一致，优先使用相关信息，注明来源。
+
+            5. **图片要求**：从分页总结或搜集信息中提取图片链接，放入合适位置（如产品概述、核心能力），使用 ![描述](图片URL) 格式；若无图片，补充默认图片链接或省略。
+
+            6. **格式**：Markdown 格式，标题分级清晰，包含表格、列表、时间线等；控制长度 7000-8000 字符，数据驱动，简洁专业；同时注意使用
+            markdown_url 作为参考链接！！！'
+        - id: bcfa41bd-37f5-4948-840f-7050f147d464
+          role: user
+          text: '{{#1757409080658.text#}}'
+        - id: b0cd5562-bef4-40ab-9c1e-c7931e043145
+          role: assistant
+          text: "参考文档模版，重点注意图片放置以及markdown_url 作为参考链接！！！如果有合适的图片可以多放一些！！！：\n网络安全产品调研报告\n\
+            [产品名称] - 深度调研分析\n\U0001F50D 执行摘要\n调研概览\n调研产品: [产品全称]\n厂商: [公司名称]\n调研时间:\
+            \ [开始日期] - [结束日期]\n调研范围: [调研的产品版本/模块]\n调研目的: [明确调研目标，如技术选型、竞品分析、市场机会评估等]\n\
+            核心结论\n推荐指数: ⭐⭐⭐⭐⭐ (1-5星)\n适用场景: [简要描述最适合的应用场景]\n关键优势: [3-5个核心优势点]\n主要风险:\
+            \ [潜在的采购或使用风险]\n\U0001F4CA 产品基础信息\n产品定位\n产品类别: [如SIEM、EDR、WAF、零信任等]\n\
+            目标市场: [企业规模、行业垂直领域]\n部署模式: \n☐ 本地部署 ☐ 云端SaaS ☐ 混合部署\n☐ 私有云 ☐ 公有云多租户 ☐\
+            \ 专有云\n技术架构\n核心技术栈: [主要技术框架和语言]\n架构模式: [分布式/集中式/混合架构]\n数据处理能力: \n日志处理量:\
+            \ [X TB/天]\n并发连接数: [X万/秒]\n响应时间: [X毫秒]\n扩展性: [水平扩展能力描述]\n\U0001F4A1 核心能力与功能亮点\n\
+            主要功能模块\n模块1: [功能名称]\n功能描述: [详细功能说明]\n技术特点: [技术实现亮点]\n性能指标: \n准确率: [X%]\n\
+            处理速度: [X万事件/秒]\n误报率: [X%]\n竞争优势: [相比同类产品的优势]\n模块2: [功能名称]\n功能描述: [详细功能说明]\n\
+            技术特点: [技术实现亮点]\n性能指标: [量化数据]\n竞争优势: [差异化优势]\n模块3: [功能名称]\n功能描述: [详细功能说明]\n\
+            技术特点: [技术实现亮点]\n性能指标: [量化数据]\n竞争优势: [差异化优势]\n创新功能亮点\n[创新点1]: [详细描述及其价值]\n\
+            [创新点2]: [详细描述及其价值]\n[创新点3]: [详细描述及其价值]\n人工智能/机器学习能力\nAI技术应用: [具体AI技术栈]\n\
+            智能化水平: [自动化程度描述]\n学习能力: [自适应和学习机制]\n算法优势: [核心算法特点]\n\U0001F3E2 厂商背景分析\n\
+            公司概况\n成立时间: [X年X月]\n总部位置: [城市，国家]\n员工规模: [X人]\n融资情况: [最新轮次，金额，投资方]\n上市状态:\
+            \ ☐ 已上市 ☐ 准备IPO ☐ 私有公司\n年营收: [X亿美元/人民币]\n产品发布节奏\n历年产品发布时间线\n2024年: [产品版本]\
+            \ - [主要更新内容]\n2023年: [产品版本] - [主要更新内容]\n2022年: [产品版本] - [主要更新内容]\n2021年:\
+            \ [产品版本] - [主要更新内容]\n产品迭代特点\n发布频率: [X个月/次大版本更新]\n更新策略: [功能驱动/市场驱动/技术驱动]\n\
+            版本生命周期: [支持周期X年]\n产品线布局\n核心产品: [主打产品列表]\n产品矩阵: [产品间的关系和定位]\n技术栈统一性: [产品间技术一致性分析]\n\
+            \U0001F31F RSAC创新产品映射\nRSAC展示历史\n2024年: [参展产品及获奖情况]\n2023年: [参展产品及获奖情况]\n\
+            2022年: [参展产品及获奖情况]\n创新产品关联度\nRSAC创新类别相关产品功能创新程度市场影响\n[创新类别1]\n[对应功能]\n\
+            [1-5星评级]\n[影响描述]\n[创新类别2]\n[对应功能]\n[1-5星评级]\n[影响描述]\n[创新类别3]\n[对应功能]\n\
+            [1-5星评级]\n[影响描述]\n行业认可度\n获奖记录: [重要奖项列表]\n分析师报告: [Gartner、Forrester等评级]\n\
+            专利技术: [核心专利数量及重要性]\n\U0001F4C8 市场表现与反馈\n市场数据\n市场份额: [在细分领域的份额X%]\n客户数量:\
+            \ [总客户数X家]\n企业级客户: [世界500强客户数X家]\n客户留存率: [X%]\n年增长率: [X%]\n客户反馈分析\n正面反馈\
+            \ (★★★★★)\n易用性: [客户评价摘要]\n性能表现: [客户评价摘要]\n技术支持: [客户评价摘要]\nROI回报: [量化数据]\n\
+            负面反馈 (⚠️)\n产品缺陷: [主要问题点]\n集成难度: [技术挑战]\n定价策略: [价格竞争力问题]\n服务质量: [服务体验问题]\n\
+            用户满意度\n整体满意度: [X分/5分]\n推荐指数: [NPS得分X]\n续约率: [X%]\n\U0001F3C6 重要里程碑\n技术里程碑\n\
+            [时间]: [重要技术突破或产品发布]\n[时间]: [关键技术升级或创新]\n[时间]: [重要合作伙伴关系建立]\n商业里程碑\n[时间]:\
+            \ [重要客户签约]\n[时间]: [市场份额突破]\n[时间]: [营收突破]\n行业里程碑\n[时间]: [行业标准制定参与]\n[时间]:\
+            \ [重要行业奖项获得]\n[时间]: [监管合规认证获得]\n\U0001F3D7️ 核心技术架构深度解析\n技术架构全景图\n┌─────────────────────────────────────────────────────────┐\n\
+            │                   用户层 (User Layer)                    │\n├─────────────────────────────────────────────────────────┤\n\
+            │                   应用层 (Application Layer)              │\n├─────────────────────────────────────────────────────────┤\n\
+            │                   服务层 (Service Layer)                 │\n├─────────────────────────────────────────────────────────┤\n\
+            │                   数据层 (Data Layer)                    │\n├─────────────────────────────────────────────────────────┤\n\
+            │                 基础设施层 (Infrastructure Layer)          │\n└─────────────────────────────────────────────────────────┘\n\
+            核心技术栈剖析\n1. 数据处理引擎架构\n技术实现:\n引擎类型: [流处理引擎/批处理引擎/混合处理]\n核心框架: [如Apache\
+            \ Kafka/Apache Storm/自研引擎]\n内存管理: [内存池技术/缓存策略/垃圾回收机制]\n并发模型: [Actor模型/生产者消费者/事件驱动]\n\
+            架构特点:\n可扩展性: 支持[X]个节点的水平扩展\n容错机制: [副本策略/故障转移/数据一致性保证]\n性能优化: [零拷贝技术/批量处理/异步IO]\n\
+            2. 存储架构设计\n存储层次:\n热数据存储: [内存数据库/SSD存储] - 存储[X天]数据\n温数据存储: [分布式文件系统] -\
+            \ 存储[X个月]数据  \n冷数据存储: [对象存储/磁带库] - 长期归档\n数据分片策略:\n分片算法: [一致性哈希/范围分片/哈希分片]\n\
+            副本数量: [X个副本]，跨[X个]可用区\n压缩率: 数据压缩比达到[X:1]\n3. 网络通信架构\n通信协议:\n内部通信: [gRPC/MessagePack/自定义协议]\n\
+            外部接口: [RESTful API/GraphQL/WebSocket]\n安全传输: [TLS 1.3/端到端加密/证书管理]\n负载均衡:\n\
+            算法: [轮询/加权轮询/最少连接/一致性哈希]\n健康检查: [心跳机制/超时检测/熔断器]\n关键技术创新点\n创新点1: [技术名称]\n\
+            技术原理:\n[详细描述技术实现原理，包括算法逻辑、数据结构等]\n创新价值:\n性能提升: 相比传统方案提升[X%]\n资源优化: 减少[X%]的CPU/内存使用\n\
+            扩展能力: 支持[X倍]的业务增长\n技术对比:\n技术指标传统方案创新方案提升幅度\n处理速度\n[X ops/sec]\n[Y ops/sec]\n\
+            [Z%]\n内存占用\n[X GB]\n[Y GB]\n[-Z%]\n扩展性\n[X nodes]\n[Y nodes]\n[Z倍]\n创新点2:\
+            \ [技术名称]\n实现机制:\n[描述技术实现的具体机制和流程]\n应用场景:\n场景A: [具体应用描述]\n场景B: [具体应用描述]\n\
+            场景C: [具体应用描述]\n技术架构优势分析\n1. 高可用性设计\n系统可用性: 达到[99.99%]的SLA保证\n故障恢复: [X秒]内完成故障自愈\n\
+            数据一致性: 采用[强一致性/最终一致性]模型\n容灾能力: 支持[同城/异地]多活部署\n2. 安全架构保障\n多层安全防护:\n应用安全层:\
+            \ WAF + 业务逻辑安全\n  ↓\n网络安全层: 防火墙 + IDS/IPS + VPN\n  ↓  \n系统安全层: 访问控制 +\
+            \ 审计日志\n  ↓\n数据安全层: 加密存储 + 权限管理\n安全机制:\n身份认证: [多因子认证/SSO/零信任]\n权限控制: [RBAC/ABAC/细粒度权限]\n\
+            数据保护: [字段级加密/脱敏/水印]\n合规认证: [SOC2/ISO27001/等保三级]\n3. 智能化能力\nAI/ML集成架构:\n\
+            模型训练: [在线学习/离线训练/联邦学习]\n特征工程: [自动特征提取/特征选择/降维]\n模型部署: [模型热更新/A/B测试/灰度发布]\n\
+            效果评估: [实时监控/模型漂移检测]\n\U0001F52C 深度技术分析\n技术优势\n[技术点1]: [详细技术分析]\n[技术点2]:\
+            \ [详细技术分析]\n[技术点3]: [详细技术分析]\n技术局限性\n[局限点1]: [分析及影响]\n[局限点2]: [分析及影响]\n\
+            [局限点3]: [分析及影响]\n技术演进路线图\n短期(6-12个月): [技术发展计划]\n中期(1-2年): [技术发展计划]\n长期(3-5年):\
+            \ [技术发展计划]\n\U0001F4B0 商业模式与定价\n定价策略\n许可模式: ☐ 永久许可 ☐ 订阅模式 ☐ 使用量计费\n定价区间:\
+            \ [价格范围]\n计费单位: [按用户/设备/数据量等]\n成本分析\n初期投入: [部署和实施成本]\n年度运营: [年度许可和维护费用]\n\
+            隐性成本: [培训、集成、定制化成本]\nROI分析: [预期回报周期]\n商业优势\n盈利模式: [收入结构分析]\n客户粘性: [锁定机制分析]\n\
+            扩展性: [追加销售机会]\n\U0001F3AF 竞争对比分析\n主要竞品对比\n对比维度调研产品竞品A竞品B竞品C\n核心功能\n[评分1-10]\n\
+            [评分]\n[评分]\n[评分]\n性能表现\n[评分1-10]\n[评分]\n[评分]\n[评分]\n易用性\n[评分1-10]\n[评分]\n\
+            [评分]\n[评分]\n价格竞争力\n[评分1-10]\n[评分]\n[评分]\n[评分]\n技术创新\n[评分1-10]\n[评分]\n\
+            [评分]\n[评分]\n市场地位\n[评分1-10]\n[评分]\n[评分]\n[评分]\n差异化优势\n[优势点1]: [详细说明]\n\
+            [优势点2]: [详细说明]\n[优势点3]: [详细说明]\n竞争劣势\n[劣势点1]: [详细说明及建议]\n[劣势点2]: [详细说明及建议]\n\
+            \U0001F52E 未来发展预测\n技术发展趋势\n人工智能深化: [AI技术演进方向]\n云原生转型: [云化程度预测]\n自动化程度:\
+            \ [自动化发展路径]\n市场机会\n市场规模预测: [未来3-5年市场规模]\n应用场景扩展: [新兴应用领域]\n技术替代风险: [被新技术替代的可能性]\n\
+            投资价值评估\n技术投资价值: [1-5星评级]\n商业投资价值: [1-5星评级]\n战略投资价值: [1-5星评级]\n✅ 决策建议\n\
+            采购建议\n是否推荐: ☐ 强烈推荐 ☐ 推荐 ☐ 谨慎考虑 ☐ 不推荐\n适用场景: [最佳应用场景描述]\n实施条件: [成功实施的前置条件]\n\
+            风险控制\n技术风险: [识别的技术风险及缓解措施]\n商业风险: [识别的商业风险及缓解措施]\n实施风险: [识别的实施风险及缓解措施]\n\
+            行动计划\n短期行动: [接下来3个月的行动计划]\n中期规划: [6-12个月的规划]\n长期战略: [1-3年的战略考虑]\n\U0001F4CB\
+            \ 附录\nA. 详细功能清单\n[产品功能的详细列表和说明]\nB. 技术规格参数\n[详细的技术参数和性能指标]\nC. 客户案例研究\n\
+            [典型客户的实施案例分析]\nD. 第三方评测报告\n[权威机构的测试报告摘要]\nE. 调研方法说明\n[调研过程、数据来源、分析方法说明]\n\
+            报告编写: [调研人员]  \n审核: [审核人员]  \n日期: [完成日期]  \n版本: [版本号]\n"
+        selected: false
+        title: 报告汇总
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1757412955421'
+      position:
+        x: 1560.0774445357179
+        y: 497.2192355932907
+      positionAbsolute:
+        x: 1560.0774445357179
+        y: 497.2192355932907
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1757412955421'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 结束 2
+        type: end
+      height: 90
+      id: '1757412965263'
+      position:
+        x: 1560.0774445357179
+        y: 656.4119242718753
+      positionAbsolute:
+        x: 1560.0774445357179
+        y: 656.4119242718753
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: used for searching
+            ja_JP: used for searching
+            pt_BR: used for searching
+            zh_Hans: 用于搜索网页内容
+          label:
+            en_US: Query string
+            ja_JP: Query string
+            pt_BR: Query string
+            zh_Hans: 查询语句
+          llm_description: key words for searching
+          max: null
+          min: null
+          name: query
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Parameter defines the language to use for the Google search. It's
+              a two-letter language code. (e.g., en for English, es for Spanish, or
+              fr for French). Head to https://serpapi.com/google-languages for a full
+              list of supported Google languages.
+            ja_JP: Parameter defines the language to use for the Google search. It's
+              a two-letter language code. (e.g., en for English, es for Spanish, or
+              fr for French). Head to https://serpapi.com/google-languages for a full
+              list of supported Google languages.
+            pt_BR: Parameter defines the language to use for the Google search. It's
+              a two-letter language code. (e.g., en for English, es for Spanish, or
+              fr for French). Head to https://serpapi.com/google-languages for a full
+              list of supported Google languages.
+            zh_Hans: 此参数定义用于 Google 搜索的语言。它是一个两字母的语言代码。 (例如，en 代表英语，es 代表西班牙语，fr 代表法语)。请前往
+              https://serpapi.com/google-languages 查看完整的支持 Google 语言列表。
+          label:
+            en_US: Language
+            ja_JP: Language
+            pt_BR: Language
+            zh_Hans: 语言
+          llm_description: Language
+          max: null
+          min: null
+          name: hl
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Parameter defines the country to use for the Google search. It's
+              a two-letter country code. (e.g., us for the United States, uk for United
+              Kingdom, or fr for France). Head to the https://serpapi.com/google-countries
+              for a full list of supported Google countries.
+            ja_JP: Parameter defines the country to use for the Google search. It's
+              a two-letter country code. (e.g., us for the United States, uk for United
+              Kingdom, or fr for France). Head to the https://serpapi.com/google-countries
+              for a full list of supported Google countries.
+            pt_BR: Parameter defines the country to use for the Google search. It's
+              a two-letter country code. (e.g., us for the United States, uk for United
+              Kingdom, or fr for France). Head to the https://serpapi.com/google-countries
+              for a full list of supported Google countries.
+            zh_Hans: 此参数定义用于 Google 搜索的国家。它是一个两字母的国家代码。 (例如，us 代表美国，uk 代表英国，fr 代表法国)。请前往
+              https://serpapi.com/google-countries 查看完整的支持 Google 国家列表。
+          label:
+            en_US: Country
+            ja_JP: Country
+            pt_BR: Country
+            zh_Hans: 国家
+          llm_description: Country
+          max: null
+          min: null
+          name: gl
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Parameter defines from where you want the search to originate.
+              If several locations match the location requested, we'll pick the most
+              popular one. Head to the /locations.json API if you need more precise
+              control. The location and uule parameters can't be used together. It
+              is recommended to specify location at the city level in order to simulate
+              a real user’s search. If location is omitted, the search may take on
+              the location of the proxy.
+            ja_JP: Parameter defines from where you want the search to originate.
+              If several locations match the location requested, we'll pick the most
+              popular one. Head to the /locations.json API if you need more precise
+              control. The location and uule parameters can't be used together. It
+              is recommended to specify location at the city level in order to simulate
+              a real user’s search. If location is omitted, the search may take on
+              the location of the proxy.
+            pt_BR: Parameter defines from where you want the search to originate.
+              If several locations match the location requested, we'll pick the most
+              popular one. Head to the /locations.json API if you need more precise
+              control. The location and uule parameters can't be used together. It
+              is recommended to specify location at the city level in order to simulate
+              a real user’s search. If location is omitted, the search may take on
+              the location of the proxy.
+            zh_Hans: 此参数定义搜索的位置。如果有多个位置与请求的位置匹配，我们将选择最受欢迎的一个。如果需要更精确的控制，请前往 /locations.json
+              API。location 和 uule 参数不能同时使用。建议在城市级别指定位置，以模拟真实用户的搜索。如果省略位置，则搜索可能会采用代理的位置。
+          label:
+            en_US: Location
+            ja_JP: Location
+            pt_BR: Location
+            zh_Hans: 位置
+          llm_description: Location
+          max: null
+          min: null
+          name: location
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          gl: ''
+          hl: ''
+          location: ''
+          query: ''
+        provider_id: langgenius/google/google
+        provider_name: langgenius/google/google
+        provider_type: builtin
+        selected: false
+        title: 谷歌搜索
+        tool_configurations: {}
+        tool_description: 一个用于执行 Google SERP 搜索并提取片段和网页的工具。输入应该是一个搜索查询。
+        tool_label: 谷歌搜索
+        tool_name: google_search
+        tool_node_version: '2'
+        tool_parameters:
+          gl:
+            type: mixed
+            value: cn
+          hl:
+            type: mixed
+            value: zh-cn
+          location:
+            type: mixed
+            value: null
+          query:
+            type: mixed
+            value: '{{#1757409080658.text#}}'
+        type: tool
+      height: 54
+      id: '1757483681140'
+      position:
+        x: 581.6909995544772
+        y: 282
+      positionAbsolute:
+        x: 581.6909995544772
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 2f2a19a4-3c29-4bea-a658-89ccfafa4399
+          role: system
+          text: '你是网络安全产品专家，任务是基于 Google 搜索返回的 URL 和信息{{#1757483681140.text#}}以及用户的提问{{#1757409080658.text#}}，生成一个小于
+            400 字符的“完善后提问”句子，供 Tavily 搜索使用。筛选 Google 结果，优先保留官方文档（如 `sangfor.com.cn/document`）、官方产品网址（如
+            `support.sangfor.com.cn`）和相关技术博客（如 `bbs.sangfor.com.cn`），聚焦 2024年9月至2025年9月，包含图片和视频需求，剩余搜索交由
+            Tavily 处理。
+
+            处理步骤（内部思考，不输出）：
+
+            1. 提取 Google 结果中的官方文档、产品和技术博客 URL。
+
+            2. 构建提问，整合筛选信息和时间范围。
+
+            3. 控制字符数在 400 以内。
+
+            输出格式（案例非实际上）：
+
+            ```
+
+            请提供{{#1757409080658.text#}}产品官方文档、产品信息和技术博客，含图片和视频，时间 2024-09 至 2026-09。
+
+            ```'
+        selected: false
+        title: 深化
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1757484202816'
+      position:
+        x: 891.1349072879102
+        y: 282
+      positionAbsolute:
+        x: 891.1349072879102
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 285.68165479947425
+      y: 62.7593657028244
+      zoom: 0.6231475841339225

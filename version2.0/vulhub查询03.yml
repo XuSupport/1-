@@ -1,0 +1,303 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: vulhub查询03
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: c4e9baac-aeda-4d8e-b0dc-63127a2c1503
+    name: API_KEY
+    selector:
+    - env
+    - API_KEY
+    value: e62a9b0d239d3f6fe2f203c5bede453c
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1753066202455-source-1753066204386-target
+      source: '1753066202455'
+      sourceHandle: source
+      target: '1753066204386'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1753066204386-source-1753066242086-target
+      source: '1753066204386'
+      sourceHandle: source
+      target: '1753066242086'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1753066242086-source-1753066670827-target
+      source: '1753066242086'
+      sourceHandle: source
+      target: '1753066670827'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1753066670827-source-1753066281243-target
+      source: '1753066670827'
+      sourceHandle: source
+      target: '1753066281243'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: input
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: input
+      height: 90
+      id: '1753066202455'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1753066202455'
+          - input
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: f1a9dd96-554e-40ca-9910-d9bf2240d31f
+          role: system
+          text: "你是一个专业的漏洞分析助手。你的任务是分析用户的输入{{#1753066202455.input#}}，识别其中包含的CVE或漏洞编号（例如“CVE-XXXX-XXXXX”或“CNVD-YYYY-YYYYY”格式），并仅输出识别出的精确漏洞名称。如果输入中包含多个漏洞名称，逐行输出所有识别出的名称。如果没有识别出漏洞名称，则返回“无漏洞名称”。\n\
+            \n示例：\n- 输入：请帮我查找CVE-2021-43008的漏洞环境\n  输出：CVE-2021-43008\n\n- 输入：我想了解CVE-2022-12345和CNVD-2023-67890\n\
+            \  输出：CVE-2022-12345\n  CNVD-2023-67890\n\n- 输入：你好，我想学习Python\n  输出：无漏洞名称"
+        selected: false
+        title: vulhub对比
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1753066204386'
+      position:
+        x: 386
+        y: 282
+      positionAbsolute:
+        x: 386
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import requests\n\ndef main(input: str, API_KEY: str) -> dict:\n  \
+          \  # MCP服务地址，需替换为实际远程服务器地址\n    mcp_url = \"http://172.17.0.1:8005/search_cve\"\
+          \n    \n    # 添加API密钥到请求头\n    headers = {}\n    if API_KEY:\n        headers[\"\
+          X-API-Key\"] = API_KEY\n\n    try:\n        # 发送POST请求到MCP服务，传递输入的CVE，添加认证头\n\
+          \        response = requests.post(mcp_url, json={\"cve\": input.strip()},\
+          \ headers=headers)\n        response.raise_for_status()  # 抛出异常如果请求失败\n\
+          \        \n        result = response.json()\n        if result[\"status\"\
+          ] == \"success\":\n            return {\"result\": f\"找到CVE路径: {result['path']}\"\
+          }\n        else:\n            return {\"result\": f\"错误: {result['message']}\"\
+          }\n    \n    except requests.exceptions.RequestException as e:\n       \
+          \ return {\"result\": f\"请求MCP服务失败: {str(e)}\"}"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 搜寻cve
+        type: code
+        variables:
+        - value_selector:
+          - '1753066204386'
+          - text
+          value_type: string
+          variable: input
+        - value_selector:
+          - env
+          - API_KEY
+          value_type: string
+          variable: API_KEY
+      height: 54
+      id: '1753066242086'
+      position:
+        x: 690
+        y: 282
+      positionAbsolute:
+        x: 690
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1753066670827'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1753066281243'
+      position:
+        x: 1441
+        y: 282
+      positionAbsolute:
+        x: 1441
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import requests\nimport re\n\ndef main(input: str, API_KEY: str) ->\
+          \ dict:\n    # 提取CVE路径\n    path_match = re.search(r\"找到CVE路径: (.+)\", input)\n\
+          \    if not path_match:\n        return {\"result\": \"错误: 无法提取CVE路径\"}\n\
+          \n    cve_path = path_match.group(1)\n    cve_name = cve_path.split(\"/\"\
+          )[-1]  # 提取CVE编号，如CVE-2021-43008\n\n    # MCP服务地址，需替换为实际远程服务器地址\n    mcp_url\
+          \ = \"http://172.17.0.1:8005/run_docker\"\n    \n    # 添加API密钥到请求头\n   \
+          \ headers = {}\n    if API_KEY:\n        headers[\"X-API-Key\"] = API_KEY\n\
+          \n    try:\n        # 发送POST请求到MCP服务，传递CVE编号，添加认证头\n        response = requests.post(mcp_url,\
+          \ json={\"cve\": cve_name}, headers=headers)\n        response.raise_for_status()\
+          \  # 抛出异常如果请求失败\n        \n        result = response.json()\n        if\
+          \ result[\"status\"] == \"accepted\":\n            return {\"result\": f\"\
+          请求已接受，{cve_name} 的Docker环境正在启动\"}\n        else:\n            return {\"\
+          result\": f\"错误: {result['message']}\"}\n    \n    except requests.exceptions.RequestException\
+          \ as e:\n        return {\"result\": f\"请求MCP服务失败: {str(e)}\"}"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 开启cve
+        type: code
+        variables:
+        - value_selector:
+          - '1753066242086'
+          - result
+          value_type: string
+          variable: input
+        - value_selector:
+          - env
+          - API_KEY
+          value_type: string
+          variable: API_KEY
+      height: 54
+      id: '1753066670827'
+      position:
+        x: 1082.8311388837926
+        y: 282
+      positionAbsolute:
+        x: 1082.8311388837926
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -361.19907209464577
+      y: 155.2405012316385
+      zoom: 0.8555336353772525

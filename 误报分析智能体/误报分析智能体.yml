@@ -1,0 +1,1362 @@
+app:
+  description: 误报分析智能体
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 误报分析智能体
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: if-else
+      id: 1756197484658-source-1756197678572-target
+      source: '1756197484658'
+      sourceHandle: source
+      target: '1756197678572'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1756197678572-true-1756198400124-target
+      source: '1756197678572'
+      sourceHandle: 'true'
+      target: '1756198400124'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 1756198400124-source-1756257782558-target
+      source: '1756198400124'
+      sourceHandle: source
+      target: '1756257782558'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1756197678572-false-1756258054300-target
+      source: '1756197678572'
+      sourceHandle: 'false'
+      target: '1756258054300'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1756257782558-source-1756258161744-target
+      source: '1756257782558'
+      sourceHandle: source
+      target: '1756258161744'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1756258054300-source-1756258161744-target
+      source: '1756258054300'
+      sourceHandle: source
+      target: '1756258161744'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1756258161744-true-1756197544597-target
+      source: '1756258161744'
+      sourceHandle: 'true'
+      target: '1756197544597'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1756197544597-source-1756197780660-target
+      source: '1756197544597'
+      sourceHandle: source
+      target: '1756197780660'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1756258161744-false-1756258593447-target
+      source: '1756258161744'
+      sourceHandle: 'false'
+      target: '1756258593447'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: if-else
+      id: 1756258593447-source-1756258830041-target
+      source: '1756258593447'
+      sourceHandle: source
+      target: '1756258830041'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1756258830041-true-1756259024308-target
+      source: '1756258830041'
+      sourceHandle: 'true'
+      target: '1756259024308'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1756259024308-source-1756258857422-target
+      source: '1756259024308'
+      sourceHandle: source
+      target: '1756258857422'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1756258830041-false-1756260259954-target
+      source: '1756258830041'
+      sourceHandle: 'false'
+      target: '1756260259954'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1756197480521-source-1756260401268-target
+      source: '1756197480521'
+      sourceHandle: source
+      target: '1756260401268'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1756260401268-true-1756197484658-target
+      source: '1756260401268'
+      sourceHandle: 'true'
+      target: '1756197484658'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1756260401268-false-1756258593447-target
+      source: '1756260401268'
+      sourceHandle: 'false'
+      target: '1756258593447'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1756260259954-source-1756260618593-target
+      source: '1756260259954'
+      sourceHandle: source
+      target: '1756260618593'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: if-else
+      id: 1756260845172-source-1756261142641-target
+      source: '1756260845172'
+      sourceHandle: source
+      target: '1756261142641'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1756260618593-false-1756260699057-target
+      source: '1756260618593'
+      sourceHandle: 'false'
+      target: '1756260699057'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1756260699057-source-1756260759152-target
+      source: '1756260699057'
+      sourceHandle: source
+      target: '1756260759152'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1756261142641-false-1756261238338-target
+      source: '1756261142641'
+      sourceHandle: 'false'
+      target: '1756261238338'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 1756261238338-source-1756260991446-target
+      source: '1756261238338'
+      sourceHandle: source
+      target: '1756260991446'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1756261142641-true-1756261713749-target
+      source: '1756261142641'
+      sourceHandle: 'true'
+      target: '1756261713749'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1756261713749-source-1756261771303-target
+      source: '1756261713749'
+      sourceHandle: source
+      target: '1756261771303'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1756260618593-true-1756260845172-target
+      source: '1756260618593'
+      sourceHandle: 'true'
+      target: '1756260845172'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: if-else
+      id: 1756260991446-source-1756262974258-target
+      source: '1756260991446'
+      sourceHandle: source
+      target: '1756262974258'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1756262974258-true-17562630516000-target
+      source: '1756262974258'
+      sourceHandle: 'true'
+      target: '17562630516000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 17562630516000-source-1756263007947-target
+      source: '17562630516000'
+      sourceHandle: source
+      target: '1756263007947'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1756262974258-false-17562630700060-target
+      source: '1756262974258'
+      sourceHandle: 'false'
+      target: '17562630700060'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 17562630700060-source-1756263013226-target
+      source: '17562630700060'
+      sourceHandle: source
+      target: '1756263013226'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: cpe
+          max_length: 48
+          options: []
+          required: false
+          type: text-input
+          variable: cpe
+        - label: cve
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: cve
+        - label: product
+          max_length: 48
+          options: []
+          required: false
+          type: text-input
+          variable: product
+        - label: version
+          max_length: 48
+          options: []
+          required: false
+          type: text-input
+          variable: version
+      height: 168
+      id: '1756197480521'
+      position:
+        x: 30
+        y: 401
+      positionAbsolute:
+        x: 30
+        y: 401
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: Content-Type:application/json
+        method: post
+        params: cpe:{{#1756197480521.cpe#}}
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 本地nvd库
+        type: http-request
+        url: http://10.50.6.13:5007/api/check_cpe
+        variables: []
+      height: 139
+      id: '1756197484658'
+      position:
+        x: 664
+        y: 401
+      positionAbsolute:
+        x: 664
+        y: 401
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 2acaa138-cb8e-404a-a310-f226533d0343
+          role: system
+          text: 你是一个分析cve漏洞策略是否误报的策略分析工程师。请你结合用户提供的{{#1756197480521.cve#}}以及{{#1756197480521.cpe#}}，同时结合本地或在线库的结果{{#1756198400124.body#}}{{#1756197484658.body#}}，分析是否是误报
+        selected: false
+        structured_output_enabled: true
+        title: 大概率不是误报
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1756197544597'
+      position:
+        x: 2425
+        y: 276
+      positionAbsolute:
+        x: 2425
+        y: 276
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 307334a4-5b83-48a8-a1fd-8c3c955437f3
+            value: '"hascve":"false"'
+            varType: string
+            variable_selector:
+            - '1756197484658'
+            - body
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 本地nvd库是否有数据
+        type: if-else
+      height: 126
+      id: '1756197678572'
+      position:
+        x: 998
+        y: 401
+      positionAbsolute:
+        x: 998
+        y: 401
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1756197544597'
+          - text
+          value_type: string
+          variable: result
+        selected: false
+        title: 大概率不是误报
+        type: end
+      height: 90
+      id: '1756197780660'
+      position:
+        x: 2801.2161348044647
+        y: 276
+      positionAbsolute:
+        x: 2801.2161348044647
+        y: 276
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: '{"cpe": "{{#1756197480521.cpe#}}"}'
+          type: raw-text
+        desc: ''
+        headers: Content-Type:application/json
+        method: POST
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 在线nvd库
+        type: http-request
+        url: http://10.50.6.13:5003/check_cve
+        variables: []
+      height: 110
+      id: '1756198400124'
+      position:
+        x: 1423
+        y: 276
+      positionAbsolute:
+        x: 1423
+        y: 276
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str,arg2: str) -> dict:\n    if arg2 in arg1:\n  \
+          \      return {\n            \"result\": \"True\"\n        }\n    return\
+          \ {\n            \"result\": \"False\"\n        }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 是否在在线列表中
+        type: code
+        variables:
+        - value_selector:
+          - '1756198400124'
+          - body
+          value_type: string
+          variable: arg1
+        - value_selector:
+          - '1756197480521'
+          - cve
+          value_type: string
+          variable: arg2
+      height: 54
+      id: '1756257782558'
+      position:
+        x: 1757
+        y: 276
+      positionAbsolute:
+        x: 1757
+        y: 276
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str,arg2: str) -> dict:\n    if arg2 in arg1:\n  \
+          \      return {\n            \"result\": \"True\"\n        }\n    return\
+          \ {\n            \"result\": \"False\"\n        }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 是否在本地列表中
+        type: code
+        variables:
+        - value_selector:
+          - '1756197484658'
+          - body
+          value_type: string
+          variable: arg1
+        - value_selector:
+          - '1756197480521'
+          - cve
+          value_type: string
+          variable: arg2
+      height: 54
+      id: '1756258054300'
+      position:
+        x: 1757
+        y: 421
+      positionAbsolute:
+        x: 1757
+        y: 421
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 9359ed79-8830-4e5c-b655-4c9221782897
+            value: 'True'
+            varType: string
+            variable_selector:
+            - '1756257782558'
+            - result
+          id: 'true'
+          logical_operator: or
+        desc: ''
+        selected: false
+        title: 是否误报
+        type: if-else
+      height: 126
+      id: '1756258161744'
+      position:
+        x: 2091
+        y: 276
+      positionAbsolute:
+        x: 2091
+        y: 276
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: "{\n    \"cve\": \"{{#1756197480521.cve#}}\",\n    \"os_mode\"\
+              : false\n  }"
+          type: raw-text
+        desc: ''
+        headers: Content-Type:application/json
+        method: POST
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 漏洞库匹配逻辑查询
+        type: http-request
+        url: http://10.50.6.13:5002/check_cve
+        variables: []
+      height: 139
+      id: '1756258593447'
+      position:
+        x: 2425
+        y: 405
+      positionAbsolute:
+        x: 2425
+        y: 405
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: d176cab2-e141-4de0-903a-21664b2273a9
+            value: '[]
+
+              '
+            varType: string
+            variable_selector:
+            - '1756258593447'
+            - body
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 是否在数据库中
+        type: if-else
+      height: 126
+      id: '1756258830041'
+      position:
+        x: 2763.2857142857147
+        y: 401
+      positionAbsolute:
+        x: 2763.2857142857147
+        y: 401
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1756259024308'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: 无策略数据固定输出
+        type: end
+      height: 90
+      id: '1756258857422'
+      position:
+        x: 3425.9074783779015
+        y: 421
+      positionAbsolute:
+        x: 3425.9074783779015
+        y: 421
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str) -> dict:\n    return {\n        \"result\": \"\
+          数据库中无此策略数据，请核查是否更新至最新数据库。后续可联系策略人员进行详细排查\",\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 无策略数据固定输出
+        type: code
+        variables:
+        - value_selector:
+          - '1756258054300'
+          - result
+          value_type: string
+          variable: arg1
+      height: 54
+      id: '1756259024308'
+      position:
+        x: 3078.714285714286
+        y: 432.1428571428571
+      positionAbsolute:
+        x: 3078.714285714286
+        y: 432.1428571428571
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str,arg2: str) -> dict:\n    if arg1:\n        if\
+          \ \"vmware\" in arg1.lower():\n            products = arg1.split(\"-\")\n\
+          \            vmware_pro_ver = products[1]\n            others = products[0].split(\"\
+          _\")\n            vmware_pro = others[1]\n            return {\n       \
+          \         \"vmware_check\":\"true\",\n                \"vmware_pro_ver\"\
+          :vmware_pro_ver,\n                \"vmware_pro\":vmware_pro\n          \
+          \  }\n        else:\n            return {\n            \"vmware_check\"\
+          :\"flase\",\n        }\n    else:\n        return {\n            \"vmware_check\"\
+          :\"flase\",\n        }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          vmware_check:
+            children: null
+            type: string
+          vmware_pro:
+            children: null
+            type: string
+          vmware_pro_ver:
+            children: null
+            type: string
+        selected: false
+        title: 判断是否是vmware
+        type: code
+        variables:
+        - value_selector:
+          - '1756197480521'
+          - product
+          value_type: string
+          variable: arg1
+        - value_selector:
+          - '1756197480521'
+          - cpe
+          value_type: string
+          variable: arg2
+      height: 54
+      id: '1756260259954'
+      position:
+        x: 3078.714285714286
+        y: 525.1428571428571
+      positionAbsolute:
+        x: 3078.714285714286
+        y: 525.1428571428571
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 2af0b83c-57bf-4acb-b142-55d53d195075
+            value: ''
+            varType: string
+            variable_selector:
+            - '1756197480521'
+            - cpe
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: true
+        title: cpe还是product
+        type: if-else
+      height: 126
+      id: '1756260401268'
+      position:
+        x: 364
+        y: 401
+      positionAbsolute:
+        x: 364
+        y: 401
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 8da4e3ce-e154-40ca-95cf-d3c95918ff74
+            value: 'true'
+            varType: string
+            variable_selector:
+            - '1756260259954'
+            - vmware_check
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 5
+        type: if-else
+      height: 126
+      id: '1756260618593'
+      position:
+        x: 3382.714285714286
+        y: 525.1428571428571
+      positionAbsolute:
+        x: 3382.714285714286
+        y: 525.1428571428571
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: bf737fc0-d06b-479b-a3aa-47ddd09c5ced
+          role: system
+          text: 你是一个分析cve漏洞策略是否误报的策略分析工程师。请你结合用户提供的{{#1756197480521.cve#}}以及{{#1756197480521.cpe#}}，同时结合本地或在线库的结果{{#1756198400124.body#}}{{#1756197484658.body#}}以及漏洞库中的策略匹配逻辑{{#1756258593447.body#}}，合理的分析是否是误报
+        selected: false
+        title: 大模型能力判断
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1756260699057'
+      position:
+        x: 3806.5530539386573
+        y: 621.7771700930055
+      positionAbsolute:
+        x: 3806.5530539386573
+        y: 621.7771700930055
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs: []
+        selected: false
+        title: 可能误报
+        type: end
+      height: 54
+      id: '1756260759152'
+      position:
+        x: 4258.143366719516
+        y: 642.4674008566772
+      positionAbsolute:
+        x: 4258.143366719516
+        y: 642.4674008566772
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: "{\n    \"cve\": \"{{#1756197480521.cve#}}\",\n    \"product\"\
+              : \"{{#1756260259954.vmware_pro#}}\",\n    \"product_version\": \"{{#1756260259954.vmware_pro_ver#}}\"\
+              \n  }"
+          type: raw-text
+        desc: ''
+        headers: Content-Type:application/json
+        method: POST
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: vmware漏洞库信息查询
+        type: http-request
+        url: http://10.50.6.13:5005/check_vmware
+        variables: []
+      height: 139
+      id: '1756260845172'
+      position:
+        x: 3786.5441514605327
+        y: 437.6602520131696
+      positionAbsolute:
+        x: 3786.5441514605327
+        y: 437.6602520131696
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: "{\n    \"version\": \"{{#1756197480521.version#}}\",\n    \"test_version\"\
+              : \"{{#1756261238338.result#}}\",\n    \"operation\": \"less\",\n  \
+              \  \"test_version_greater\": \"1.2.5\",\n    \"ignore_case\": \"1\"\n\
+              \  }"
+          type: raw-text
+        desc: ''
+        headers: Content-Type:application/json
+        method: POST
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 版本比较
+        type: http-request
+        url: http://10.50.6.13:5004/compare
+        variables: []
+      height: 139
+      id: '1756260991446'
+      position:
+        x: 4933.309525754283
+        y: 461.1091802119977
+      positionAbsolute:
+        x: 4933.309525754283
+        y: 461.1091802119977
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: da8f963f-134c-4e09-b997-31c988817ffa
+            value: '"build":""'
+            varType: string
+            variable_selector:
+            - '1756260845172'
+            - body
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 6
+        type: if-else
+      height: 126
+      id: '1756261142641'
+      position:
+        x: 4181.581166820689
+        y: 327.3123546069197
+      positionAbsolute:
+        x: 4181.581166820689
+        y: 327.3123546069197
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\ndef main(arg1: str) -> dict:\n    match = re.search(r'\"\
+          build\"\\s*:\\s*\"([^\"]*)\"', arg1)\n    build_value = match.group(1) if\
+          \ match else \"\"\n    \n    return {\n        \"result\": build_value\n\
+          \    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 提取build
+        type: code
+        variables:
+        - value_selector:
+          - '1756260845172'
+          - body
+          value_type: string
+          variable: arg1
+      height: 54
+      id: '1756261238338'
+      position:
+        x: 4554.68664885233
+        y: 470.7646212350446
+      positionAbsolute:
+        x: 4554.68664885233
+        y: 470.7646212350446
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: bde82a55-d7fd-40d5-b9f9-95d05c956285
+          role: system
+          text: 你是一个分析cve漏洞策略是否误报的策略分析工程师。请你结合用户提供的{{#1756197480521.cve#}}以及{{#1756197480521.product#}}和{{#1756197480521.version#}}，同时结合漏洞库中的策略匹配逻辑{{#1756258593447.body#}}，vmware漏洞库的数据{{#1756260845172.body#}}，合理的分析是否是误报
+        selected: false
+        title: 大模型能力判断
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1756261713749'
+      position:
+        x: 4680.207382151939
+        y: 252.03181106238867
+      positionAbsolute:
+        x: 4680.207382151939
+        y: 252.03181106238867
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1756261713749'
+          - text
+          value_type: string
+          variable: result
+        selected: false
+        title: 可能误报
+        type: end
+      height: 90
+      id: '1756261771303'
+      position:
+        x: 4984.207382151939
+        y: 252.03181106238867
+      positionAbsolute:
+        x: 4984.207382151939
+        y: 252.03181106238867
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: b4849d41-5b50-4b9e-99b4-ba8cb0fa8da1
+            value: 'true'
+            varType: string
+            variable_selector:
+            - '1756260991446'
+            - body
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 7
+        type: if-else
+      height: 126
+      id: '1756262974258'
+      position:
+        x: 5237.309525754283
+        y: 461.1091802119977
+      positionAbsolute:
+        x: 5237.309525754283
+        y: 461.1091802119977
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '17562630516000'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: 非误报
+        type: end
+      height: 90
+      id: '1756263007947'
+      position:
+        x: 5841.309525754283
+        y: 461.1091802119977
+      positionAbsolute:
+        x: 5841.309525754283
+        y: 461.1091802119977
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '17562630700060'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: 误报
+        type: end
+      height: 90
+      id: '1756263013226'
+      position:
+        x: 5841.309525754283
+        y: 590.1091802119977
+      positionAbsolute:
+        x: 5841.309525754283
+        y: 590.1091802119977
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str) -> dict:\n    return {\n        \"result\": \"\
+          符合官网数据，不是误报\",\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 符合官网数据
+        type: code
+        variables:
+        - value_selector:
+          - '1756260991446'
+          - body
+          value_type: string
+          variable: arg1
+      height: 54
+      id: '17562630516000'
+      position:
+        x: 5541.538294773812
+        y: 470.7646212350446
+      positionAbsolute:
+        x: 5541.538294773812
+        y: 470.7646212350446
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str) -> dict:\n    return {\n        \"result\": \"\
+          不符合官网数据，大概率是误报。请联系策略人员进行详细排查\",\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 不符合官网数据
+        type: code
+        variables:
+        - value_selector:
+          - '1756260991446'
+          - body
+          value_type: string
+          variable: arg1
+      height: 54
+      id: '17562630700060'
+      position:
+        x: 5541.538294773812
+        y: 553.6282442969582
+      positionAbsolute:
+        x: 5541.538294773812
+        y: 553.6282442969582
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -3635.153613737948
+      y: -204.7595171916928
+      zoom: 1.07327877056693

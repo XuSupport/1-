@@ -1,0 +1,211 @@
+app:
+  description: 查看当前镜像状态
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 查看当前镜像状态02
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: d0f1e541-364b-4023-bea2-26ac869e04dd
+    name: API_KEY
+    selector:
+    - env
+    - API_KEY
+    value: e62a9b0d239d3f6fe2f203c5bede453c
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1751957462281-source-1751957468186-target
+      source: '1751957462281'
+      sourceHandle: source
+      target: '1751957468186'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1751957468186-source-1751957505690-target
+      source: '1751957468186'
+      sourceHandle: source
+      target: '1751957505690'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: input
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: input
+      height: 90
+      id: '1751957462281'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\nimport requests\n\
+          import json\n\ndef main(input:str, API_KEY:str) -> dict:\n    \"\"\"\n \
+          \   获取所有Docker镜像信息并返回，让后端大模型进行比对\n    \n    参数:\n        input: 用户输入的查询文本，包含对靶场环境的需求描述\n\
+          \        \n    返回:\n        dict: 包含所有镜像信息和用户输入的格式化文本\n    \"\"\"\n    #\
+          \ API服务的URL\n    API_BASE_URL = \"http://172.17.0.1:8005\"\n    \n    #\
+          \ 添加API密钥到请求头\n    headers = {\n        \"X-API-Key\": API_KEY\n    }\n\
+          \    \n    try:\n        # 获取当前可用的Docker镜像\n        try:\n            images_response\
+          \ = requests.get(f\"{API_BASE_URL}/docker/images\", headers=headers, timeout=10)\n\
+          \            images_response.raise_for_status()\n            images_data\
+          \ = images_response.json()\n        except Exception as e:\n           \
+          \ return {\n                \"result\": f\"### ⚠️ 获取Docker镜像列表失败\\n\\n无法获取当前可用的Docker镜像列表。\\\
+          n错误信息: {str(e)}\\n\\n请确认Docker服务正常运行。\\n\\n**用户查询**: {input}\"\n       \
+          \     }\n        \n        if images_data.get(\"status\") != \"success\"\
+          :\n            return {\n                \"result\": f\"### ⚠️ 获取Docker镜像列表失败\\\
+          n\\n无法获取当前可用的Docker镜像列表。\\n错误信息: {images_data.get('message', '未知错误')}\\\
+          n\\n请确认Docker服务正常运行。\\n\\n**用户查询**: {input}\"\n            }\n        \n\
+          \        # 获取所有镜像\n        images = images_data.get(\"images\", [])\n  \
+          \      \n        # 如果没有镜像\n        if not images:\n            return {\n\
+          \                \"result\": f\"### ℹ️ 当前环境中没有Docker镜像\\n\\n未检测到任何可用的Docker镜像。可能需要先拉取相关镜像。\\\
+          n\\n**用户查询**: {input}\"\n            }\n        \n        # 返回所有镜像信息\n \
+          \       result = f\"### \U0001F4CB 当前可用Docker镜像\\n\\n\"\n        \n    \
+          \    # 表格标题\n        result += \"| 镜像名称 | 标签 | 镜像ID | 大小 | 创建时间 |\\n\"\n\
+          \        result += \"|---------|-----|--------|------|--------|\\n\"\n \
+          \       \n        # 表格内容\n        for image in images:\n            repo\
+          \ = image.get(\"Repository\", \"\")\n            tag = image.get(\"Tag\"\
+          , \"\")\n            image_id = image.get(\"ID\", \"\")\n            size\
+          \ = image.get(\"Size\", \"\")\n            created = image.get(\"CreatedAt\"\
+          , \"\")\n            result += f\"| {repo} | {tag} | {image_id} | {size}\
+          \ | {created} |\\n\"\n        \n        result += f\"\\n**用户查询**: {input}\"\
+          \n        \n        return {\"result\": result}\n        \n    except requests.exceptions.ConnectionError:\n\
+          \        return {\n            \"result\": f\"### ❌ 连接错误\\n\\n无法连接到Docker\
+          \ API服务。请确保服务正在运行。\\n\\n**用户查询**: {input}\"\n        }\n    except requests.exceptions.Timeout:\n\
+          \        return {\n            \"result\": f\"### ⏱️ 请求超时\\n\\n连接Docker\
+          \ API服务超时。请检查服务状态后重试。\\n\\n**用户查询**: {input}\"\n        }\n    except Exception\
+          \ as e:\n        return {\n            \"result\": f\"### \U0001F525 未知错误\\\
+          n\\n处理Docker镜像查询时发生错误: {str(e)}\\n\\n**用户查询**: {input}\"\n        } "
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: true
+        title: 查看当前镜像状态
+        type: code
+        variables:
+        - value_selector:
+          - '1751957462281'
+          - input
+          variable: input
+        - value_selector:
+          - env
+          - API_KEY
+          variable: API_KEY
+      height: 54
+      id: '1751957468186'
+      position:
+        x: 383
+        y: 282
+      positionAbsolute:
+        x: 383
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1751957468186'
+          - result
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1751957505690'
+      position:
+        x: 688
+        y: 282
+      positionAbsolute:
+        x: 688
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 113
+      y: 75
+      zoom: 1

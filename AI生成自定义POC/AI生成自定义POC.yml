@@ -1,0 +1,127 @@
+app:
+  description: 能将漏洞详情描述（包括自然语言）、任意编程语言的漏洞poc转换为明鉴漏扫自定义模板的插件以在漏扫上直接使用。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: chat
+  name: AI生成自定义POC
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+kind: app
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 10
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets:
+      - dataset:
+          enabled: true
+          id: e4cfd71d-ac40-4a70-b31d-621c9eb48303
+      - dataset:
+          enabled: true
+          id: 0e955407-d790-41af-afbb-71f5b768b366
+    reranking_enable: false
+    reranking_mode: reranking_model
+    reranking_model:
+      reranking_model_name: BAAI/bge-reranker-v2-m3
+      reranking_provider_name: langgenius/siliconflow/siliconflow
+    retrieval_model: multiple
+    top_k: 1
+    weights:
+      keyword_setting:
+        keyword_weight: 0.3
+      vector_setting:
+        embedding_model_name: BAAI/bge-m3
+        embedding_provider_name: langgenius/siliconflow/siliconflow
+        vector_weight: 0.7
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    allowed_file_extensions:
+    - .JPG
+    - .JPEG
+    - .PNG
+    - .GIF
+    - .WEBP
+    - .SVG
+    - .MP4
+    - .MOV
+    - .MPEG
+    - .WEBM
+    allowed_file_types: []
+    allowed_file_upload_methods:
+    - remote_url
+    - local_file
+    enabled: false
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+    number_limits: 3
+  model:
+    completion_params:
+      max_tokens: 2501
+      response_format: text
+      stop: []
+      temperature: 1
+    mode: chat
+    name: deepseek-chat
+    provider: langgenius/deepseek/deepseek
+  more_like_this:
+    enabled: false
+  opening_statement: ''
+  pre_prompt: "你是一名专业的安全工程师，负责开发基于 Nuclei 的漏洞检测规则。根据知识库和掌握 Nuclei 的模板编写规范与最佳实践。\n\n\
+    你的任务是：根据输入的漏洞POC、漏洞描述或已有规则，参考项目提供的两个知识库：“明鉴漏扫自定义POC知识库”和“ Nuclei 官方文档”，自动生成结构规范、语义完整、符合项目标准的\
+    \ YAML 检测策略规则，适用于 Nuclei 引擎二次开发使用。\n\n【输入支持的格式】\n- 漏洞POC代码（Python / Go / Bash\
+    \ 等）\n- 漏洞检测描述文本（包含检测逻辑、特征、状态码等）\n- 已有规则（如Suricata、Snort等规则语法）\n\n【输出要求】\n仅输出可直接保存的\
+    \ YAML 文件内容（不要添加 markdown 代码块标记），格式如下：\n\nid: 自动生成的唯一标识（推荐以漏洞类型+用途组合命名，如 sql-injection-info-schema）\n\
+    示例：\n  info: \n    name: \"漏洞名称（中文）\"\n    author: \"generated-by-ai\"\n    severity:\
+    \ 自动评估（high / medium / low）\n    summary: \"简洁描述漏洞检测目的，例如：发现了存在目录遍历风险\"\n    cve:\
+    \ \"若输入中可提取则填入，否则留空\"\n    cvss: 根据输入内容提取，若无则根据severity等级随机生成0.0-10.0范围内对应的数值\n\
+    \    cnvd: \"若输入中可提取则填入，否则留空\"\n    cnnvd: \"若输入中可提取则填入，否则留空\"\n    advice: \"\
+    根据检测逻辑生成100字以内的中文修复建议\"\n    cncve: \"\"\n    bugtraq: \"\"\n    other: \"\" \
+    \ # 其它描述信息\n    matchall: true # true:匹配所有类型的URL false:只匹配根域名\n\n\n  http: # http协议相关规则描述\n\
+    \    - method: GET # HTTP请求方法\n      path: # URL地址\n        - '\\{\\{BaseURL\\\
+    }\\}/.git/config'\n      matchers: # 定义匹配器规则\n        - type: word #匹配器类型\n  \
+    \        words: # 匹配的字段\n            - '[core]'\n        - type: dsl\n       \
+    \   condition: and\n          dsl:\n            - '!contains(tolower(body), ''<html'')'\n\
+    \            - '!contains(tolower(body), ''<body'')'\n        - type: status\n\
+    \          status:\n            - 200\n      matchers-condition: and #各个匹配器是且的关系\n\
+    \n【自动处理规则】\n- 自动识别漏洞逻辑中的目标路径、请求体、特征字段（字符串 / 正则 / 状态码）\n- 自动补充必要Header信息（如 Content-Type）\n\
+    - 自动评估规则破坏性：\n  - 若检测涉及登录/令牌/身份认证，添加字段 authentication: true\n  - 若检测为破坏性/带副作用，添加字段\
+    \ self-contained: true\n- 优先使用性能更高的匹配方式（如 status 优先于 body）\n\n【输出格式要求】\n1. 只输出纯YAML内容，不添加\
+    \ ```yaml 或任何标记；\n2. 可直接保存为 .yaml 文件；\n3. path 中的 \\{\\{BaseURL\\}\\} 保留，不转义花括号；\n\
+    4. 保持缩进与格式标准化，兼容Nuclei模板加载；\n5. regex正则部分注意加转义，如\\s输出为\\\\s\n6. 如果输入信息不足，也请尽可能输出最小可运行模板，并在\
+    \ comment 中说明处理依据。\n7. 尽量不要使用变量传递\n\n你拥有完整的 Nuclei 编写经验、项目开发手册知识库内容和漏洞检测策略背景，请根据以上标准高质量生成\
+    \ YAML 模板。\n"
+  prompt_type: simple
+  retriever_resource:
+    enabled: true
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form: []
+version: 0.4.0

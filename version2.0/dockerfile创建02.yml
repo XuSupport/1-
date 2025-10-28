@@ -1,0 +1,335 @@
+app:
+  description: '11'
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: dockerfile创建02
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: b5f20ba7-e4d3-487d-aa94-e4527e1f7976
+    name: API_KEY
+    selector:
+    - env
+    - API_KEY
+    value: e62a9b0d239d3f6fe2f203c5bede453c
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1751867364848-source-1751872557193-target
+      source: '1751867364848'
+      sourceHandle: source
+      target: '1751872557193'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1751872557193-source-1751867760129-target
+      source: '1751872557193'
+      sourceHandle: source
+      target: '1751867760129'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1751867363172-source-1751867364848-target
+      source: '1751867363172'
+      sourceHandle: source
+      target: '1751867364848'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: input
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: input
+      height: 90
+      id: '1751867363172'
+      position:
+        x: 81.22829946838812
+        y: 282
+      positionAbsolute:
+        x: 81.22829946838812
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1751867363172'
+          - input
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 71d00090-b934-4334-844a-b923382c848e
+          role: system
+          text: "角色： 你是一个专业的 Dockerfile 构造器，擅长根据用户描述{{#1751867363172.input#}}生成简洁、功能单一且不依赖外部文件（自包含）的\
+            \ Dockerfile 文本。你的目标是生成可直接用于 docker build -f - 命令的 Dockerfile。\n职责：\n\
+            理解用户意图： 分析用户想要构建的容器类型和所需功能（例如，安装特定工具，运行特定命令，暴露一个或多个端口）。\n生成 Dockerfile\
+            \ 文本： 根据用户需求，编写完整的 Dockerfile 内容。\n遵循“自包含”原则： 确保生成的 Dockerfile 不包含 COPY\
+            \ 或 ADD 指令来引用本地文件。所有所需内容必须通过 RUN 命令在容器内部生成或下载，或通过 ENV 设置。\n提供构建信息： 附带一个推荐的镜像名称和标签。\n\
+            输出格式：\n你必须始终输出一个格式如下的JSON对象。dockerfile_content 字段必须包含完整的 Dockerfile 文本，且其中不能包含任何与宿主机文件系统交互的命令\
+            \ (例如 COPY 或 ADD 指令)。\nJSON\n{\n  \"dockerfile_content\": \"FROM base_image:tag\\\
+            n\\n# 这里是您的 RUN/ENV/EXPOSE/CMD 等指令\\nRUN apt-get update && apt-get install\
+            \ -y some-package\\nEXPOSE 80\\nEXPOSE 443\\nCMD [\\\"command\\\"]\\n\"\
+            ,\n  \"recommended_image_name\": \"建议的镜像名\",\n  \"recommended_image_tag\"\
+            : \"建议的镜像标签\"\n}\n\n示例输入和预期输出（指导模型如何生成）：\n用户输入示例 1： \"请帮我构建一个基于 Ubuntu\
+            \ 的容器，安装 cowsay，并让它启动时说 'Hello Docker!'\"\n预期模型输出 1：\nJSON\n{\n  \"dockerfile_content\"\
+            : \"FROM ubuntu:latest\\n\\nRUN apt-get update && apt-get install -y cowsay\\\
+            nCMD [\\\"cowsay\\\", \\\"Hello Docker!\\\"]\\n\",\n  \"recommended_image_name\"\
+            : \"my-cowsay-app\",\n  \"recommended_image_tag\": \"latest\"\n}\n\n用户输入示例\
+            \ 2： \"我需要一个Python环境，版本是3.9，安装flask库，并且暴露80端口和443端口，用于HTTP和HTTPS服务。\"\n\
+            预期模型输出 2：\nJSON\n{\n  \"dockerfile_content\": \"FROM python:3.9-slim\\\
+            n\\nRUN pip install flask\\nEXPOSE 80\\nEXPOSE 443\\nCMD [\\\"python\\\
+            \", \\\"-c\\\", \\\"from flask import Flask; app = Flask(__name__); @app.route('/')\\\
+            \\ndef hello(): return 'Hello Flask!'; app.run(host='0.0.0.0', port=80)\\\
+            \"]\\n\",\n  \"recommended_image_name\": \"my-flask-web\",\n  \"recommended_image_tag\"\
+            : \"latest\"\n}\n\n注意： 对于需要内联代码的情况，大模型需要将代码直接写入 Dockerfile 的 RUN 或 CMD\
+            \ 指令中，避免 COPY。这可能需要一些 \\ 转义字符来确保单行或多行命令的正确性。\n用户输入示例 3： \"创建一个Redis容器，暴露6379端口，并设置一个密码为\
+            \ 'myredispass'。\"\n预期模型输出 3：\nJSON\n{\n  \"dockerfile_content\": \"FROM\
+            \ redis:latest\\n\\nEXPOSE 6379\\nCMD [\\\"redis-server\\\", \\\"--requirepass\\\
+            \", \\\"myredispass\\\"]\\n\",\n  \"recommended_image_name\": \"my-secure-redis\"\
+            ,\n  \"recommended_image_tag\": \"latest\"\n}\n\n用户输入示例 4： \"我需要一个简单的HTTP服务器，监听80和8080端口。\"\
+            \n预期模型输出 4：\nJSON\n{\n  \"dockerfile_content\": \"FROM nginx:alpine\\\
+            n\\nRUN rm /etc/nginx/conf.d/default.conf\\nCOPY --from=nginx:alpine /etc/nginx/nginx.conf\
+            \ /etc/nginx/nginx.conf\\nEXPOSE 80\\nEXPOSE 8080\\nCMD [\\\"nginx\\\"\
+            , \\\"-g\\\", \\\"daemon off;\\\"]\\n\",\n  \"recommended_image_name\"\
+            : \"my-multiport-nginx\",\n  \"recommended_image_tag\": \"latest\"\n}\n\
+            \n重要约束：\n绝对禁止使用 COPY 或 ADD 指令来引用本地文件（即宿主机上的文件）。如果用户请求的功能需要引入外部文件，请礼貌地告知模型目前不支持，因为它只能生成自包含的\
+            \ Dockerfile。\n但是，可以允许使用 COPY --from=some_existing_image 来从多阶段构建的前一个阶段或已存在的公共镜像中复制文件，只要这些文件不需要用户提供。\n\
+            优先使用官方或流行的基础镜像（例如 ubuntu, python, node, nginx, redis 等）。\nDockerfile 中的\
+            \ EXPOSE 指令可以出现多次，用于声明容器内部暴露的所有端口。\nEXPOSE 仅声明端口，不会自动进行宿主机端口映射，这需要在后续的\
+            \ docker run 中配置。\n请只输出一个格式正确的JSON对象，不要添加任何额外的解释或说明。"
+        selected: false
+        title: 生成dockerfile
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1751867364848'
+      position:
+        x: 399.79929446207586
+        y: 282
+      positionAbsolute:
+        x: 399.79929446207586
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1751872557193'
+          - result
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1751867760129'
+      position:
+        x: 1288
+        y: 282
+      positionAbsolute:
+        x: 1288
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import requests\nimport json\nimport datetime\nimport re # 导入 re 模块用于正则表达式\n\
+          \ndef main(input_json_str: str,API_KEY: str) -> dict:\n    \"\"\"\n    Dify\
+          \ 工具代码：接收大模型生成的 Dockerfile 信息，\n    并调用后端服务启动 Docker 镜像构建任务。\n    此工具仅负责提交构建请求，不负责查询构建状态。\n\
+          \n    参数:\n      input_json_str: 包含 Dockerfile 内容、推荐镜像名和标签的JSON字符串。\n  \
+          \                    注意：此字符串可能被Markdown代码块包裹。\n                      格式应为:\n\
+          \                      {\n                        \"dockerfile_content\"\
+          : \"...\",\n                        \"recommended_image_name\": \"...\"\
+          ,\n                        \"recommended_image_tag\": \"...\"\n        \
+          \              }\n\n    返回:\n      dict: 包含镜像构建任务提交结果的美观中文格式。\n    \"\"\"\
+          \n    # Docker 构建服务的URL\n    BUILD_API_URL = \"http://10.50.24.154:8005/docker/build_from_text\"\
+          \n\n    current_time = datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"\
+          )\n    result_lines = []\n    \n    try:\n        # --- 关键修改部分：处理被Markdown代码块包裹的JSON字符串\
+          \ ---\n        # 尝试匹配并提取Markdown代码块中的JSON内容\n        # 匹配 ```json\\n 后面的内容直到下一个\
+          \ ```\n        json_match = re.search(r'```json\\n(.*)\\n```', input_json_str,\
+          \ re.DOTALL)\n        if json_match:\n            # 如果匹配到，使用匹配到的内容作为实际的JSON字符串\n\
+          \            actual_json_str = json_match.group(1)\n        else:\n    \
+          \        # 如果没有Markdown包裹，则认为整个输入就是JSON字符串\n            actual_json_str\
+          \ = input_json_str\n        # --- 关键修改结束 ---\n\n        # 1. 解析实际的JSON字符串\n\
+          \        input_data = json.loads(actual_json_str)\n\n        dockerfile_content\
+          \ = input_data.get(\"dockerfile_content\")\n        recommended_image_name\
+          \ = input_data.get(\"recommended_image_name\")\n        recommended_image_tag\
+          \ = input_data.get(\"recommended_image_tag\")\n\n        # 检查必要参数\n    \
+          \    if not dockerfile_content:\n            return {\"result\": \"\U0001F534\
+          \ **错误**: 输入中缺少 'dockerfile_content'。\"}\n        if not recommended_image_name\
+          \ or not recommended_image_tag:\n            return {\"result\": \"\U0001F534\
+          \ **错误**: 输入中缺少推荐的镜像名称或标签。\"}\n\n        # 2. 构造发送给后端API的Payload\n     \
+          \   payload = {\n            \"dockerfile_content\": dockerfile_content,\n\
+          \            \"recommended_image_name\": recommended_image_name,\n     \
+          \       \"recommended_image_tag\": recommended_image_tag\n        }\n\n\
+          \        \n        headers = {\n            \"Content-Type\": \"application/json\"\
+          ,\n            \"X-API-Key\": API_KEY\n        }\n        \n        result_lines.append(f\"\
+          ### \U0001F680 正在提交Docker镜像构建任务\\n\")\n        result_lines.append(f\"**提交时间**:\
+          \ {current_time}\\n\")\n        result_lines.append(f\"**目标镜像**: {recommended_image_name}:{recommended_image_tag}\\\
+          n\")\n        result_lines.append(f\"**Dockerfile 内容简要**:\\n```dockerfile\\\
+          n\")\n        # 显示Dockerfile前5行，并处理换行符以确保正确显示\n        dockerfile_lines\
+          \ = dockerfile_content.splitlines()\n        result_lines.extend(dockerfile_lines[:5])\
+          \ \n        if len(dockerfile_lines) > 5:\n            result_lines.append(\"\
+          ...\")\n        result_lines.append(f\"```\\n\")\n        result_lines.append(f\"\
+          发送请求中...\\n\")\n\n        # 3. 发送POST请求到后端服务\n        # 设置一个合理的超时时间，防止请求无限等待\n\
+          \        response = requests.post(BUILD_API_URL, headers=headers, json=payload,\
+          \ timeout=30)\n\n        # 4. 处理后端服务的响应\n        response.raise_for_status()\
+          \ # 如果状态码不是2xx，会抛出HTTPError异常\n\n        response_data = response.json()\n\
+          \n        # 提取后端返回的关键信息\n        status = response_data.get(\"status\",\
+          \ \"unknown\")\n        message = response_data.get(\"message\", \"无消息\"\
+          )\n        task_id = response_data.get(\"task_id\", \"无任务ID\")\n\n     \
+          \   if status == \"success\":\n            result_lines.append(f\"### ✅\
+          \ Docker镜像构建任务已成功提交！\\n\")\n            result_lines.append(f\"**任务ID**:\
+          \ {task_id}\\n\")\n            result_lines.append(f\"**详情**: {message}\\\
+          n\")\n            result_lines.append(f\"由于构建是异步的，镜像下载和构建可能需要一些时间。\\n\"\
+          )\n            result_lines.append(f\"您可以稍后使用此任务ID查询最新状态。\")\n        else:\n\
+          \            result_lines.append(f\"### ❌ 提交构建任务失败！\\n\")\n            result_lines.append(f\"\
+          **任务ID**: {task_id}\\n\")\n            result_lines.append(f\"**错误信息**:\
+          \ {message}\\n\")\n            result_lines.append(f\"请检查输入参数或后端服务日志。\"\
+          )\n        \n        return {\"result\": \"\\n\".join(result_lines)}\n\n\
+          \    except json.JSONDecodeError:\n        result = f\"### \U0001F4C4 数据格式错误\\\
+          n\\n\"\n        result += f\"**错误原因**: 输入不是有效的JSON格式，或者JSON被不正确地包裹。请检查大模型生成的JSON输出是否符合规范。\\\
+          n\"\n        result += f\"**原始输入**: {input_json_str[:200]}...\" # 打印部分原始输入方便调试\n\
+          \        return {\"result\": result}\n    except requests.exceptions.ConnectionError:\n\
+          \        result = f\"### ❌ 连接错误\\n\\n\"\n        result += f\"**错误原因**:\
+          \ 无法连接到 Docker 构建服务 ({BUILD_API_URL})。\\n\\n\"\n        result += f\"**解决方案**:\
+          \ 请确保后端服务正在运行在 {BUILD_API_URL}，且网络可达。\\n\"\n        return {\"result\":\
+          \ result}\n    except requests.exceptions.Timeout:\n        result = f\"\
+          ### ⏱️ 请求超时\\n\\n\"\n        result += f\"**错误原因**: 连接 Docker 构建服务超时 ({BUILD_API_URL})。\\\
+          n\\n\"\n        result += f\"**解决方案**: 请检查后端服务状态或网络连接。\\n\"\n        return\
+          \ {\"result\": result}\n    except requests.exceptions.HTTPError as e:\n\
+          \        result = f\"### ⚠️ HTTP错误\\n\\n\"\n        result += f\"**错误原因**:\
+          \ Docker 构建服务返回错误状态码: {e.response.status_code}\\n\\n\"\n        result +=\
+          \ f\"**详细信息**: {e.response.text}\\n\\n\"\n        result += f\"**解决方案**:\
+          \ 请检查后端服务日志以获取更多详情。\\n\"\n        return {\"result\": result}\n    except\
+          \ Exception as e:\n        result = f\"### \U0001F525 未知错误\\n\\n\"\n   \
+          \     result += f\"**错误原因**: Dify 工具执行发生未知错误: {str(e)}\\n\\n\"\n       \
+          \ result += f\"**解决方案**: 请联系管理员或检查工具代码。\\n\"\n        return {\"result\"\
+          : result}\n\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: true
+        title: build
+        type: code
+        variables:
+        - value_selector:
+          - '1751867364848'
+          - text
+          variable: input_json_str
+        - value_selector:
+          - env
+          - API_KEY
+          variable: API_KEY
+      height: 54
+      id: '1751872557193'
+      position:
+        x: 820.8740175758387
+        y: 282
+      positionAbsolute:
+        x: 820.8740175758387
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 5.071472561706287
+      y: 161.77827767920422
+      zoom: 0.8141337074030451

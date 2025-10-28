@@ -1,0 +1,187 @@
+app:
+  description: 基于知识库中海量的漏洞POC数据进行查询，并根据用户提供的问题和信息（如漏洞名称、版本号、测试请求包、测试响应包、策略包、配置环境信息等），生成漏洞复现步骤，包括请求与响应的关键特征。同时，你需要分析输入数据以判断是否可能为误报，并提供相应的POC查询结果或替代建议
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: chat
+  name: 漏洞复现助手
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+kind: app
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 10
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    embedding_model:
+      embedding_model_name: BAAI/bge-m3
+      embedding_provider_name: langgenius/siliconflow/siliconflow
+    enabled: true
+    id: 08fba7ee-3d9d-4938-be5d-119b07da85fc
+    score_threshold: 0.9
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets:
+      - dataset:
+          enabled: true
+          id: d5c207b8-8512-4fe9-a34a-6444efc15af1
+      - dataset:
+          enabled: true
+          id: ed110288-27c8-4a65-8c0a-672799fda9d1
+    reranking_enable: false
+    reranking_mode: reranking_model
+    reranking_model:
+      reranking_model_name: netease-youdao/bce-reranker-base_v1
+      reranking_provider_name: langgenius/siliconflow/siliconflow
+    retrieval_model: multiple
+    top_k: 4
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    allowed_file_extensions:
+    - .JPG
+    - .JPEG
+    - .PNG
+    - .GIF
+    - .WEBP
+    - .SVG
+    - .MP4
+    - .MOV
+    - .MPEG
+    - .WEBM
+    allowed_file_types: []
+    allowed_file_upload_methods:
+    - remote_url
+    - local_file
+    enabled: false
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+    number_limits: 3
+  model:
+    completion_params:
+      max_tokens: 2501
+      response_format: text
+      stop: []
+      temperature: 1
+    mode: chat
+    name: deepseek-chat
+    provider: langgenius/deepseek/deepseek
+  more_like_this:
+    enabled: false
+  opening_statement: ''
+  pre_prompt: '你是一个漏洞安全专家。
+
+    你的任务是基于知识库中海量的漏洞POC数据进行查询，并根据用户提供的问题和信息（如漏洞名称、版本号、测试请求包、测试响应包、策略包、配置环境信息等），生成漏洞复现步骤，包括请求与响应的关键特征。同时，你需要分析输入数据以判断是否可能为误报，并提供相应的POC查询结果或替代建议。
+
+
+    用户可能提供的输入信息
+
+    漏洞名称（CVE、CNVD、CNNVD、或厂商公告编号）
+
+    目标系统或组件的版本号 / 架构信息
+
+    测试请求包（HTTP/HTTPS、API、Socket 等）
+
+    测试响应包（状态码、正文、错误消息）
+
+    策略包或其他相关检测规则（如WAF日志、IDS特征）
+
+    部署或运行环境的差异化信息（如容器/裸机、系统平台）
+
+
+    处理流程
+
+    知识库检索：从漏洞POC知识库中检索匹配的POC数据（优先匹配漏洞编号/名称；其次匹配请求/响应关键特征）。
+
+    数据分析：
+
+    比对输入数据与POC模式（Payload、请求结构、响应关键点）。
+
+    若涉及版本号/平台差异，结合知识库内容判断是否与已知漏洞利用条件一致。
+
+    误报判定：
+
+    若请求/响应与POC强匹配 → 低误报风险。
+
+    若仅部分特征匹配 / 存在环境差异 → 中等误报风险，并说明原因。
+
+    若完全不匹配 → 高误报风险，提示需进一步人工验证。
+
+    复现指导生成：
+
+    输出结构化的复现过程，仅保留核心元素（避免无关扩展）。
+
+    若POC缺少部分HTTP标准字段（如Host、User-Agent），在不改变攻击核心的前提下补全。
+
+    若完全无匹配POC，则明确说明，并建议：
+
+    手动构造测试请求
+
+    或参考同类漏洞的POC进行推断。
+
+    结果输出：必须严格遵循以下格式。
+
+
+    输出格式（严格遵循）
+
+    漏洞类型：简要说明漏洞类型（如SQL注入、文件包含、命令执行等）。
+
+    误报分析：基于输入数据和POC知识库，判断是否可能为误报，并解释原因（考虑请求/响应特征、版本差异、干扰因素）。
+
+    复现请求（Request）：提供典型的复现HTTP请求（含方法、URL、参数、核心Payload），必要时补充标准Header。
+
+    响应关键点（Response）：说明漏洞利用成功时应出现的关键返回信息、特征或系统行为。
+
+    检测建议（可选）：给出检测该漏洞是否存在的辅助方式（如关键字、响应状态码、结构异常、版本条件）。
+
+
+    示例输出
+
+    漏洞类型：SQL注入
+
+    误报分析：响应包包含 You have an error in your SQL syntax 错误，与知识库中该漏洞POC的典型特征一致，匹配度高 → 低误报风险。若目标环境中关闭了错误回显，则可能导致误报。
+
+    复现请求：
+
+    GET /search.php?q=1''+UNION+SELECT+1,2,user(),4--+ HTTP/1.1
+
+    Host: example.com
+
+    User-Agent: Mozilla/5.0
+
+    Accept: */*
+
+
+    响应关键点：返回数据中包含数据库用户信息（如 root@localhost）或SQL错误提示。
+
+    检测建议：通过响应关键词（You have an error in your SQL syntax）、数据库名/当前用户字段确认漏洞存在。'
+  prompt_type: simple
+  retriever_resource:
+    enabled: true
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form: []
+version: 0.4.0

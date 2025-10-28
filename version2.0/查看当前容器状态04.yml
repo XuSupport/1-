@@ -1,0 +1,235 @@
+app:
+  description: 查看当前容器状态
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 查看当前容器状态04
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: e8e5cb41-3be0-487b-b1fb-2c3f1c9318ab
+    name: API_KEY
+    selector:
+    - env
+    - API_KEY
+    value: e62a9b0d239d3f6fe2f203c5bede453c
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1751957697438-source-1751957715537-target
+      source: '1751957697438'
+      sourceHandle: source
+      target: '1751957715537'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1751957715537-source-1751957734842-target
+      source: '1751957715537'
+      sourceHandle: source
+      target: '1751957734842'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: input
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: input
+      height: 90
+      id: '1751957697438'
+      position:
+        x: 79
+        y: 282
+      positionAbsolute:
+        x: 79
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\nimport requests\n\
+          import json\nimport datetime\nimport os\nfrom typing import Optional\n\n\
+          def main(input:str, API_KEY:str) -> dict:\n    \"\"\"\n    用于检查当前Docker容器运行状态的函数，适用于Dify平台\n\
+          \    通过HTTP请求访问docker_api_service获取容器信息\n    \n    参数:\n        input: 用户输入的查询文本\n\
+          \        API_KEY: API认证密钥，如果未提供则使用环境变量或默认值\n        \n    返回:\n        dict:\
+          \ 包含Docker容器状态信息的美观中文格式\n    \"\"\"\n    # API服务的URL\n    API_URL = \"http://172.17.0.1:8005/docker/ps\"\
+          \n    \n\n    # 添加API密钥到请求头\n    headers = {\n        \"X-API-Key\": API_KEY\n\
+          \    }\n    \n    try:\n        # 发送GET请求获取容器列表，添加认证头\n        response\
+          \ = requests.get(API_URL, headers=headers, timeout=10)\n        response.raise_for_status()\
+          \  # 如果响应状态码不是200，会抛出异常\n        \n        # 解析JSON响应\n        data = response.json()\n\
+          \        \n        # 检查API响应状态\n        if data.get(\"status\") != \"success\"\
+          :\n            error_msg = data.get('message', '未知错误')\n            result\
+          \ = f\"\U0001F534 **错误**: API返回非成功状态\\n\\n原因: {error_msg}\\n\\n用户查询: {input}\"\
+          \n            return {\"result\": result}\n            \n        # 获取容器列表\n\
+          \        containers = data.get(\"containers\", [])\n        \n        #\
+          \ 格式化容器信息以便易于阅读\n        formatted_containers = []\n        for container\
+          \ in containers:\n            formatted_container = {\n                \"\
+          container_id\": container.get(\"ID\", \"\")[:12],  # 只保留ID前12位\n       \
+          \         \"name\": container.get(\"Names\", \"\"),\n                \"\
+          image\": container.get(\"Image\", \"\"),\n                \"status\": container.get(\"\
+          Status\", \"\"),\n                \"ports\": container.get(\"Ports\", \"\
+          \")\n            }\n            formatted_containers.append(formatted_container)\n\
+          \        \n        # 获取当前时间\n        current_time = datetime.datetime.now().strftime(\"\
+          %Y-%m-%d %H:%M:%S\")\n        \n        # 构建美观的中文输出\n        if not formatted_containers:\n\
+          \            # 没有运行的容器\n            result = f\"### \U0001F50D Docker容器状态查询结果\\\
+          n\\n\"\n            result += f\"**查询时间**: {current_time}\\n\\n\"\n    \
+          \        result += f\"**运行状态**: 当前没有正在运行的Docker容器\\n\\n\"\n            result\
+          \ += f\"**用户查询**: {input}\"\n        else:\n            # 有运行的容器\n     \
+          \       result = f\"### \U0001F433 Docker容器状态查询结果\\n\\n\"\n            result\
+          \ += f\"**查询时间**: {current_time}\\n\"\n            result += f\"**运行容器总数**:\
+          \ {len(formatted_containers)}个\\n\\n\"\n            \n            # 表格标题\n\
+          \            result += f\"| 容器ID | 容器名称 | 镜像 | 状态 | 端口映射 |\\n\"\n      \
+          \      result += f\"|--------|---------|------|------|--------|\\n\"\n \
+          \           \n            # 表格内容\n            for container in formatted_containers:\n\
+          \                result += f\"| {container['container_id']} | {container['name']}\
+          \ | {container['image']} | {container['status']} | {container['ports']}\
+          \ |\\n\"\n            \n            result += f\"\\n**用户查询**: {input}\"\n\
+          \        \n        # 返回符合Dify格式的结果\n        return {\"result\": result}\n\
+          \    \n    except requests.exceptions.ConnectionError:\n        # API服务连接错误\n\
+          \        result = f\"### ❌ 连接错误\\n\\n\"\n        result += f\"无法连接到Docker\
+          \ API服务 {API_URL}\\n\\n\"\n        result += f\"**可能原因**: Docker API服务未启动或网络问题\\\
+          n\\n\"\n        result += f\"**解决方案**: 请确保Docker API服务正在运行，并检查网络连接\\n\\\
+          n\"\n        result += f\"**用户查询**: {input}\"\n        return {\"result\"\
+          : result}\n    \n    except requests.exceptions.Timeout:\n        # 请求超时\n\
+          \        result = f\"### ⏱️ 请求超时\\n\\n\"\n        result += f\"连接Docker\
+          \ API服务超时\\n\\n\"\n        result += f\"**可能原因**: 服务器响应时间过长或负载过高\\n\\n\"\
+          \n        result += f\"**解决方案**: 请检查服务器状态，稍后再试\\n\\n\"\n        result +=\
+          \ f\"**用户查询**: {input}\"\n        return {\"result\": result}\n    \n  \
+          \  except requests.exceptions.RequestException as e:\n        # 其他请求错误\n\
+          \        result = f\"### ⚠️ 请求错误\\n\\n\"\n        result += f\"发送请求时出错:\
+          \ {str(e)}\\n\\n\"\n        result += f\"**用户查询**: {input}\"\n        return\
+          \ {\"result\": result}\n    \n    except json.JSONDecodeError:\n       \
+          \ # JSON解析错误\n        result = f\"### \U0001F4C4 数据格式错误\\n\\n\"\n      \
+          \  result += f\"API返回的响应不是有效的JSON格式\\n\\n\"\n        result += f\"**可能原因**:\
+          \ API服务返回了非标准格式的数据\\n\\n\"\n        result += f\"**解决方案**: 请检查API服务的配置和状态\\\
+          n\\n\"\n        result += f\"**用户查询**: {input}\"\n        return {\"result\"\
+          : result}\n    \n    except Exception as e:\n        # 其他未知异常\n        result\
+          \ = f\"### \U0001F525 未知错误\\n\\n\"\n        result += f\"发生未知错误: {str(e)}\\\
+          n\\n\"\n        result += f\"**用户查询**: {input}\"\n        return {\"result\"\
+          : result} "
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: true
+        title: 查看当前容器状态
+        type: code
+        variables:
+        - value_selector:
+          - '1751957697438'
+          - input
+          variable: input
+        - value_selector:
+          - env
+          - API_KEY
+          variable: API_KEY
+      height: 54
+      id: '1751957715537'
+      position:
+        x: 383
+        y: 282
+      positionAbsolute:
+        x: 383
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1751957715537'
+          - result
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1751957734842'
+      position:
+        x: 687
+        y: 282
+      positionAbsolute:
+        x: 687
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 252.53864657432086
+      y: 88.3871890014264
+      zoom: 0.8507955397354482

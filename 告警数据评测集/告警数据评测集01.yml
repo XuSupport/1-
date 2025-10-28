@@ -1,0 +1,855 @@
+app:
+  description: 将原始告警数据，直接转化为有效的评测集，暂时没有接入模型
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 告警数据评测集01
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: qiangxinglin/excel_tools:0.0.2@a21645f3ecb7f0e49c8e9f3a19c00961bea5db124a562fdc0950915501557bce
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: document-extractor
+      id: 1758266491214-source-1758267578031-target
+      selected: false
+      source: '1758266491214'
+      sourceHandle: source
+      target: '1758267578031'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: code
+      id: 1758267578031-source-1758786798195-target
+      selected: false
+      source: '1758267578031'
+      sourceHandle: source
+      target: '1758786798195'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1758786798195-source-1758787546292-target
+      selected: false
+      source: '1758786798195'
+      sourceHandle: source
+      target: '1758787546292'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1758791367742-source-1758875783097-target
+      selected: false
+      source: '1758791367742'
+      sourceHandle: source
+      target: '1758875783097'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1758875783097-source-1759023594680-target
+      selected: false
+      source: '1758875783097'
+      sourceHandle: source
+      target: '1759023594680'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: tool
+      id: 1759023594680-source-1759046632902-target
+      source: '1759023594680'
+      sourceHandle: source
+      target: '1759046632902'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: end
+      id: 1759046632902-source-1758267599259-target
+      source: '1759046632902'
+      sourceHandle: source
+      target: '1758267599259'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1758787546292-source-1758791367742-target
+      source: '1758787546292'
+      sourceHandle: source
+      target: '1758791367742'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - allowed_file_extensions:
+          - .json
+          allowed_file_types:
+          - custom
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: wenjian
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: wenjian
+      height: 90
+      id: '1758266491214'
+      position:
+        x: 30
+        y: 404.5
+      positionAbsolute:
+        x: 30
+        y: 404.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: JSON提取
+        type: document-extractor
+        variable_selector:
+        - '1758266491214'
+        - wenjian
+      height: 94
+      id: '1758267578031'
+      position:
+        x: 334
+        y: 404.5
+      positionAbsolute:
+        x: 334
+        y: 404.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1759046632902'
+          - files
+          value_type: array[file]
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1758267599259'
+      position:
+        x: 2652.8206603347753
+        y: 404.5
+      positionAbsolute:
+        x: 2652.8206603347753
+        y: 404.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(text: str) -> dict:\n    import json\n    \n    try:\n   \
+          \     # 解析JSON数据\n        if isinstance(text, str):\n            data =\
+          \ json.loads(text)\n        else:\n            data = text\n        \n \
+          \       # 获取告警数据\n        alerts = data.get('data', [])\n        \n    \
+          \    yes_data = []  # 有头部信息的数据\n        no_data = []   # 没有头部信息的原始数据\n \
+          \       \n        # 处理每个告警\n        for alert in alerts:\n            request_header\
+          \ = alert.get('requestHeader', '')\n            response_header = alert.get('responseHeader',\
+          \ '')\n            \n            # 如果有头部信息，拆分保存\n            if request_header\
+          \ or response_header:\n                extracted = {\n                 \
+          \   'alert_id': alert.get('eventIDs', ''),\n                    'requestHeader':\
+          \ request_header,\n                    'responseHeader': response_header,\n\
+          \                    'timestamp': alert.get('startTime', alert.get('collectorReceiptTime',\
+          \ '')),\n                    'srcAddress': alert.get('srcAddress', ''),\n\
+          \                    'destAddress': alert.get('destAddress', ''),\n    \
+          \                'appProtocol': alert.get('appProtocol', '')\n         \
+          \       }\n                yes_data.append(extracted)\n            else:\n\
+          \                # 没有头部信息，保存原始数据\n                no_data.append(alert)\n\
+          \        \n        return {\n            \"yesjson\": json.dumps(yes_data,\
+          \ ensure_ascii=False),\n            \"nojson\": json.dumps(no_data, ensure_ascii=False)\n\
+          \        }\n        \n    except Exception as e:\n        return {\n   \
+          \         \"yesjson\": json.dumps([], ensure_ascii=False),\n           \
+          \ \"nojson\": json.dumps([], ensure_ascii=False)\n        }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          nojson:
+            children: null
+            type: string
+          yesjson:
+            children: null
+            type: string
+        selected: false
+        title: 提取request和response
+        type: code
+        variables:
+        - value_selector:
+          - '1758267578031'
+          - text
+          value_type: string
+          variable: text
+      height: 54
+      id: '1758786798195'
+      position:
+        x: 639.8738428937447
+        y: 404.5
+      positionAbsolute:
+        x: 639.8738428937447
+        y: 404.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(text: str) -> dict:\n    \"\"\"\n    Dify代码节点 - 载荷与响应特征提取器\
+          \ V5.1 (修复版)\n    \n    输入: text (包含requestHeader和responseHeader的JSON数据)\n\
+          \    输出: payload_results (提取了载荷特征与响应高光词条的JSON字符串，无timestamp)\n    \"\"\"\
+          \n    import json\n    import re\n    import urllib.parse\n\n    # 载荷模式定义\
+          \ (保持不变)\n    payload_patterns = {\n        \"SQLInjection\": [\n      \
+          \      r\"(union\\s+select\\s+.*?(?:from|--|\\#))\", r\"(select\\s+.*?from\\\
+          s+\\w+)\", \n            r\"(benchmark\\s*\\(\\s*\\d+\\s*,.*?\\))\", r\"\
+          (sleep\\s*\\(\\s*\\d+\\s*\\))\",\n            r\"(\\b(and|or)\\b\\s+\\d+\\\
+          s*=\\s*\\d+)\", r\"(information_schema\\.\\w+)\",\n            r\"(pg_sleep\\\
+          s*\\(\\s*\\d+\\s*\\))\", r\"(waitfor\\s+delay\\s+['\\\"][\\d:]+['\\\"])\"\
+          ,\n            r\"(extractvalue\\s*\\([^)]+\\))\", r\"(updatexml\\s*\\([^)]+\\\
+          ))\",\n            r\"(order\\s+by\\s+\\d+)\", r\"(group\\s+by\\s+\\d+)\"\
+          , r\"(having\\s+\\d+\\s*=\\s*\\d+)\",\n            r\"(\\'\\s*or\\s*\\'\\\
+          d*\\'\\s*=\\s*\\'\\d*)\", r\"(\\\"\\s*or\\s*\\\"\\d*\\\"\\s*=\\s*\\\"\\\
+          d*)\"\n        ],\n        \"XSS\": [\n            r\"(<script[^>]*>.*?</script>)\"\
+          , r\"(javascript:alert\\()\", r\"(on[a-z]+=\\s*['\\\"].*?['\\\"])\",\n \
+          \           r\"(<img[^>]*src=['\\\"]javascript:)\", r\"(<svg/onload=)\"\
+          , r\"(eval\\()\", r\"(document\\.cookie)\",\n            r\"(<iframe[^>]*>)\"\
+          , r\"(<object[^>]*>)\", r\"(<embed[^>]*>)\", r\"(alert\\()\", r\"(confirm\\\
+          ()\",\n            r\"(prompt\\()\", r\"(String\\.fromCharCode)\", r\"(unescape\\\
+          ()\", r\"(decodeURI\\()\"\n        ],\n        \"CommandExec\": [\n    \
+          \        r\"(\\b(cat|ls|id|whoami|pwd|ifconfig|ipconfig|uname|wget|curl|ping|nslookup|dig)\\\
+          b)\",\n            r\"(\\s*(\\|\\||&|;)\\s*(cat|ls|id|whoami|pwd|ifconfig|ipconfig|uname|wget|curl))\"\
+          ,\n            r\"(\\$\\([^\\)]+\\))\", r\"(`[^`]+`)\", r\"(\\|.*?\\|)\"\
+          , r\"(&&.*?&&)\", r\"(;.*?;)\",\n            r\"(nc\\s+-)\", r\"(netcat\\\
+          s+-)\", r\"(/bin/sh)\", r\"(/bin/bash)\", r\"(cmd\\.exe)\",\n          \
+          \  r\"(powershell)\", r\"(certutil)\", r\"(bitsadmin)\"\n        ],\n  \
+          \      \"FileInclude\": [\n            r\"(\\.\\./)\", r\"(/etc/passwd)\"\
+          , r\"(/windows/win.ini)\", r\"(php://filter)\", r\"(data://)\",\n      \
+          \      r\"(file://)\", r\"(phar://)\", r\"(zip://)\", r\"(expect://)\",\
+          \ r\"(input://)\",\n            r\"(%2e%2e%2f)\", r\"(%252e%252e%252f)\"\
+          , r\"(\\.\\.\\\\)\", r\"(%2e%2e%5c)\",\n            r\"(/proc/self/environ)\"\
+          , r\"(/proc/version)\", r\"(/etc/hosts)\"\n        ],\n        \"WebshellRequest\"\
+          : [\n            r\"(eval\\()\", r\"(assert\\()\", r\"(phpinfo\\()\", r\"\
+          (system\\()\", r\"(exec\\()\", r\"(shell_exec\\()\",\n            r\"(passthru\\\
+          ()\", r\"(proc_open\\()\", r\"(popen\\()\", r\"(base64_decode\\()\", r\"\
+          (gzinflate\\()\",\n            r\"(str_rot13\\()\", r\"(chr\\()\", r\"(unserialize\\\
+          ()\", r\"(preg_replace\\([^,]+,['\\\"]e['\\\"])\",\n            r\"(AntSword|Behinder|Godzilla|ChinaChopper)\"\
+          , r\"(webshell)\", r\"(backdoor)\",\n            r\"(file_get_contents\\\
+          ()\", r\"(file_put_contents\\()\", r\"(fopen\\()\", r\"(fwrite\\()\"\n \
+          \       ],\n        \"SSRF\": [\n            r\"(http://127\\.0\\.0\\.1)\"\
+          , r\"(http://localhost)\", r\"(file:///)\", r\"(gopher://)\",\n        \
+          \    r\"(dict://)\", r\"(ftp://)\", r\"(data://)\", r\"(169\\.254\\.\\d+\\\
+          .\\d+)\", r\"(10\\.\\d+\\.\\d+\\.\\d+)\",\n            r\"(172\\.(1[6-9]|2\\\
+          d|3[0-1])\\.\\d+\\.\\d+)\", r\"(192\\.168\\.\\d+\\.\\d+)\",\n          \
+          \  r\"(http://0\\.0\\.0\\.0)\", r\"(http://\\[::\\])\", r\"(http://0x)\"\
+          , r\"(http://\\d+)\"\n        ],\n        \"InfoLeak\": [\n            r\"\
+          (/etc/passwd)\", r\"(/proc/self/cmdline)\", r\"(\\.git/config)\", r\"(\\\
+          .svn/entries)\",\n            r\"(\\.env)\", r\"(\\.bash_history)\", r\"\
+          (\\.ssh/id_rsa)\", r\"(web\\.config)\", r\"(config\\.php)\",\n         \
+          \   r\"(database\\.yml)\", r\"(application\\.properties)\", r\"(server\\\
+          .xml)\", r\"(robots\\.txt)\",\n            r\"(sitemap\\.xml)\", r\"(crossdomain\\\
+          .xml)\", r\"(phpinfo\\.php)\", r\"(test\\.php)\"\n        ],\n        \"\
+          BypassAccCtrl\": [\n            r\"(\\.\\./)\", r\"(%2e%2e%2f)\", r\"(admin)\"\
+          , r\"(root)\", r\"(user)\", r\"(password)\", r\"(token)\",\n           \
+          \ r\"(auth)\", r\"(session)\", r\"(cookie)\", r\"(login)\", r\"(logout)\"\
+          , r\"(register)\",\n            r\"(%00)\", r\"(null)\", r\"(\\x00)\", r\"\
+          (bypass)\", r\"(privilege)\", r\"(escalation)\"\n        ],\n        \"\
+          CodeInjection\": [\n            r\"(@ognl\\.OgnlContext@[A-Z_]+)\", r\"\
+          (@java\\.lang\\.Runtime@getRuntime\\(\\)\\.exec\\([^)]+\\))\",\n       \
+          \     r\"(\\$\\{jndi:ldap://[^}]+\\})\", r\"(\\$\\{jndi:rmi://[^}]+\\})\"\
+          , r\"(\\$\\{jndi:[^}]+\\})\",\n            r\"(%23_memberAccess[^&]*)\"\
+          , r\"(struts2[^&\\s]*)\", r\"(ognl:[^&\\s]*)\",\n            r\"(eval\\\
+          s*\\([^)]+\\))\", r\"(assert\\s*\\([^)]+\\))\", r\"(exec\\s*\\([^)]+\\))\"\
+          ,\n            r\"(Runtime\\.getRuntime\\(\\))\", r\"(ProcessBuilder\\s*\\\
+          ([^)]+\\))\",\n            r\"(create_function\\s*\\([^)]+\\))\", r\"(call_user_func\\\
+          s*\\([^)]+\\))\",\n            r\"(preg_replace\\s*\\([^,]+,['\\\"].*?e.*?['\\\
+          \"])\", r\"(__import__\\s*\\([^)]+\\))\",\n            r\"(getattr\\s*\\\
+          ([^)]+\\))\", r\"(setattr\\s*\\([^)]+\\))\"\n        ],\n        \"FileUpload\"\
+          : [\n            r\"(multipart/form-data)\", r\"(Content-Disposition:\\\
+          s*form-data)\", r\"(filename=)\",\n            r\"(\\.php|\\.jsp|\\.asp|\\\
+          .aspx|\\.sh|\\.pl|\\.py|\\.rb|\\.cgi)\", r\"(upload)\", r\"(file)\",\n \
+          \           r\"(Content-Type:\\s*application/)\", r\"(boundary=)\", r\"\
+          (name=\\\"file\\\")\"\n        ],\n        # --- V5.1 错误修复: 修正了XXE的正则表达式，避免语法错误\
+          \ ---\n        \"XXE\": [\n            r\"(<!DOCTYPE\\s+[^>]*?ENTITY\\s+[^>]*?>)\"\
+          , r\"(<!ENTITY\\s+[^>]*?>)\", r\"(SYSTEM\\s+['\\\"][^'\\\"]+['\\\"])\",\n\
+          \            r\"(PUBLIC\\s+['\\\"][^'\\\"]+['\\\"])\", r\"(file:///)\",\
+          \ r\"(http://)\", r\"(gopher://)\", r\"(expect://)\",\n            r\"(xml)\"\
+          , r\"(DOCTYPE)\", r\"(ENTITY)\", r\"(SYSTEM)\", r\"(PUBLIC)\"\n        ]\n\
+          \    }\n\n    # --- 响应高光提取函数 ---\n    def extract_response_highlights(response_header:\
+          \ str) -> list:\n        if not response_header:\n            return []\n\
+          \        highlights = []\n        highlight_patterns = {\n            'Server':\
+          \ r'Server:\\s*([^\\r\\n]+)', 'X-Powered-By': r'X-Powered-By:\\s*([^\\r\\\
+          n]+)',\n            'Presence': r'(Set-Cookie|Proxy-Authorization|WWW-Authenticate|HttpOnly|Secure)',\n\
+          \            'Keywords': r'(SQL syntax|WAF|blocked|forbidden|安全狗|云锁|长亭|Traceback)'\n\
+          \        }\n        server_match = re.search(highlight_patterns['Server'],\
+          \ response_header, re.IGNORECASE)\n        if server_match: highlights.append(server_match.group(1).strip())\n\
+          \        powered_by_match = re.search(highlight_patterns['X-Powered-By'],\
+          \ response_header, re.IGNORECASE)\n        if powered_by_match: highlights.append(powered_by_match.group(1).strip())\n\
+          \        presence_matches = re.findall(highlight_patterns['Presence'], response_header,\
+          \ re.IGNORECASE)\n        highlights.extend(presence_matches)\n        keyword_matches\
+          \ = re.findall(highlight_patterns['Keywords'], response_header, re.IGNORECASE)\n\
+          \        highlights.extend(keyword_matches)\n        return list(set(highlights))\n\
+          \n    # --- 载荷提取函数 (保持不变) ---\n    def extract_payloads_from_text(text_content,\
+          \ attack_patterns):\n        extracted = []\n        noise_words = {'user',\
+          \ 'auth', 'login', 'cookie', 'session', 'token', 'admin', 'root', 'host',\
+          \ 'accept', 'content', 'type', 'length', 'connection', 'close', 'keep-alive',\
+          \ 'gzip', 'deflate', 'mozilla', 'webkit', 'chrome', 'safari', 'windows',\
+          \ 'linux', 'mac', 'os', 'x', 'nt', 'wow64', 'intel', 'like', 'gecko', 'khtml',\
+          \ 'applewebkit', 'version', 'rv', 'trident', 'edge', 'firefox', 'opera',\
+          \ 'text', 'html', 'application', 'json', 'xml', 'charset', 'utf', 'iso',\
+          \ 'en', 'us', 'cn', 'zh', 'www', 'com', 'org', 'net', 'http', 'https', 'ftp',\
+          \ 'ssl', 'tls', 'get', 'post', 'put', 'delete', 'head', 'options', 'trace',\
+          \ 'connect', 'patch', 'file'}\n        http_noise_patterns = [r'^;\\s*(httponly|secure|path=|domain=|max-age=|expires=)',\
+          \ r'^;\\s*(win64|wow64|x64|intel|amd64)', r'^content-type:\\s*application/',\
+          \ r'^accept.*?:\\s*', r'^user-agent:\\s*', r'^;\\s*charset=', r'^;\\s*boundary=',\
+          \ r'^;\\s*includesubdomains', r'^;\\s*mode=block', r'cache-control:.*?must-revalidate',\
+          \ r'x-.*?-protection:', r'strict-transport-security:']\n        for pattern\
+          \ in attack_patterns:\n            try:\n                matches = re.finditer(pattern,\
+          \ text_content, re.IGNORECASE | re.DOTALL)\n                for match in\
+          \ matches:\n                    payload = match.group(0).strip()\n     \
+          \               if not payload or len(payload) < 3: continue\n         \
+          \           if payload.isdigit(): continue\n                    if payload.lower()\
+          \ in noise_words: continue\n                    is_http_noise = False\n\
+          \                    for noise_pattern in http_noise_patterns:\n       \
+          \                 if re.match(noise_pattern, payload.lower()): is_http_noise\
+          \ = True; break\n                    if is_http_noise: continue\n      \
+          \              if len(payload) > 100: continue\n                    if re.match(r'^[^\\\
+          w]+$', payload): continue\n                    if len(payload.strip()) <\
+          \ 4: continue\n                    extracted.append(payload)\n         \
+          \   except re.error: continue\n        return list(set(extracted))\n\n \
+          \   # --- 攻击类型检测函数 (保持不变) ---\n    def detect_attack_type(request_header,\
+          \ response_header):\n        combined_text = f\"{request_header} {response_header}\"\
+          .lower()\n        original_text = f\"{request_header} {response_header}\"\
+          \n        try: decoded_text = urllib.parse.unquote(combined_text.replace('+',\
+          \ ' '))\n        except: decoded_text = combined_text\n        if any(p\
+          \ in original_text for p in [\"@ognl.OgnlContext\", \"struts2\", \"ognl:\"\
+          , \"%23_memberAccess\"]): return \"CodeInjection\"\n        if any(p in\
+          \ original_text for p in [\"${jndi:\", \"${ldap:\", \"jndi:ldap://\", \"\
+          jndi:rmi://\"]): return \"CodeInjection\"\n        if any(p in combined_text\
+          \ for p in [\"runtime.getruntime\", \"processbuilder\", \"java.lang.runtime\"\
+          ]): return \"CodeInjection\"\n        sql_patterns = [\"union select\",\
+          \ \"union all select\", \"order by\", \"group by\", \"having\", \"benchmark(\"\
+          , \"sleep(\", \"waitfor delay\", \"extractvalue(\", \"updatexml(\", \"concat_ws(\"\
+          , \"concat(\", \"substring(\", \"mid(\", \"left(\", \"right(\", \"ascii(\"\
+          , \"char(\", \"hex(\", \"unhex(\", \"md5(\", \"sha1(\", \"information_schema\"\
+          , \"mysql.user\", \"pg_user\", \"sys.tables\", \"' or '1'='1\", \"\\\" or\
+          \ \\\"1\\\"=\\\"1\", \"' or 1=1\", \"\\\" or 1=1\", \"' and '1'='2\", \"\
+          \\\" and \\\"1\\\"=\\\"2\", \"' union select\", \"\\\" union select\", \"\
+          0x7e\", \"0x3a\", \"null,null\", \"1,2,3\", \"1,1,1\"]\n        if any(p\
+          \ in combined_text for p in sql_patterns) or any(p in decoded_text for p\
+          \ in sql_patterns): return \"SQLInjection\"\n        xss_patterns = [\"\
+          <script\", \"javascript:\", \"alert(\", \"confirm(\", \"prompt(\", \"onerror=\"\
+          , \"onload=\", \"onmouseover=\"]\n        if any(p in combined_text for\
+          \ p in xss_patterns): return \"XSS\"\n        cmd_patterns = [\"system(\"\
+          , \"exec(\", \"shell_exec(\", \"passthru(\", \"/bin/bash\", \"/bin/sh\"\
+          , \"cmd.exe\", \"powershell\"]\n        if any(p in combined_text for p\
+          \ in cmd_patterns): return \"CommandExec\"\n        if any(p in combined_text\
+          \ for p in [\"../\", \"..\\\\\", \"php://filter\", \"/etc/passwd\", \"/windows/win.ini\"\
+          ]): return \"FileInclude\"\n        webshell_patterns = [\"webshell\", \"\
+          backdoor\", \"eval(\", \"assert(\", \"base64_decode(\", \"gzinflate(\"]\n\
+          \        if any(p in combined_text for p in webshell_patterns): return \"\
+          WebshellRequest\"\n        ssrf_patterns = [\"127.0.0.1\", \"localhost\"\
+          , \"file:///\", \"gopher://\", \"dict://\"]\n        if any(p in combined_text\
+          \ for p in ssrf_patterns): return \"SSRF\"\n        upload_indicators =\
+          \ 0\n        if \"multipart/form-data\" in combined_text: upload_indicators\
+          \ += 2\n        if \"content-disposition\" in combined_text and \"form-data\"\
+          \ in combined_text: upload_indicators += 2\n        if \"filename=\" in\
+          \ combined_text: upload_indicators += 1\n        if any(ext in combined_text\
+          \ for ext in [\".php\", \".jsp\", \".asp\", \".aspx\", \".sh\", \".py\"\
+          ]): upload_indicators += 1\n        if \"upload\" in combined_text: upload_indicators\
+          \ += 1\n        if upload_indicators >= 3: return \"FileUpload\"\n     \
+          \   if any(p in combined_text for p in [\"<!doctype\", \"<!entity\", \"\
+          system\", \"public\"]) and \"xml\" in combined_text: return \"XXE\"\n  \
+          \      info_patterns = [\".git/config\", \".env\", \"phpinfo\", \"robots.txt\"\
+          , \"swagger\", \"api-docs\"]\n        if any(p in combined_text for p in\
+          \ info_patterns): return \"InfoLeak\"\n        bypass_patterns = [\"admin\"\
+          , \"login\", \"bypass\", \"../\"]\n        if any(p in combined_text for\
+          \ p in bypass_patterns): return \"BypassAccCtrl\"\n        return \"Unknown\"\
+          \n\n    # --- 主函数逻辑 ---\n    try:\n        data = json.loads(text)\n   \
+          \     if isinstance(data, dict): data = [data]\n        \n        results\
+          \ = []\n        \n        for record in data:\n            request_header\
+          \ = record.get('requestHeader', '')\n            response_header = record.get('responseHeader',\
+          \ '')\n            \n            original_path = \"\"\n            if request_header:\n\
+          \                match = re.search(r'^(?:GET|POST|PUT|DELETE|HEAD|OPTIONS)\\\
+          s+([^\\s?#]+)', request_header)\n                if match: original_path\
+          \ = match.group(1)\n            \n            detected_attack_type = detect_attack_type(request_header,\
+          \ response_header)\n            \n            combined_patterns = [p for\
+          \ patterns in payload_patterns.values() for p in patterns]\n           \
+          \ all_payloads = list(set(extract_payloads_from_text(request_header, combined_patterns)))[:20]\n\
+          \n            response_highlights = extract_response_highlights(response_header)\n\
+          \n            if all_payloads or response_highlights:\n                analysis_record\
+          \ = {\n                    'alert_id': record.get('alert_id', ''),\n   \
+          \                 'attack_type': detected_attack_type,\n               \
+          \     'original_path': original_path,\n                    'extracted_payloads':\
+          \ all_payloads,\n                    'response_highlights': response_highlights\n\
+          \                }\n                results.append(analysis_record)\n  \
+          \      \n        return {\"payload_results\": json.dumps(results, ensure_ascii=False,\
+          \ indent=2)}\n        \n    except Exception as e:\n        return {\"error\"\
+          : f\"载荷与响应高光分析错误: {str(e)}\", \"payload_results\": json.dumps([], ensure_ascii=False)}"
+        code_language: python3
+        desc: ''
+        outputs:
+          payload_results:
+            children: null
+            type: string
+        selected: false
+        title: 拆分
+        type: code
+        variables:
+        - value_selector:
+          - '1758786798195'
+          - yesjson
+          value_type: string
+          variable: text
+      height: 54
+      id: '1758787546292'
+      position:
+        x: 927.5818816681806
+        y: 404.5
+      positionAbsolute:
+        x: 927.5818816681806
+        y: 404.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(text: str) -> dict:\n    \"\"\"\n    Dify代码节点：生成匹配训练集格式的测试数据\
+          \ V2.1 (修复版)\n    \n    输入: text (V5.1版本payload提取器的输出JSON)\n    输出: test_data,\
+          \ total_count\n    \"\"\"\n    import json\n    import random\n    \n  \
+          \  # 初始化输出参数\n    test_data = \"[]\"\n    total_count = 0\n    \n    # System提示词\n\
+          \    system_prompts = [\n        \"你是一个专业的Web安全分析师，能够识别各种网络攻击模式。请仔细分析提供的安全事件，判断其意图和风险。\"\
+          ,\n        \"你是一个经验丰富的安全工程师，擅长结合请求和响应来研判Web应用攻击。请对提供的事件进行安全分析。\",\n    \
+          \    \"作为网络安全专家，你需要准确识别HTTP交互中的威胁。请分析请求和响应信号，并给出你的专业评估。\",\n        \"作为安全分析师，请检查以下安全事件，综合请求内容和响应特征，判断是否存在恶意行为。\"\
+          \n    ]\n    \n    # User提问模板\n    user_question_templates = [\n       \
+          \ \"请对以下安全事件进行研判：\\n\\n**模拟请求:**\\n`{}`\\n\\n**响应高光:**\\n`{}`\",\n     \
+          \   \"分析一下这个HTTP交互的安全性：\\n\\n**模拟请求:**\\n`{}`\\n\\n**响应高光:**\\n`{}`\",\n\
+          \        \"请判断以下事件是正常访问还是恶意探测：\\n\\n**模拟请求:**\\n`{}`\\n\\n**响应高光:**\\n`{}`\"\
+          ,\n        \"这是一个安全事件日志，请给出你的分析：\\n\\n**模拟请求:**\\n`{}`\\n\\n**响应高光:**\\\
+          n`{}`\"\n    ]\n    \n    try:\n        # --- 核心修复：使用更健壮的解析逻辑 ---\n    \
+          \    parsed_input = json.loads(text)\n        payload_results = []\n   \
+          \     if isinstance(parsed_input, dict) and 'payload_results' in parsed_input:\n\
+          \            # 如果输入是 {\"payload_results\": \"[...]\"} 格式\n            payload_results\
+          \ = json.loads(parsed_input['payload_results'])\n        elif isinstance(parsed_input,\
+          \ list):\n            # 如果输入直接就是 [...] 格式\n            payload_results =\
+          \ parsed_input\n        \n        test_cases = []\n        \n        for\
+          \ record in payload_results:\n            alert_id = record.get('alert_id',\
+          \ '')\n            payloads = record.get('extracted_payloads', [])\n   \
+          \         highlights = record.get('response_highlights', [])\n         \
+          \   path = record.get('original_path', '/')\n\n            if not payloads\
+          \ and not highlights:\n                continue\n            \n        \
+          \    method = 'GET'\n            request_str = \"\"\n            \n    \
+          \        if payloads:\n                example_payload = random.choice(payloads)\n\
+          \                param = random.choice(['id', 'q', 'file', 'data', 'path'])\n\
+          \                path = path.rstrip('?')\n                separator = '&'\
+          \ if '?' in path else '?'\n                request_str = f\"{method} {path}{separator}{param}={example_payload}\"\
+          \n            else:\n                request_str = f\"{method} {path}\"\n\
+          \n            highlights_str = \", \".join(highlights) if highlights else\
+          \ \"无\"\n\n            system_prompt = random.choice(system_prompts)\n \
+          \           user_content = random.choice(user_question_templates).format(request_str,\
+          \ highlights_str)\n            \n            test_case = {\n           \
+          \     'alert_id': alert_id,\n                'messages': [\n           \
+          \         {'role': 'system', 'content': system_prompt},\n              \
+          \      {'role': 'user', 'content': user_content}\n                ],\n \
+          \               'original_record': record\n            }\n            \n\
+          \            test_cases.append(test_case)\n        \n        total_count\
+          \ = len(test_cases)\n        test_data = json.dumps(test_cases, ensure_ascii=False,\
+          \ indent=2)\n        \n    except Exception as e:\n        # 保持健壮性，在任何错误下返回空\n\
+          \        test_data = \"[]\"\n        total_count = 0\n    \n    return {\n\
+          \        'test_data': test_data,\n        'total_count': total_count\n \
+          \   }"
+        code_language: python3
+        desc: ''
+        outputs:
+          test_data:
+            children: null
+            type: string
+          total_count:
+            children: null
+            type: number
+        selected: false
+        title: 测试数据生成
+        type: code
+        variables:
+        - value_selector:
+          - '1758787546292'
+          - payload_results
+          value_type: string
+          variable: text
+      height: 54
+      id: '1758791367742'
+      position:
+        x: 1253.3969285868807
+        y: 404.5
+      positionAbsolute:
+        x: 1253.3969285868807
+        y: 404.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(text: str) -> dict:\n    \"\"\"\n    Dify代码节点：将V2.1生成的测试数据转换为纯净评测格式\
+          \ (适配版)\n    \n    输入: text (V2.1版本测试数据生成器的输出JSON)\n    输出: evaluation_jsonl,\
+          \ total_count, sample_data, conversion_status\n    \"\"\"\n    import json\n\
+          \n    try:\n        # --- 1. 适配修改: 增强的输入解析逻辑 ---\n        # 能够正确处理上一个节点输出的\
+          \ {\"test_data\": \"[...]\"} 格式\n        if isinstance(text, str):\n   \
+          \         input_data = json.loads(text)\n        else:\n            input_data\
+          \ = text\n\n        test_data_list = []\n        if 'test_data' in input_data:\n\
+          \            test_data_list = json.loads(input_data['test_data'])\n    \
+          \    elif 'yesjson' in input_data: # 保留旧的兼容性\n            test_data_list\
+          \ = json.loads(input_data['yesjson'])\n        elif isinstance(input_data,\
+          \ list):\n            test_data_list = input_data\n        \n        if\
+          \ not test_data_list:\n            return {\n                \"evaluation_jsonl\"\
+          : \"\", \"total_count\": 0,\n                \"sample_data\": \"无有效测试数据\"\
+          ,\n                \"conversion_status\": \"❌ 错误: 未找到有效的测试数据\"\n       \
+          \     }\n\n        # --- 2. 适配修改: 组装纯净评测用例的逻辑 ---\n        evaluation_cases\
+          \ = []\n        for item in test_data_list:\n            if not isinstance(item,\
+          \ dict):\n                continue\n\n            # 从新结构中提取信息\n        \
+          \    alert_id = item.get('alert_id', 'unknown')\n            messages =\
+          \ item.get('messages', [])\n            original_record = item.get('original_record',\
+          \ {})\n            \n            # 提取代表性的payload用于预览\n            payloads\
+          \ = original_record.get('extracted_payloads', [])\n            representative_payload\
+          \ = payloads[0] if payloads else \"N/A\"\n\n            # 直接从messages中组合出完整的prompt，因为它已经被精心格式化好了\n\
+          \            system_content = \"\"\n            user_content = \"\"\n  \
+          \          if isinstance(messages, list):\n                for msg in messages:\n\
+          \                    if msg.get('role') == 'system':\n                 \
+          \       system_content = msg.get('content', '')\n                    elif\
+          \ msg.get('role') == 'user':\n                        user_content = msg.get('content',\
+          \ '')\n            \n            # 组合成最终的prompt\n            prompt = f\"\
+          {system_content}\\n\\n{user_content}\" if system_content and user_content\
+          \ else user_content or system_content\n\n            # 如果prompt为空，则跳过此条目\n\
+          \            if not prompt:\n                continue\n\n            evaluation_cases.append({\n\
+          \                \"test_id\": alert_id,\n                \"prompt\": prompt,\n\
+          \                \"payload\": representative_payload,\n                #\
+          \ http_request 不再是独立字段，信息已在prompt中，此处提供占位符\n                \"http_request\"\
+          : \"N/A (已嵌入Prompt)\" \n            })\n\n        # 3. 输出为合法的JSON数组字符串 (逻辑不变)\n\
+          \        evaluation_json = json.dumps(evaluation_cases, ensure_ascii=False)\n\
+          \n        # 4. 样本预览 (逻辑不变, 可直接复用)\n        sample_data = []\n        for\
+          \ i, case in enumerate(evaluation_cases[:3]):\n            sample_data.append({\n\
+          \                \"序号\": i + 1,\n                \"测试ID\": case['test_id'],\n\
+          \                \"代表性载荷\": case['payload'][:50] + \"...\" if len(case['payload'])\
+          \ > 50 else case['payload'],\n                \"Prompt长度\": f\"{len(case['prompt'])}\
+          \ 字符\",\n                \"Prompt预览\": case['prompt'][:100].replace('\\\
+          n', ' ') + \"...\" if len(case['prompt']) > 100 else case['prompt'].replace('\\\
+          n', ' ')\n            })\n        sample_text = f\"\U0001F4CA 纯净评测数据集: {len(evaluation_cases)}\
+          \ 条用例（无预设答案）\\n\\n\"\n        for sample in sample_data:\n            sample_text\
+          \ += f\"样本 {sample['序号']}:\\n\"\n            for k, v in sample.items():\n\
+          \                if k != \"序号\":\n                    sample_text += f\"\
+          \  {k}: {v}\\n\"\n            sample_text += \"\\n\"\n\n        return {\n\
+          \            \"evaluation_jsonl\": evaluation_json,\n            \"total_count\"\
+          : len(evaluation_cases),\n            \"sample_data\": sample_text.strip(),\n\
+          \            \"conversion_status\": f\"✅ 纯净评测数据集转换成功！生成 {len(evaluation_cases)}\
+          \ 条评测用例。\"\n        }\n\n    except json.JSONDecodeError as e:\n       \
+          \ return {\n            \"evaluation_jsonl\": \"\", \"total_count\": 0,\n\
+          \            \"sample_data\": f\"JSON解析错误: {str(e)}\",\n            \"conversion_status\"\
+          : f\"❌ JSON格式错误: {str(e)}\"\n        }\n    except Exception as e:\n   \
+          \     return {\n            \"evaluation_jsonl\": \"\", \"total_count\"\
+          : 0,\n            \"sample_data\": f\"处理错误: {str(e)}\",\n            \"\
+          conversion_status\": f\"❌ 转换失败: {str(e)}\"\n        }"
+        code_language: python3
+        desc: ''
+        outputs:
+          conversion_status:
+            children: null
+            type: string
+          evaluation_jsonl:
+            children: null
+            type: string
+          sample_data:
+            children: null
+            type: string
+          total_count:
+            children: null
+            type: number
+        selected: false
+        title: jsonl转化
+        type: code
+        variables:
+        - value_selector:
+          - '1758791367742'
+          - test_data
+          value_type: string
+          variable: text
+      height: 54
+      id: '1758875783097'
+      position:
+        x: 1595.2652573593339
+        y: 404.5
+      positionAbsolute:
+        x: 1595.2652573593339
+        y: 404.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(evaluation_jsonl: str) -> dict:\n    \"\"\"\n    Dify代码节点主函数：将evaluation_jsonl分割为最多30份子数组（作为JSONL字符串列表）\n\
+          \    \n    输入参数:\n    - evaluation_jsonl: 直接输入的evaluation_jsonl字符串\n   \
+          \ \n    输出参数:\n    - batches: 实际分割出的子数组列表，每个元素是JSONL格式的字符串（array[string]）\n\
+          \    - batch_counts: 每个子数组的实际数据条数列表\n    - total_count: 总条数\n    - split_status:\
+          \ 分割状态信息\n    \"\"\"\n    import json\n    \n    # 初始化默认返回值\n    batches\
+          \ = []\n    batch_counts = []\n    total_count = 0\n    split_status = \"\
+          ❌ 未知错误\"\n    \n    try:\n        if not evaluation_jsonl or not evaluation_jsonl.strip():\n\
+          \            split_status = \"✅ 操作完成: 输入数据为空，无需分割。\"\n            # 即使输入为空，也返回标准格式的空值，避免下游节点出错\n\
+          \            return {\n                \"batches\": [],\n              \
+          \  \"batch_counts\": [],\n                \"total_count\": 0,\n        \
+          \        \"split_status\": split_status\n            }\n        \n     \
+          \   # 将JSONL字符串解析为对象列表\n        lines = evaluation_jsonl.strip().split('\\\
+          n')\n        cases = [json.loads(line) for line in lines if line.strip()]\n\
+          \        \n        total_count = len(cases)\n        \n        if total_count\
+          \ == 0:\n            split_status = \"✅ 操作完成: 无有效数据用例，无需分割。\"\n        \
+          \    return {\n                \"batches\": [],\n                \"batch_counts\"\
+          : [],\n                \"total_count\": 0,\n                \"split_status\"\
+          : split_status\n            }\n        \n        # --- 核心修改在这里 ---\n   \
+          \     # 1. 确定分割的目标组数，不超过30\n        max_batches = 30\n        \n       \
+          \ # 2. 计算每组的大小，确保总组数不超过 max_batches\n        #    (total_count + max_batches\
+          \ - 1) // max_batches 是一种向上取整的整数除法\n        batch_size = (total_count +\
+          \ max_batches - 1) // max_batches\n        # 确保batch_size至少为1，防止 total_count\
+          \ < max_batches 时计算出0\n        batch_size = max(1, batch_size)\n\n     \
+          \   # 3. 根据计算出的 batch_size 进行分割\n        for i in range(0, total_count,\
+          \ batch_size):\n            batch_cases = cases[i:i + batch_size]\n    \
+          \        # 将当前批次的对象列表转换回JSONL字符串\n            batch_jsonl = '\\n'.join(json.dumps(case,\
+          \ ensure_ascii=False) for case in batch_cases)\n            batches.append(batch_jsonl)\n\
+          \            batch_counts.append(len(batch_cases))\n        \n        #\
+          \ --- 关键改动 ---\n        # 移除了原来用于填充空字符串的 while 循环\n        # 现在 batches\
+          \ 列表的长度就是实际分割出的组数\n        \n        actual_batches_count = len(batches)\n\
+          \        split_status = f\"✅ 分割成功！总共 {total_count} 条数据，被分为 {actual_batches_count}\
+          \ 份。\"\n        \n        return {\n            \"batches\": batches,\n\
+          \            \"batch_counts\": batch_counts,\n            \"total_count\"\
+          : total_count,\n            \"split_status\": split_status\n        }\n\
+          \    \n    except json.JSONDecodeError as e:\n        split_status = f\"\
+          ❌ JSON解析错误: 在处理某一行时失败 - {e}\"\n        return {\n            \"batches\"\
+          : [], \"batch_counts\": [], \"total_count\": 0, \"split_status\": split_status\n\
+          \        }\n    except Exception as e:\n        split_status = f\"❌ 分割失败:\
+          \ 发生意外错误 - {e}\"\n        return {\n            \"batches\": [], \"batch_counts\"\
+          : [], \"total_count\": 0, \"split_status\": split_status\n        }"
+        code_language: python3
+        desc: ''
+        outputs:
+          batch_counts:
+            children: null
+            type: array[number]
+          batches:
+            children: null
+            type: array[string]
+          split_status:
+            children: null
+            type: string
+          total_count:
+            children: null
+            type: number
+        selected: false
+        title: 数据拆分
+        type: code
+        variables:
+        - value_selector:
+          - '1758875783097'
+          - evaluation_jsonl
+          value_type: string
+          variable: evaluation_jsonl
+      height: 54
+      id: '1759023594680'
+      position:
+        x: 1918.7747061516775
+        y: 404.5
+      positionAbsolute:
+        x: 1918.7747061516775
+        y: 404.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The JSON string to convert.
+            ja_JP: The JSON string to convert.
+            pt_BR: The JSON string to convert.
+            zh_Hans: 要转换的JSON字符串。
+          label:
+            en_US: JSON String
+            ja_JP: JSON String
+            pt_BR: JSON String
+            zh_Hans: JSON字符串
+          llm_description: The JSON string to convert.
+          max: null
+          min: null
+          name: json_str
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: The filename for the generated Excel file
+            ja_JP: The filename for the generated Excel file
+            pt_BR: The filename for the generated Excel file
+            zh_Hans: 生成的Excel文件的文件名
+          label:
+            en_US: Excel filename
+            ja_JP: Excel filename
+            pt_BR: Excel filename
+            zh_Hans: Excel文件名
+          llm_description: The filename that will be used for the generated Excel
+            file
+          max: null
+          min: null
+          name: filename
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          filename: ''
+          json_str: ''
+        provider_id: qiangxinglin/excel_tools/excel_tools
+        provider_name: qiangxinglin/excel_tools/excel_tools
+        provider_type: builtin
+        selected: false
+        title: Json转Excel
+        tool_configurations: {}
+        tool_description: 将Json转换为Excel。
+        tool_label: Json转Excel
+        tool_name: json2excel
+        tool_node_version: '2'
+        tool_parameters:
+          filename:
+            type: mixed
+            value: ceshi
+          json_str:
+            type: mixed
+            value: '{{#1758875783097.evaluation_jsonl#}}'
+        type: tool
+      height: 54
+      id: '1759046632902'
+      position:
+        x: 2285.259429927588
+        y: 404.5
+      positionAbsolute:
+        x: 2285.259429927588
+        y: 404.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 53.00046095534003
+      y: 122.23136836703753
+      zoom: 0.6346354430099276

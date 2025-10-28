@@ -1,0 +1,531 @@
+app:
+  description: 通过ai识别虚拟化与容器，解析端口banner资产应用信息，作为版本匹配的补充，发现并上报未覆盖的客户资产。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 资产识别智能体
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/siliconflow:0.0.23@da2cc8bd076ff081b0c4f69e6d484e3e1e79bd3ad1d937a9c00d9ffdbc8dd14f
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1756259565994-source-1756260366755-target
+      selected: false
+      source: '1756259565994'
+      sourceHandle: source
+      target: '1756260366755'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1756260366755-source-1756260631029-target
+      source: '1756260366755'
+      sourceHandle: source
+      target: '1756260631029'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: iteration
+      id: 1756260631029-source-1756452841789-target
+      source: '1756260631029'
+      sourceHandle: source
+      target: '1756452841789'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1756452841789'
+        sourceType: iteration-start
+        targetType: knowledge-retrieval
+      id: 1756452841789start-source-1756452853591-target
+      source: 1756452841789start
+      sourceHandle: source
+      target: '1756452853591'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1756452841789'
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1756452853591--1756452869687-target
+      source: '1756452853591'
+      sourceHandle: source
+      target: '1756452869687'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1756452841789'
+        sourceType: code
+        targetType: llm
+      id: 1756452869687--1756452933960-target
+      source: '1756452869687'
+      sourceHandle: source
+      target: '1756452933960'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: end
+      id: 1756452841789-source-1756453202315-target
+      source: '1756452841789'
+      sourceHandle: source
+      target: '1756453202315'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: banner
+          max_length: 4000
+          options: []
+          required: true
+          type: paragraph
+          variable: banner
+      height: 90
+      id: '1756259565994'
+      position:
+        x: 79
+        y: 282
+      positionAbsolute:
+        x: 79
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1756259565994'
+          - banner
+        desc: 从输入中提取所有的产品和版本信息
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 635b4482-0af4-414f-adbf-564c4b7def23
+          role: system
+          text: "你是 Web 资产识别指纹专家，需要对输入的 {{#1756259565994.banner#}}进行进行分析识别，从中提取出资产的\
+            \ 产品名称及其版本号，只需要严格的产品名称和版本号。\n\n输入banner数据：\n{{#1756259565994.banner#}}\n\
+            \n注意产品后包含的括号有操作系统时，操作系统不为判断的产品，例如Server: Apache (Red Hat Linux等其他操作系统)，识别为产品APACHE\
+            \ HTTP Server即可，不需要提取操作系统信息，注意不要遗漏输入信息中的产品。\n输出要求：\n    •如果只包含一个产品：输出为\
+            \ 产品名称 --- 版本号\n    •如果包含多个产品：每个产品一行，格式为\n            产品名称 --- 版本号  \n\
+            \            产品名称2 --- 版本号2  \n\n请注意准确区分产品名和版本号，并确保每个产品信息单独列出，避免混淆。\n\
+            若版本号未知，则输出空值。例如'OpenSSH --- 7.4'、'APACHE HTTP Server --- '、'dameng ---\
+            \ '\n\n"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 118
+      id: '1756260366755'
+      position:
+        x: 383
+        y: 282
+      positionAbsolute:
+        x: 383
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\n\ndef main(arg1: str, arg2: dict) -> dict:\n    \"\"\"\n\
+          \    解析输入字符串（arg1），提取产品和版本。\n    格式： product --- version\n    \"\"\"\n \
+          \   # 处理输入文本，去除首尾空白\n    input_text = arg1.strip()\n    # 按行分割文本\n    lines\
+          \ = input_text.splitlines()\n    \n    # 正则表达式匹配 product --- version 格式\n\
+          \    # 允许版本为空，允许 --- 前后有任意空格\n    pattern = re.compile(r'^(.*?)\\s*---\\\
+          s*(.*)$')\n    \n    # 存储提取结果\n    products = []\n    versions = []\n  \
+          \  all_result = []  # 存储完整的键值对\n    result_total = []  # 可用于存储汇总信息\n   \
+          \ \n    for line in lines:\n        # 去除每行首尾空白\n        line = line.strip()\n\
+          \        if not line:  # 跳过空行\n            continue\n            \n    \
+          \    # 尝试匹配模式\n        match = pattern.match(line)\n        if match:\n\
+          \            # 提取产品名称并去除前后空白\n            product = match.group(1).strip()\n\
+          \            # 提取版本号并去除前后空白（允许版本为空）\n            version = match.group(2).strip()\
+          \ if match.group(2) else \"\"\n            \n            # 添加到结果列表\n   \
+          \         products.append(product)\n            versions.append(version)\n\
+          \            all_result.append({\"product\": product, \"version\": version})\n\
+          \    \n    # 可以根据需要向 result_total 添加汇总信息\n    result_total.append(f\"共提取到\
+          \ {len(products)} 个产品信息\")\n    \n    return {\n        \"products\": products,\n\
+          \        \"versions\": versions,\n        \"all_result\": all_result,\n\
+          \        \"result\": result_total\n    }\n"
+        code_language: python3
+        desc: 分解产品和版本信息
+        outputs:
+          all_result:
+            children: null
+            type: array[object]
+          products:
+            children: null
+            type: array[string]
+          result:
+            children: null
+            type: array[string]
+          versions:
+            children: null
+            type: array[string]
+        selected: false
+        title: 分解产品和版本信息
+        type: code
+        variables:
+        - value_selector:
+          - '1756260366755'
+          - text
+          value_type: string
+          variable: arg1
+        - value_selector:
+          - '1756260366755'
+          - usage
+          value_type: object
+          variable: arg2
+      height: 82
+      id: '1756260631029'
+      position:
+        x: 687
+        y: 282
+      positionAbsolute:
+        x: 687
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 180
+        is_parallel: false
+        iterator_input_type: array[string]
+        iterator_selector:
+        - '1756260631029'
+        - products
+        output_selector:
+        - '1756452933960'
+        - structured_output
+        output_type: array[object]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1756452841789start
+        title: 迭代
+        type: iteration
+        width: 996
+      height: 180
+      id: '1756452841789'
+      position:
+        x: 107.05922682834989
+        y: 495.6190201831488
+      positionAbsolute:
+        x: 107.05922682834989
+        y: 495.6190201831488
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 996
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1756452841789start
+      parentId: '1756452841789'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 131.0592268283499
+        y: 563.6190201831488
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        dataset_ids:
+        - CIA72lgbmrhGtXREXvNZsHlJOcJ8yHBdy5UoPo8X6UJxqJYpbK9HDbpibp3DRIS2
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1756452841789'
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          reranking_model:
+            model: BAAI/bge-reranker-v2-m3
+            provider: langgenius/siliconflow/siliconflow
+          top_k: 4
+        query_variable_selector:
+        - '1756452841789'
+        - item
+        retrieval_mode: multiple
+        selected: false
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 92
+      id: '1756452853591'
+      parentId: '1756452841789'
+      position:
+        x: 129.1719534783092
+        y: 66.8280465216908
+      positionAbsolute:
+        x: 236.2311803066591
+        y: 562.4470667048396
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "def main(arg1: list, arg2: list, index: int) -> dict:\n    # arg1 是完整的\
+          \ all_result 数组（包含多个产品的 {product, version} 信息）\n    # 通过迭代的 index 获取当前产品的字典\n\
+          \    current_product_info = arg1[index] if index < len(arg1) else {}\n \
+          \   \n    # 提取初始产品名称和版本\n    original_product = current_product_info.get(\"\
+          product\", \"\")\n    version = current_product_info.get(\"version\", \"\
+          \")\n    \n    # 提取知识检索结果的 content 数组\n    product = [item.get(\"content\"\
+          , \"\").strip() for item in arg2 if isinstance(item, dict)]\n    \n    return\
+          \ {\n        \"product\": product,\n        \"original_product\": original_product,\
+          \ \n        \"version\": version\n    }"
+        code_language: python3
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1756452841789'
+        outputs:
+          original_product:
+            children: null
+            type: string
+          product:
+            children: null
+            type: array[string]
+          version:
+            children: null
+            type: string
+        selected: false
+        title: 存储相似向量结果
+        type: code
+        variables:
+        - value_selector:
+          - '1756260631029'
+          - all_result
+          value_type: array[object]
+          variable: arg1
+        - value_selector:
+          - '1756452853591'
+          - result
+          value_type: array[object]
+          variable: arg2
+        - value_selector:
+          - '1756452841789'
+          - index
+          value_type: number
+          variable: index
+      height: 54
+      id: '1756452869687'
+      parentId: '1756452841789'
+      position:
+        x: 432
+        y: 68
+      positionAbsolute:
+        x: 539.0592268283499
+        y: 563.6190201831488
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1756452869687'
+          - product
+        desc: ''
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1756452841789'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 9d22fcc3-8bce-4c63-81a8-025dcc6899eb
+          role: system
+          text: "你是一个自动化漏洞查重专家，需要基于 cpe标准词典中现有产品名称，对 **当前目标产品{{#1756452869687.product#}}（版本：{{#1756452869687.version#}}）**\
+            \ 进行判定。（注意：当前目标产品的知识检索结果为{{#1756452869687.product#}}数组）。\n\n判断规则：\n1.\
+            \ 【优先精确匹配】若知识检索结果中存在 **与输入产品名称完全一致** 的条目，直接选中该条目，忽略包含此名称的扩展版本（如 \"asp.net_mvc\"\
+            \ 等）；  \n2. 【缩写与厂商拆分匹配】若无精确匹配，再处理输入产品与库中数据的缩写、厂商拆分问题（例如输入为 JBoss-EAP，在库中对应\
+            \ redhat jboss_enterprise_application_platform；erlang_otp 对应 erlang/otp\
+            \ 等 ）；  \n3. 【版本关联约束】当输入产品版本为空时，更严格执行“精确匹配优先”，避免因版本缺失导致模型误选扩展名称；  \n4.\
+            \ 【字符匹配度兜底】若以上规则均无匹配，按产品名称字符匹配度排序，优先选匹配度最高的结果。  \n\n输出要求：只输出匹配上cpe标准词典中现有的产品名称，禁止输出非cpe标准词典中的名称（例如非库中产品名称mssqlserver、jboss-eap、erlang_otp等），只需输出最相似的一个对应结果，无需输出解析过程和判定结果过程。\n\
+            匹配结果输出格式如下：\n{\n    \"vender\":  厂商名称vendor,\n    \"product\": 产品名称product,\n\
+            \    \"version\": {{#1756452869687.version#}}\n}\n若不存在则置空，若匹配失败，则不输出内容。\n\
+            \n**cpe标准词典中现有产品名称**\n厂商:vendor -- 产品:product\n\n*输入的产品列表**\n{{#1756452869687.product#}}\n\
+            {{#1756452869687.version#}}\n{{#1756260631029.result#}}\n\n# 关键补充：显式要求\
+            \ JSON 格式输出 #\n请严格按照上述 JSON 格式返回结果，确保输出为标准 JSON 结构。\n"
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              product:
+                type: string
+              vender:
+                type: string
+              version:
+                type: string
+            required:
+            - vender
+            - product
+            - version
+            type: object
+        structured_output_enabled: true
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1756452933960'
+      parentId: '1756452841789'
+      position:
+        x: 736
+        y: 68
+      positionAbsolute:
+        x: 843.0592268283499
+        y: 563.6190201831488
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1756452841789'
+          - output
+          value_type: array[object]
+          variable: result
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1756453202315'
+      position:
+        x: 1163.05922682835
+        y: 495.6190201831488
+      positionAbsolute:
+        x: 1163.05922682835
+        y: 495.6190201831488
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -487.1304239263862
+      y: -24.84058877049921
+      zoom: 0.8117372352564113

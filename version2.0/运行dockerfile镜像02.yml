@@ -1,0 +1,395 @@
+app:
+  description: '111'
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 运行dockerfile镜像02
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: d5ac9250-1892-45dd-b34c-83ff8dab143e
+    name: API_KEY
+    selector:
+    - env
+    - API_KEY
+    value: e62a9b0d239d3f6fe2f203c5bede453c
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1751874365670-source-1751874594906-target
+      source: '1751874365670'
+      sourceHandle: source
+      target: '1751874594906'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1751874594906-source-1751874367651-target
+      source: '1751874594906'
+      sourceHandle: source
+      target: '1751874367651'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1751874367651-source-1751875003034-target
+      source: '1751874367651'
+      sourceHandle: source
+      target: '1751875003034'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1751875003034-source-1751874372360-target
+      source: '1751875003034'
+      sourceHandle: source
+      target: '1751874372360'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: input
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: input
+      height: 90
+      id: '1751874365670'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1751874594906'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 66611fe2-beff-4dea-a132-7cb8a35102ea
+          role: system
+          text: "角色： 你是一个专业的 Docker 容器启动命令生成器。你将分析用户提供的可用镜像列表和他们的启动请求{{#1751874594906.result#}}，然后生成一个用于启动指定容器的\
+            \ curl 命令。\n职责：\n解析可用镜像列表： 理解提供的 Markdown 表格形式的 Docker 镜像信息，识别出可用的镜像名称和标签。\n\
+            理解用户意图： 识别用户想要启动哪个具体的镜像。\n智能决策并生成命令：\n容器名称 (name)： 自动为容器生成一个有意义的名称，通常是\
+            \ 镜像名_container 或 镜像名_lab。\n端口映射 (ports)：\n根据目标镜像的类型（例如：Web 应用、数据库、SSH\
+            \ 服务等），智能地推荐并选择一个最常用且合适的宿主机端口进行映射。\n重要：ports 字段只允许包含一个端口映射字符串，格式为 \"宿主机端口:容器端口\"\
+            。\n常见默认端口：\nWeb 应用 (如 DVWA, Juice Shop, Nginx): 容器端口通常是 80 或 3000，推荐映射到宿主机\
+            \ 8080。\nMySQL 数据库: 容器端口 3306，推荐映射到宿主机 3306。\nRedis 数据库: 容器端口 6379，推荐映射到宿主机\
+            \ 6379。\nSSH 服务 (如 Metasploitable): 容器端口 22，推荐映射到宿主机 2222。\n环境变量 (env_vars)：\
+            \ 如果已知某个镜像（如标准 mysql 镜像）在启动时需要特定的环境变量（例如 MYSQL_ROOT_PASSWORD），请在 env_vars\
+            \ 字段中包含这些变量。env_vars 必须是字符串列表，每个元素形如 \"KEY=VALUE\"。对于自定义构建的镜像，如果其 Dockerfile\
+            \ 已将凭据硬编码到 CMD 或 ENTRYPOINT，则无需额外 env_vars。\n构造 curl 命令： 严格按照以下模板生成 curl\
+            \ 命令。\ncurl 命令模板：\ncurl -X POST \"http://10.50.24.154:8005/docker/run\"\
+            \ -H \"Content-Type: application/json\" -d '{\"image\":\"镜像名:标签\",\"name\"\
+            :\"容器名\",\"ports\":[\"宿主机端口:容器端口\"][, \"env_vars\":[\"环境变量名=环境变量值\"]]\
+            \ }'\n输出格式：\n你的输出必须只包含一个完整的 curl 命令字符串，不包含任何额外的文字、解释、JSON 格式或 Markdown\
+            \ 代码块。\n输入示例：\nJSON\n{\n  \"result\": \"### \U0001F4CB 当前可用Docker镜像\\\
+            n\\n| 镜像名称 | 标签 | 镜像ID | 大小 | 创建时间 |\\n|---------|-----|--------|------|--------|\\\
+            n| docker-docker-api | latest | 68092649dad5 | 103MB | 2025-07-03 09:10:40\
+            \ +0800 CST |\\n| <none> | <none> | 1da800da81a9 | 136MB | 2025-07-02\
+            \ 16:30:50 +0800 CST |\\n| langgenius/dify-api | 1.5.0 | e83456ad9de1\
+            \ | 1.98GB | 2025-06-25 17:24:41 +0800 CST |\\n| langgenius/dify-web |\
+            \ 1.5.0 | 2cd0aa1baee1 | 535MB | 2025-06-25 17:00:56 +0800 CST |\\n| nginx\
+            \ | latest | 9592f5595f2b | 192MB | 2025-06-25 04:52:14 +0800 CST |\\\
+            n| bkimminich/juice-shop | latest | f056b7d0c127 | 418MB | 2025-06-17\
+            \ 06:23:41 +0800 CST |\\n| langgenius/dify-plugin-daemon | 0.1.2-local\
+            \ | 95a00635bf89 | 1.38GB | 2025-06-11 16:23:07 +0800 CST |\\n| postgres\
+            \ | 15-alpine | 8c5b83868f93 | 274MB | 2025-06-07 02:27:47 +0800 CST |\\\
+            n| my-secure-redis | latest | 5c22deb3f5d4 | 128MB | 2025-05-30 00:02:07\
+            \ +0800 CST |\\n| langgenius/dify-sandbox | 0.2.12 | ba1b250b9505 | 578MB\
+            \ | 2025-05-07 18:08:12 +0800 CST |\\n| redis | 6-alpine | 70b635414ee2\
+            \ | 30.2MB | 2025-04-24 16:18:49 +0800 CST |\\n| ubuntu/squid | latest\
+            \ | feec1ad0ab0a | 213MB | 2025-04-16 21:58:15 +0800 CST |\\n| webgoat/webgoat\
+            \ | latest | d8434d588ee3 | 601MB | 2023-03-12 03:20:13 +0800 CST |\\\
+            n| mysql | 5.7.44 | 5107333e08a8 | 501MB | 2023-12-13 03:11:08 +0800 CST\
+            \ |\\n| semitechnologies/weaviate | 1.19.0 | 8ec9f084ab23 | 52.5MB | 2023-05-05\
+            \ 00:01:32 +0800 CST |\\n| postgres | 10.7-alpine | 2a46e2abc7d6 | 70.7MB\
+            \ | 2019-04-25 08:28:10 +0800 CST |\\n| vulhub/confluence | 6.10.2 | 8d358560578b\
+            \ | 725MB | 2019-04-10 05:52:24 +0800 CST |\\n| vulnerables/web-dvwa |\
+            \ latest | ab0d83586b6e | 712MB | 2018-10-13 01:49:01 +0800 CST |\\n|\
+            \ tleemcjr/metasploitable2 | latest | db90cb788ea1 | 1.51GB | 2018-01-28\
+            \ 15:09:54 +0800 CST |\\n| raesene/bwapp | latest | 8be28fba48ec | 441MB\
+            \ | 2016-02-15 18:35:01 +0800 CST |\\n\\n**用户查询**: 启动my-secure-redis镜像\"\
+            \n}\n\n预期模型输出：\ncurl -X POST \"http://10.50.24.154:8005/docker/run\" -H\
+            \ \"Content-Type: application/json\" -d '{\"image\":\"my-secure-redis:latest\"\
+            ,\"name\":\"my-secure-redis-container\",\"ports\":[\"6379:6379\"]}'\n\n\
+            重要提示：\n严格按照上述 curl 命令模板生成，确保 URL 和 JSON payload 的拼接正确无误，特别是 JSON 内部的转义字符\
+            \ \\\"。\nports 字段必须是一个包含单个字符串的 JSON 数组。\n如果用户请求启动的镜像在列表中不存在，请回复“抱歉，我无法在可用镜像列表中找到您请求的镜像。”\n\
+            如果镜像需要特定环境变量（例如 mysql:5.7.44 需要 MYSQL_ROOT_PASSWORD），请务必在 env_vars 字段中添加。对于\
+            \ my-secure-redis，其 Dockerfile 已将密码作为 CMD 参数，因此不需要额外的 env_vars。\n请只输出可执行的命令内容，不要添加任何额外解释。"
+        selected: false
+        title: 生成curl
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1751874367651'
+      position:
+        x: 684
+        y: 282
+      positionAbsolute:
+        x: 684
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1751874367651'
+          - text
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1751874372360'
+      position:
+        x: 1344.5632343732268
+        y: 282
+      positionAbsolute:
+        x: 1344.5632343732268
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\nimport requests\n\
+          import json\n\ndef main(input:str, API_KEY:str) -> dict:\n    \"\"\"\n \
+          \   获取所有Docker镜像信息并返回，让后端大模型进行比对\n    \n    参数:\n        input: 用户输入的查询文本，包含对靶场环境的需求描述\n\
+          \        \n    返回:\n        dict: 包含所有镜像信息和用户输入的格式化文本\n    \"\"\"\n    #\
+          \ API服务的URL\n    API_BASE_URL = \"http://172.17.0.1:8005\"\n    \n    #\
+          \ 添加API密钥到请求头\n    headers = {\n        \"X-API-Key\": API_KEY\n    }\n\
+          \    \n    try:\n        # 获取当前可用的Docker镜像\n        try:\n            images_response\
+          \ = requests.get(f\"{API_BASE_URL}/docker/images\", headers=headers, timeout=10)\n\
+          \            images_response.raise_for_status()\n            images_data\
+          \ = images_response.json()\n        except Exception as e:\n           \
+          \ return {\n                \"result\": f\"### ⚠️ 获取Docker镜像列表失败\\n\\n无法获取当前可用的Docker镜像列表。\\\
+          n错误信息: {str(e)}\\n\\n请确认Docker服务正常运行。\\n\\n**用户查询**: {input}\"\n       \
+          \     }\n        \n        if images_data.get(\"status\") != \"success\"\
+          :\n            return {\n                \"result\": f\"### ⚠️ 获取Docker镜像列表失败\\\
+          n\\n无法获取当前可用的Docker镜像列表。\\n错误信息: {images_data.get('message', '未知错误')}\\\
+          n\\n请确认Docker服务正常运行。\\n\\n**用户查询**: {input}\"\n            }\n        \n\
+          \        # 获取所有镜像\n        images = images_data.get(\"images\", [])\n  \
+          \      \n        # 如果没有镜像\n        if not images:\n            return {\n\
+          \                \"result\": f\"### ℹ️ 当前环境中没有Docker镜像\\n\\n未检测到任何可用的Docker镜像。可能需要先拉取相关镜像。\\\
+          n\\n**用户查询**: {input}\"\n            }\n        \n        # 返回所有镜像信息\n \
+          \       result = f\"### \U0001F4CB 当前可用Docker镜像\\n\\n\"\n        \n    \
+          \    # 表格标题\n        result += \"| 镜像名称 | 标签 | 镜像ID | 大小 | 创建时间 |\\n\"\n\
+          \        result += \"|---------|-----|--------|------|--------|\\n\"\n \
+          \       \n        # 表格内容\n        for image in images:\n            repo\
+          \ = image.get(\"Repository\", \"\")\n            tag = image.get(\"Tag\"\
+          , \"\")\n            image_id = image.get(\"ID\", \"\")\n            size\
+          \ = image.get(\"Size\", \"\")\n            created = image.get(\"CreatedAt\"\
+          , \"\")\n            result += f\"| {repo} | {tag} | {image_id} | {size}\
+          \ | {created} |\\n\"\n        \n        result += f\"\\n**用户查询**: {input}\"\
+          \n        \n        return {\"result\": result}\n        \n    except requests.exceptions.ConnectionError:\n\
+          \        return {\n            \"result\": f\"### ❌ 连接错误\\n\\n无法连接到Docker\
+          \ API服务。请确保服务正在运行。\\n\\n**用户查询**: {input}\"\n        }\n    except requests.exceptions.Timeout:\n\
+          \        return {\n            \"result\": f\"### ⏱️ 请求超时\\n\\n连接Docker\
+          \ API服务超时。请检查服务状态后重试。\\n\\n**用户查询**: {input}\"\n        }\n    except Exception\
+          \ as e:\n        return {\n            \"result\": f\"### \U0001F525 未知错误\\\
+          n\\n处理Docker镜像查询时发生错误: {str(e)}\\n\\n**用户查询**: {input}\"\n        } "
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 查看镜像
+        type: code
+        variables:
+        - value_selector:
+          - '1751874365670'
+          - input
+          variable: input
+        - value_selector:
+          - env
+          - API_KEY
+          value_type: string
+          variable: API_KEY
+      height: 54
+      id: '1751874594906'
+      position:
+        x: 385.1569942835798
+        y: 282
+      positionAbsolute:
+        x: 385.1569942835798
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(input: str, API_KEY: str) -> dict:\n    \"\"\"\n    仅向 /docker/run\
+          \ 发送非阻塞式启动请求，并返回友好提示\n    —— 若检测到密码/密钥相关 env_vars，末尾回显具体变量及其值\n    \"\"\"\
+          \n    import requests, json, re\n\n    result_lines = []\n    secret_pairs\
+          \ = []          # ← 存储 (name, value) 元组\n\n    try:\n        # 1️⃣ 解析 URL\n\
+          \        url_match = re.search(r'http[^\"]+/docker/run', input)\n      \
+          \  url = url_match.group(0) if url_match else \"http://172.17.0.1:8001/docker/run\"\
+          \n        result_lines.append(f\"Docker API 地址: {url}\")\n\n        # 2️⃣\
+          \ 提取 JSON\n        m = re.search(r'-d\\s+(?P<q>[\\'\"])(?P<body>\\{.*?})(?P=q)',\
+          \ input, re.DOTALL)\n        if not m:\n            return {\"result\":\
+          \ \"错误: 无法从输入中提取 JSON 数据\"}\n\n        cleaned = m.group('body').replace(r'\\\
+          \"', '\"')\n        try:\n            data_json = json.loads(cleaned)\n\
+          \        except json.JSONDecodeError:\n            return {\"result\": f\"\
+          错误: JSON 解析失败 - {cleaned}\"}\n\n        image_name = data_json.get(\"image\"\
+          , \"未指定镜像\")\n        result_lines.append(f\"目标镜像: {image_name}\")\n\n \
+          \       # 2️⃣·a 收集敏感 env_vars\n        for env in data_json.get(\"env_vars\"\
+          , []):\n            name, _, value = env.partition(\"=\")\n            if\
+          \ re.search(r'(?i)(pass(word)?|pwd|secret|token)', name):\n            \
+          \    secret_pairs.append((name, value))\n\n        # 3️⃣ 发送请求\n        headers\
+          \ = {\"Content-Type\": \"application/json\", \"X-API-Key\": API_KEY}\n \
+          \       result_lines.append(\"\\n发送 RUN 请求中...\")\n        resp = requests.post(url,\
+          \ headers=headers, json=data_json, timeout=30)\n\n        # 4️⃣ 处理响应\n \
+          \       if 200 <= resp.status_code < 300:\n            try:\n          \
+          \      js = resp.json()\n                result_lines.append(\"✅ 容器启动请求已被接受!\"\
+          )\n                if msg := js.get(\"message\"):\n                    result_lines.append(f\"\
+          服务器消息: {msg}\")\n                if ports := data_json.get(\"ports\"):\n\
+          \                    result_lines.append(f\"端口映射: {', '.join(ports)}\")\n\
+          \                result_lines.append(\"\\n容器已在后台启动，可稍后调用 /docker/ps 查看状态。\"\
+          )\n            except json.JSONDecodeError:\n                result_lines.append(f\"\
+          请求成功但无法解析响应: {resp.text}\")\n        else:\n            result_lines.append(f\"\
+          ❌ 请求失败 (状态码: {resp.status_code})\")\n            result_lines.append(f\"\
+          错误信息: {resp.text}\")\n\n    except requests.exceptions.Timeout:\n      \
+          \  result_lines.append(\"⚠️ 请求超时，但容器可能仍在后台启动\")\n    except requests.exceptions.ConnectionError:\n\
+          \        result_lines.append(\"❌ 无法连接到 Docker API 服务\")\n    except Exception\
+          \ as e:\n        result_lines.append(f\"❌ 执行错误: {str(e)}\")\n\n    # 5️⃣\
+          \ 回显密码环境变量\n    if secret_pairs:\n        result_lines.append(\"\\n\U0001F510\
+          \ 传入的敏感环境变量：\")\n        for name, value in secret_pairs:\n            result_lines.append(f\"\
+          \  • {name} = {value}\")\n\n    result_lines.append(\"\\n如需停止或删除容器，可调用 /docker/stop\
+          \ 或 /docker/rm。\")\n    return {\"result\": '\\n'.join(result_lines)}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 运行镜像
+        type: code
+        variables:
+        - value_selector:
+          - '1751874367651'
+          - text
+          variable: input
+        - value_selector:
+          - env
+          - API_KEY
+          value_type: string
+          variable: API_KEY
+      height: 54
+      id: '1751875003034'
+      position:
+        x: 1039.7782629553276
+        y: 291.2559542686387
+      positionAbsolute:
+        x: 1039.7782629553276
+        y: 291.2559542686387
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 236.43692282077063
+      y: 87.37111873341607
+      zoom: 0.8643085054023973

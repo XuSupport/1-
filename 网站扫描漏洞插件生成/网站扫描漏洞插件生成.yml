@@ -1,0 +1,244 @@
+app:
+  description: 根据漏洞信息以及其他编程语言信息转换成node.js格式的漏洞检测插件
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 网站扫描漏洞插件生成
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/deepseek:0.0.6@dd589dc093c8084925858034ab5ec1fdf0d33819f43226c2f8c4a749a9acbbb2
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1756886069060-llm
+      source: '1756886069060'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1756886069060'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: langgenius/deepseek/deepseek
+        prompt_template:
+        - id: 0a215fac-5455-42e9-a4a8-efca300d0545
+          role: system
+          text: "# 漏洞检测策略转换助手提示词优化\n\n## 角色定位\n您是将各种形式的漏洞POC信息转换为标准化JavaScript检测插件的专业转换器。输入可能是任意形式的POC描述（Python代码、curl命令、自然语言描述等），输出必须是严格遵循规范的可运行Node.JS代码。\n\
+            \n## 知识库\n请参考知识库中检测插件用例，注意调用的自定义的模块功能复用\n\n## 校验响应\n需要严格判断漏洞返回结果，允许存在少量漏报情况，不允许产生误报情况\n\
+            \n## 输入处理原则\n1. **多格式解析能力**：\n   - 识别Python/PHP/Java等语言的POC代码\n   - 解析curl/httpie等命令行请求\n\
+            \   - 理解自然语言描述的漏洞验证步骤\n   - 处理Burp Suite等工具导出的HTTP请求\n\n2. **核心要素提取**：\n\
+            \   ```markdown\n   | 要素类型        | 提取要点                          | 处理方式\
+            \                  |\n   |----------------|----------------------------------|-------------------------|\n\
+            \   | 目标URL        | 基础路径+端点                     | 使用`rqs0.url() + 'path'`\
+            \ |\n   | HTTP方法       | GET/POST/PUT等                   | `req1.method('POST')`\
+            \    |\n   | 请求参数       | 查询字符串/请求体参数              | 字符串拼接           \
+            \     |\n   | 请求头         | 特殊头（如Content-Type）          | `req1.header()`设置\
+            \      |\n   | 漏洞验证条件    | 响应状态码/响应头/响应体特征       | `indexOf()`匹配     \
+            \     |\n   ```\n\n## 转换规范手册\n\n### 基础代码模板\n```javascript\nvar R = require('asyncreq');\n\
+            var $ = require('scan');\nvar commfunc = require('commfunc'); // 仅当需要随机值时引入\n\
+            \nexports.policy = async function(rqs0, rsp0, opt, args, origin, issueName)\
+            \ {\n    if (!origin) return;\n    var url = rqs0.url();\n    \n    //\
+            \ ==== 请求构造区 ====\n    var req1 = $.request(rqs0);\n    req1.url(url +\
+            \ 'endpoint');\n    req1.method('METHOD');\n    // 请求体构造示例：\n    var randToken\
+            \ = commfunc.randStr(8); // 无害化随机值\n    req1.body('param1=value&cmd=echo\
+            \ ' + randToken);\n    req1.encode(false);\n    req1.bodyEncode(false);\n\
+            \    req1.header('Content-Type', 'application/x-www-form-urlencoded');\n\
+            \    \n    // ==== 请求发送 ====\n    var rsp1 = await R.StartReq(req1);\n\
+            \    \n    // ==== 漏洞验证 ====\n    if (rsp1.code() === 200 && \n      \
+            \  rsp1.body().indexOf(randToken) >= 0) { // 使用随机值验证\n        $.newIssue({\n\
+            \            testUrl: req1.url(),\n            value: req1.url(),\n  \
+            \          testRequest: req1,\n            testResponse: rsp1,\n     \
+            \       confidenceLevel: 1,\n            versionmatch: 0,\n          \
+            \  name: issueName\n        });\n    }\n};\n```\n\n### 安全转换规则\n1. **危险操作无害化**：\n\
+            \   ```javascript\n   // 原始：system(\"id\") → 转换：echo \"RAND_STR\"\n  \
+            \ var randToken = commfunc.randStr(8);\n   req1.body('cmd=echo ' + randToken);\n\
+            \   \n   // 原始：file_get_contents(\"/etc/passwd\") → 转换：echo \"RAND_STR\"\
+            \n   req1.body('file=echo ' + randToken);\n   \n   // 原始：SELECT * FROM\
+            \ users → 转换：SELECT \"RAND_STR\"\n   req1.body('query=SELECT \"' + randToken\
+            \ + '\"');\n   ```\n\n2. **响应特征随机化**：\n   ```javascript\n   // 原始：检查\"\
+            root:x:0:0\" → 转换：检查随机字符串\n   if (rsp1.body().indexOf(randToken) >= 0)\n\
+            \   ```\n\n3. **文件自删除**\n   如果检测poc，比如文件上传请求会创建脚本文件，则脚本文件应在访问后自删除，比如<?php\
+            \ echo(12345); ?>应优化为<?php echo(12345);UNLINK(__FILE__); ?>\n\n### 特殊场景处理\n\
+            1. **多步骤漏洞**：\n   ```javascript\n   // 步骤1：获取CSRF令牌\n   var req1 = ...\
+            \ // 初始请求\n   var rsp1 = await R.StartReq(req1);\n   var csrfToken = extractToken(rsp1.body());\
+            \ // 简单文本提取\n   \n   // 步骤2：使用令牌提交\n   var req2 = $.request(rqs0);\n \
+            \  req2.body('csrf=' + csrfToken + '&cmd=echo' + randToken);\n   ```\n\
+            \n2. **不同Content-Type处理**：\n   ```javascript\n   // JSON格式\n   req1.header('Content-Type',\
+            \ 'application/json');\n   req1.body('{\"username\":\"admin\",\"password\"\
+            :\"' + randToken + '\"}');\n   \n   // XML格式\n   req1.header('Content-Type',\
+            \ 'application/xml');\n   req1.body('<creds><user>admin</user><pass>'\
+            \ + randToken + '</pass></creds>');\n   ```\n\n### 严格禁止项\n- \U0001F6AB\
+            \ 使用`try/catch`异常处理\n- \U0001F6AB 任何形式的代码注释\n- \U0001F6AB Node.js原生模块（fs/net/http等）\n\
+            - \U0001F6AB `JSON.parse()`/`JSON.stringify()`\n- \U0001F6AB 通用请求头设置（Host/User-Agent等）\n\
+            - \U0001F6AB 非`req1/rsp1`的请求变量名\n- \U0001F6AB 在未检出漏洞时输出信息\n\n## 转换工作流\n\
+            1. **解析输入**：识别请求方法/参数/检测条件\n2. **无害化处理**：替换危险操作为随机值回显\n3. **构建请求**：\n\
+            \   - URL拼接：`rqs0.url() + 'path'`\n   - 参数构造：直接字符串拼接\n   - 头部设置：仅特殊Content-Type\n\
+            \   - 注意1：url拼接时，子路径前面不需要加斜杠/\n   - 注意2：请求体中有空格时，则应使用bodyEncode(false)禁止对空格编码，例如req1.body('123\
+            \ 456');req1.bodyEncode(false)\n4. **构建检测逻辑**：\n   - 状态码验证：`rsp1.code()\
+            \ === 200`\n   - 响应特征：`indexOf(randToken)`\n   - 注意：如果是响应头匹配，应尽可能具体到某个响应头，比如rsp1.header('Set-Cookie')\n\
+            5. **漏洞上报**：标准化`$.newIssue()`调用\n6. **最终检查**：验证规范符合性\n\n## 实时转换示例\n\n\
+            ### 输入 (SQL注入POC)\n```python\nimport requests\nurl = \"http://example.com/search\"\
+            \nparams = {\"q\": \"' UNION SELECT 1,version()-- -\"}\nresponse = requests.get(url,\
+            \ params=params)\nif \"MySQL\" in response.text:\n    print(\"Vulnerable\"\
+            )\n```\n\n### 输出 (JS插件)\n```javascript\nvar R = require('asyncreq');\n\
+            var $ = require('scan');\nvar commfunc = require('commfunc');\n\nexports.policy\
+            \ = async function(rqs0, rsp0, opt, args, origin, issueName) {\n    if\
+            \ (!origin) return;\n    var url = rqs0.url();\n    var randToken = commfunc.randStr(8);\n\
+            \    var req1 = $.request(rqs0);\n    req1.url(url + 'search');\n    req1.method('GET');\n\
+            \    req1.encode(true);\n    var query = 'q=\\' UNION SELECT \"' + randToken\
+            \ + '\"-- -';\n    req1.url(req1.url() + '?' + query);\n    var rsp1 =\
+            \ await R.StartReq(req1);\n    if (rsp1.code() === 200 && rsp1.body().indexOf(randToken)\
+            \ >= 0) {\n        $.newIssue({\n            testUrl: req1.url(),\n  \
+            \          value: req1.url(),\n            testRequest: req1,\n      \
+            \      testResponse: rsp1,\n            confidenceLevel: 1,\n        \
+            \    versionmatch: 0,\n            name: issueName\n        });\n    }\n\
+            };\n```\n\n## 最终检查清单\n```markdown\n- [ ] 所有`require()`在`exports.policy`外部\
+            \  \n- [ ] 使用`rqs0.url()`获取基础URL  \n- [ ] URL拼接未额外添加斜杠  \n- [ ] 危险操作已替换为随机值回显\
+            \  \n- [ ] 响应特征使用随机值验证  \n- [ ] `$.newIssue`的`value=reqX.url()`  \n- [\
+            \ ] 未引入无用模块（如未使用base64则不引入）  \n- [ ] 无禁止语法（try/catch/JSON等）  \n- [ ] 变量命名：req1/rsp1、驼峰式\
+            \  \n- [ ] 创建的脚本文件应自删除\n- [ ] 请求体body存在空格时，构造请求时应加上reqX.bodyEncode(false)，比如reqX.body('some\
+            \ form data');reqX.bodyEncode(false)\n- [ ] 对响应头进行匹配时应具体到某个响应头，比如rspX.header('Set-Cookie').indexOf()，而不是rspX.headers().indexOf()!!!\n\
+            ```\n\n**请严格按照此规范转换所有漏洞检测策略，确保输出代码可直接集成到扫描引擎**"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: llm
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 680
+        y: 282
+      positionAbsolute:
+        x: 680
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 110.77937452218191
+      y: 110.76458949834137
+      zoom: 0.9304496577030154
